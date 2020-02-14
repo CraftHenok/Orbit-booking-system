@@ -1,0 +1,98 @@
+<div class="calenderSetting">
+
+
+  <div class="currentDate">
+    <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+  </div>
+
+  <hr>
+
+  <div class="selectDoctors">
+    <p class="label">Change doctor</p>
+    <mat-form-field appearance="outline">
+      <mat-label>Select doctor</mat-label>
+      <mat-select>
+        <mat-option value="A">A</mat-option>
+        <mat-option value="B">B</mat-option>
+        <mat-option value="C">C</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="pagination">
+    <p class="label">Pagination</p>
+    <mat-button-toggle-group name="fontStyle" aria-label="Font Style" class="nextPrev">
+      <mat-button-toggle value="Previous" mwlCalendarPreviousView [view]="view"
+                         [(viewDate)]="viewDate"
+                         (viewDateChange)="closeOpenMonthViewDay()">Previous
+      </mat-button-toggle>
+      <mat-button-toggle value="Today" mwlCalendarToday [(viewDate)]="viewDate">Today</mat-button-toggle>
+      <mat-button-toggle value="Next" mwlCalendarNextView
+                         [view]="view"
+                         [(viewDate)]="viewDate"
+                         (viewDateChange)="closeOpenMonthViewDay()">Next
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+
+  <div class="calenderFormat">
+    <p class="label">Calender format</p>
+    <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+      <mat-button-toggle value="Month" (click)="setView(CalendarView.Month)"
+                         [class.active]="view === CalendarView.Month">Month
+      </mat-button-toggle>
+      <mat-button-toggle value="Week" (click)="setView(CalendarView.Week)"
+                         [class.active]="view === CalendarView.Week">Week
+      </mat-button-toggle>
+      <mat-button-toggle value="Day" (click)="setView(CalendarView.Day)"
+                         [class.active]="view === CalendarView.Day">Day
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+
+  <div class="addNewAppointments">
+    <p class="label">Add new appointments</p>
+    <button (click)="openAddDialog()" mat-flat-button color="accent">Add new</button>
+  </div>
+
+
+</div>
+
+<div class="calenderContainer">
+  <div [ngSwitch]="view">
+    <mwl-calendar-month-view
+      *ngSwitchCase="CalendarView.Month"
+      [viewDate]="viewDate"
+      [events]="events"
+      [refresh]="refresh"
+      [activeDayIsOpen]="activeDayIsOpen"
+      (dayClicked)="dayClicked($event.day)"
+      (eventClicked)="handleEvent('Clicked', $event.event)"
+      (eventTimesChanged)="eventTimesChanged($event)"
+    >
+    </mwl-calendar-month-view>
+    <mwl-calendar-week-view
+      *ngSwitchCase="CalendarView.Week"
+      [viewDate]="viewDate"
+      [events]="events"
+      [refresh]="refresh"
+      (eventClicked)="handleEvent('Clicked', $event.event)"
+      (eventTimesChanged)="eventTimesChanged($event)"
+    >
+    </mwl-calendar-week-view>
+    <mwl-calendar-day-view
+      *ngSwitchCase="CalendarView.Day"
+      [viewDate]="viewDate"
+      [events]="events"
+      [refresh]="refresh"
+      (eventClicked)="handleEvent('Clicked', $event.event)"
+      (eventTimesChanged)="eventTimesChanged($event)"
+    >
+    </mwl-calendar-day-view>
+  </div>
+</div>
+
+
+
+
+

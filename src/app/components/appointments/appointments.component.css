@@ -1,0 +1,40 @@
+.calenderSetting, .calenderContainer {
+  float: left;
+}
+
+.calenderSetting {
+  padding: 1%;
+  width: 18%;
+}
+
+.calenderContainer {
+  width: 80%;
+}
+
+.currentDate h3 {
+  font-size: 1.4em;
+  margin-bottom: 0;
+  text-align: center;
+}
+
+.pagination, .calenderFormat, .addNewAppointments {
+  margin-top: 30px;
+}
+
+hr {
+  opacity: 0.5;
+}
+
+.label {
+  font-size: 0.8em;
+  margin: 5px;
+  color: #919191;
+}
+
+.selectDoctors {
+  margin-top: 20px;
+}
+
+div .mat-form-field-wrapper {
+  padding-bottom: 0;
+}

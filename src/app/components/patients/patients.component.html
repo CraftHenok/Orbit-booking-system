@@ -1,0 +1,92 @@
+<div class="addNewArea">
+  <mat-form-field appearance="outline">
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Example: patient's name">
+  </mat-form-field>
+</div>
+<div class="patientsList">
+
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z6">
+
+
+    <ng-container matColumnDef="seq">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>SEQ</th>
+      <td mat-cell *matCellDef="let element"> {{element.seq | number}} </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="regDate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>REG DATE</th>
+      <td mat-cell *matCellDef="let element"> {{element.regDate | date}} </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="active">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>ACTIVE</th>
+      <td mat-cell *matCellDef="let element"> {{element.active }} </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>NAME</th>
+      <td mat-cell
+          *matCellDef="let element"> {{ element.firstName + ' ' + element.middleName + ' ' + element.lastName }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="gender">
+      <th mat-header-cell *matHeaderCellDef>GENDER</th>
+      <td mat-cell *matCellDef="let element"> {{element.gender}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="dateOfBirth">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>DATE OF BIRTH</th>
+      <td mat-cell *matCellDef="let element"> {{element.dateOfBirth | date}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="nationality">
+      <th mat-header-cell *matHeaderCellDef>NATIONALITY</th>
+      <td mat-cell *matCellDef="let element"> {{element.nationality | uppercase }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="contactInfo">
+      <th mat-header-cell *matHeaderCellDef>CONTACT INFO</th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-stroked-button>View</button>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="emergencyInfo">
+      <th mat-header-cell *matHeaderCellDef>EMERGENCY INFO</th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-stroked-button>View</button>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="edit">
+      <th mat-header-cell *matHeaderCellDef>EDIT</th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-stroked-button color="accent">EDIT</button>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef>DELETE</th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-stroked-button color="warn">DELETE</button>
+      </td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+        class="example-element-row"
+        [class.example-expanded-row]="expandedElement === row"
+        (click)="expandedElement = expandedElement === row ? null : row">
+    </tr>
+
+
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[10, 20, 30]" length="100%" showFirstLastButtons></mat-paginator>
+
+</div>

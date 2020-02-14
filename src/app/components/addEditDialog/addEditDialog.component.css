@@ -1,0 +1,16 @@
+mat-form-field {
+  width: 100%;
+}
+
+h1 {
+  margin-bottom: 5px;
+}
+
+hr {
+  opacity: 0.5;
+  box-shadow: inset 0 0 10px #000000;
+}
+
+.selectDoctors {
+  margin: 0;
+}
