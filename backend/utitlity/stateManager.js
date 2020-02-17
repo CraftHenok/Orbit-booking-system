@@ -1,5 +1,4 @@
 const fs = require('fs');
-const path = require("path");
 
 // Create and write to file
 const fileName = "State.txt";
