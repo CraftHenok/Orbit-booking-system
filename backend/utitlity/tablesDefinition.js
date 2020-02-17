@@ -32,6 +32,7 @@ const patient = "CREATE TABLE \"Patient\" (\n" +
     "\t\"active\"\tINTEGER DEFAULT 0,\n" +
     "\t\"contactId\"\tINTEGER NOT NULL,\n" +
     "\t\"addressId\"\tINTEGER NOT NULL,\n" +
+    "\t\"regDate\"\tTEXT NOT NULL,\n" +
     "\t\"emergencyInfoId\"\tINTEGER NOT NULL\n" +
     ");";
 
