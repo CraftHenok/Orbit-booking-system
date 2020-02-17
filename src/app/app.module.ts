@@ -19,6 +19,7 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatTableModule} from '@angular/material/table';
 import {MatInputModule} from '@angular/material/input';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -40,10 +41,12 @@ import {MatInputModule} from '@angular/material/input';
     MatDialogModule,
     ReactiveFormsModule,
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
-    MatTableModule
+    MatTableModule,
+    HttpClientModule
   ],
   entryComponents: [AddEditDialogComponent],
   providers: [],
+  exports: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {
