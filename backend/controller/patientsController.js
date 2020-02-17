@@ -152,7 +152,6 @@ exports.updatePatientById = (req, res) => {
 };
 
 exports.deleteByPatientId = async (req, res) => {
-  // return res.json("delete patient by id =>" + req.params['patientId']);
   await db.run("DELETE from patient WHERE seq= ?", req.params['patientId'], function (err) {
     if (err) {
       res.json(err.message).status(404);
@@ -160,4 +159,37 @@ exports.deleteByPatientId = async (req, res) => {
       res.json(this.changes);
     }
   });
+};
+
+
+exports.getContactById = (req, res) => {
+  db.get("Select * from Contact where id = ?", req.params["contactId"], (err, row) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.json(row);
+    }
+  });
+
+};
+
+exports.getAddressById = async (req, res) => {
+  await db.get("select * from address WHERE id = ?", req.params['addressId'], (err, row) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.json(row);
+    }
+  })
+};
+
+exports.getEmergencyInfoById = async (req, res) => {
+  await db.get("select * from EmergencyContact WHERE id = ?", req.params['emergencyInfoId'], (err, row) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(row);
+      res.json(row);
+    }
+  })
 };
