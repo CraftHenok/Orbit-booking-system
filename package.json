@@ -8,8 +8,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "devbe": "nodemon ./backend/index",
-    "be": "node ./backend/index"
+    "devbe": "nodemon server.js",
+    "be": "node server.js"
   },
   "private": true,
   "dependencies": {
