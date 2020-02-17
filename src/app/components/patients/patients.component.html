@@ -55,6 +55,13 @@
       </td>
     </ng-container>
 
+    <ng-container matColumnDef="address">
+      <th mat-header-cell *matHeaderCellDef>ADDRESS</th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-stroked-button>View</button>
+      </td>
+    </ng-container>
+
     <ng-container matColumnDef="emergencyInfo">
       <th mat-header-cell *matHeaderCellDef>EMERGENCY INFO</th>
       <td mat-cell *matCellDef="let element">
