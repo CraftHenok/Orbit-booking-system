@@ -11,4 +11,9 @@ router.delete('/:patientId', patientsController.deleteByPatientId);
 router.patch('/:patientId', patientsController.updatePatientById);
 router.put('/:patientId', patientsController.updatePatientById);
 
+//patient detail queries
+router.get('/contactInfo/:contactId', patientsController.getContactById);
+router.get('/address/:addressId', patientsController.getAddressById);
+router.get('/emergencyInfo/:emergencyInfoId', patientsController.getEmergencyInfoById);
+
 module.exports = router;
