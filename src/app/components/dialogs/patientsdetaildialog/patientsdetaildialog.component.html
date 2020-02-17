@@ -1,0 +1,51 @@
+<div *ngIf="data.code=='A'">
+  <h1 mat-dialog-title>Patient address</h1>
+  <hr>
+  <mat-dialog-content class="mat-typography">
+    <p>Line 1</p>
+    <h2>{{ address.line1 }}</h2>
+    <p>Line 2</p>
+    <h2>{{ address.line2 }}</h2>
+    <p>City</p>
+    <h2>{{ address.city | titlecase }}</h2>
+    <p>Country</p>
+    <h2>{{ address.country | uppercase }}</h2>
+  </mat-dialog-content>
+</div>
+<div *ngIf="data.code=='C'">
+  <h1 mat-dialog-title>Patient contact info</h1>
+  <hr>
+  <mat-dialog-content class="mat-typography">
+    <p>Email</p>
+    <h2>{{ contactInfo.email }}</h2>
+    <p>Phone number</p>
+    <h2>{{ contactInfo.phoneNumber }}</h2>
+    <p>Alternate phone number</p>
+    <h2>{{ contactInfo.alternatePhoneNumber }}</h2>
+  </mat-dialog-content>
+</div>
+
+<div *ngIf="data.code=='E'">
+  <h1 mat-dialog-title>Patients emergency info</h1>
+  <hr>
+  <mat-dialog-content class="mat-typography">
+    <p>Title id</p>
+    <h2>{{ emergencyInfo.emergencyTitleId }}</h2>
+    <p>Name</p>
+    <h2>{{ emergencyInfo.name | titlecase }}</h2>
+    <p>Phone number</p>
+    <h2>{{ emergencyInfo.phoneNumber }}</h2>
+    <p>Alternate phone number</p>
+    <h2>{{ emergencyInfo.alternatePhoneNumber }}</h2>
+  </mat-dialog-content>
+</div>
+
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+</mat-dialog-actions>
+
+
+
+
+
