@@ -1,40 +1,68 @@
-.calenderSetting, .calenderContainer {
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.leftSide, .rightSide {
   float: left;
 }
 
-.calenderSetting {
-  padding: 1%;
+.leftSide {
+  position: relative;
   width: 18%;
+  padding: 1%;
+  height: 100%;
 }
 
-.calenderContainer {
-  width: 80%;
+.rightSide {
+  position: relative;
+  width: 79.8%;
+  height: 100%;
 }
 
-.currentDate h3 {
-  font-size: 1.4em;
-  margin-bottom: 0;
+.rightSide .topSide, .rightSide .bottomSide {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+}
+
+.rightSide .topSide {
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+.rightSide .bottomSide {
+  width: 100%;
+}
+
+.rightSide .topSide div {
+  position: relative;
+  float: left;
+  width: 33.3%;
+}
+
+.calenderFormat {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.addNew {
+  position: relative;
+  left: 100%;
+  bottom: 0;
+  transform: translateX(-100%);
+}
+
+.showDoctor {
+  font-weight: lighter;
+  margin-bottom: 10px;
+}
+
+.showDate {
   text-align: center;
-}
+  font-weight: lighter;
+  padding-bottom: 3px;
+  padding-top: 3px;
 
-.pagination, .calenderFormat, .addNewAppointments {
-  margin-top: 30px;
-}
-
-hr {
-  opacity: 0.5;
-}
-
-.label {
-  font-size: 0.8em;
-  margin: 5px;
-  color: #919191;
-}
-
-.selectDoctors {
-  margin-top: 20px;
-}
-
-div .mat-form-field-wrapper {
-  padding-bottom: 0;
 }
