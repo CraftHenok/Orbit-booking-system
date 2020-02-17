@@ -21,6 +21,9 @@ import {MatTableModule} from '@angular/material/table';
 import {MatInputModule} from '@angular/material/input';
 import {HttpClientModule} from '@angular/common/http';
 
+// ng g module moduleName --flat --routing
+
+
 @NgModule({
   declarations: [
     AppComponent,
