@@ -1,10 +1,17 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const migrationManager = require('./backend/utitlity/migrationManager');
+const stateManager = require("./backend/utitlity/stateManager");
 
-app.use(cors);
-const migrationManager = require('./utitlity/migrationManager');
-const stateManager = require("./utitlity/stateManager");
+
+// Body Parser Middleware
+app.use(express.json());
+app.use(express.urlencoded({extended: false}));
+
+// cors
+app.use(cors());
+
 
 if (stateManager.createTables()) {
   //create tables
@@ -22,14 +29,15 @@ app.get("/doManualMigration/OrbitHealth", () => {
 });
 
 
-// Body Parser Middleware
-app.use(express.json());
-app.use(express.urlencoded({extended: false}));
+app.get('/', function (req, res) {
+  res.json('Hello World');
+});
 
-// Appointment API Routes
-app.use('/appointment', require('./route/appointmetsRoute'));
-app.use('/doctor', require('./route/doctorRoute'));
-app.use('/patient', require('./route/patientRoute'));
+
+// available api routes
+app.use('/appointment', require('./backend/route/appointmetsRoute'));
+app.use('/doctor', require('./backend/route/doctorRoute'));
+app.use('/patient', require('./backend/route/patientRoute'));
 
 
 //check if we need to create
