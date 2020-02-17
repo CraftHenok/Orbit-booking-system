@@ -9,7 +9,7 @@ import {AppointmentsComponent} from './components/appointments/appointments.comp
 import {MaterialDateModule} from './materialDateModule/materialDateModule';
 import {CalendarModule, DateAdapter} from 'angular-calendar';
 import {adapterFactory} from 'angular-calendar/date-adapters/date-fns';
-import {AddEditDialogComponent} from './components/addEditDialog/addEditDialog.component';
+import {AddEditDialogComponent} from './components/dialogs/addEditDialog/addEditDialog.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {ServiceWorkerModule} from '@angular/service-worker';
 import {environment} from '../environments/environment';
