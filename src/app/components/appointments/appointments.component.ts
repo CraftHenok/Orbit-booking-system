@@ -2,7 +2,7 @@ import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {CalendarEvent, CalendarEventTimesChangedEvent, CalendarView} from 'angular-calendar';
 import {Subject} from 'rxjs';
 import {isSameDay, isSameMonth} from 'date-fns';
-import {AddEditDialogComponent} from '../addEditDialog/addEditDialog.component';
+import {AddEditDialogComponent} from '../dialogs/addEditDialog/addEditDialog.component';
 import {LocalAppointments} from '../../models/Appointemts/LocalAppointments';
 import {MatDialog} from '@angular/material/dialog';
 import {AppointmentsServices} from '../../services/Appointments/appointments-services';
