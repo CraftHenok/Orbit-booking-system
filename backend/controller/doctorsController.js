@@ -78,8 +78,7 @@ exports.getDoctorById = (req, res) => {
 };
 
 exports.getAllDoctors = async (req, res) => {
-  console.log("--------------all doctors---------------");
-  await db.all("SELECT * FROM doctor", (err, rows) => {
+  await db.all("select * from Doctor ORDER by displayOrder ASC;", (err, rows) => {
     if (err) {
       console.log(err);
     }
