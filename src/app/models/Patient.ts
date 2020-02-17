@@ -21,8 +21,15 @@ export class Patient {
   address: Address;
   emergencyInfo: EmergencyInfo;
 
+  contactId: string;
+  addressId: string;
+  emergencyInfoId: string;
+
   // additional info
   active = false;
+
+  // used when we click view on the patient table
+  code: string;
 
   constructor(seqNumber: number, regDate: Date, titleId: number, firstName: string, middleName: string,
               lastName: string, gender: string, dateOfBirth: Date, age: number,
