@@ -4,7 +4,7 @@ export class Doctor {
   username: string;
   password: string;
   displayOrder: number;
-  manageBlock: boolean;
+  manageBlocks: boolean;
   manageBooking: boolean;
   isDoctor: boolean;
 
@@ -15,7 +15,7 @@ export class Doctor {
     this.username = username;
     this.password = password;
     this.displayOrder = displayOrder;
-    this.manageBlock = manageBlock;
+    this.manageBlocks = manageBlock;
     this.manageBooking = manageBooking;
     this.isDoctor = isDoctor;
   }
