@@ -9,7 +9,7 @@ import {MatSortModule} from '@angular/material/sort';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
-import {MatGridListModule} from '@angular/material/grid-list';
+import {NumberToBooleanModule} from '../../customPipes/numberToBoolean/number-to-boolean.module';
 
 
 @NgModule({
@@ -24,7 +24,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
     MatSortModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    NumberToBooleanModule
   ]
 })
 export class PatientsModule {

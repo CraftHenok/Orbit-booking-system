@@ -8,7 +8,6 @@
 
   <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z6">
 
-
     <ng-container matColumnDef="seq">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>SEQ</th>
       <td mat-cell *matCellDef="let element"> {{element.seq | number}} </td>
@@ -39,17 +38,17 @@
 
     <ng-container matColumnDef="manageBlock">
       <th mat-header-cell *matHeaderCellDef>MANAGE BLOCK</th>
-      <td mat-cell *matCellDef="let element"> {{element.manageBlock}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.manageBlocks | toBoolean}} </td>
     </ng-container>
 
     <ng-container matColumnDef="manageBooking">
       <th mat-header-cell *matHeaderCellDef>MANAGE BOOKING</th>
-      <td mat-cell *matCellDef="let element"> {{element.manageBooking}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.manageBooking | toBoolean}} </td>
     </ng-container>
 
     <ng-container matColumnDef="isDoctor">
       <th mat-header-cell *matHeaderCellDef>IS DOCTOR</th>
-      <td mat-cell *matCellDef="let element"> {{element.isDoctor}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.isDoctor | toBoolean}} </td>
     </ng-container>
 
     <ng-container matColumnDef="edit">
