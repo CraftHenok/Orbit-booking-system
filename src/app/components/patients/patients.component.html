@@ -51,21 +51,21 @@
     <ng-container matColumnDef="contactInfo">
       <th mat-header-cell *matHeaderCellDef>CONTACT INFO</th>
       <td mat-cell *matCellDef="let element">
-        <button mat-stroked-button>View</button>
+        <button mat-stroked-button (click)="openPatientDetailDialog('C',element)">View</button>
       </td>
     </ng-container>
 
     <ng-container matColumnDef="address">
       <th mat-header-cell *matHeaderCellDef>ADDRESS</th>
       <td mat-cell *matCellDef="let element">
-        <button mat-stroked-button>View</button>
+        <button mat-stroked-button (click)="openPatientDetailDialog('A',element)">View</button>
       </td>
     </ng-container>
 
     <ng-container matColumnDef="emergencyInfo">
       <th mat-header-cell *matHeaderCellDef>EMERGENCY INFO</th>
       <td mat-cell *matCellDef="let element">
-        <button mat-stroked-button>View</button>
+        <button mat-stroked-button (click)="openPatientDetailDialog('E',element)">View</button>
       </td>
     </ng-container>
 

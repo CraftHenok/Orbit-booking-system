@@ -6,6 +6,9 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {Subscription} from 'rxjs';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import {MatDialog} from '@angular/material/dialog';
+import {AddEditDialogComponent} from '../dialogs/addEditDialog/addEditDialog.component';
+import {PatientsdetaildialogComponent} from '../dialogs/patientsdetaildialog/patientsdetaildialog.component';
 
 @Component({
   selector: 'app-patients',
@@ -22,21 +25,23 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 export class PatientsComponent implements OnInit, OnDestroy {
 
   dataSource;
-  displayedColumns: string[] = ['seq', 'regDate', 'active', 'name', 'gender', 'dateOfBirth', 'nationality'
-    , 'contactInfo', 'address', 'emergencyInfo', 'edit', 'delete'];
+  displayedColumns: string[] = ['seq', 'regDate', 'active', 'name', 'gender', 'dateOfBirth', 'nationality',
+    'contactInfo', 'address', 'emergencyInfo', 'edit', 'delete'];
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   private subscription: Subscription = new Subscription();
   expandedElement: Patient | null;
 
 
-  constructor(private patientService: PatientsService) {
+  constructor(private patientService: PatientsService,
+              private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
 
     this.subscription.add(this.patientService.getAllPatients().subscribe(
       result => {
+        console.table(result);
         this.dataSource = new MatTableDataSource<Patient>(result);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
@@ -55,5 +60,13 @@ export class PatientsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  openPatientDetailDialog(code: string, element: Patient) {
+    element.code = code;
+    return this.dialog.open(PatientsdetaildialogComponent, {
+      width: '400px',
+      data: element
+    });
   }
 }

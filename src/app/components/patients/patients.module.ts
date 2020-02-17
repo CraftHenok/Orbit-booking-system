@@ -10,11 +10,14 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {NumberToBooleanModule} from '../../customPipes/numberToBoolean/number-to-boolean.module';
+import {PatientsdetaildialogComponent} from '../dialogs/patientsdetaildialog/patientsdetaildialog.component';
+import {MatDialogModule} from '@angular/material/dialog';
 
 
 @NgModule({
   declarations: [
-    PatientsComponent
+    PatientsComponent,
+    PatientsdetaildialogComponent
   ],
   imports: [
     CommonModule,
@@ -25,7 +28,8 @@ import {NumberToBooleanModule} from '../../customPipes/numberToBoolean/number-to
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    NumberToBooleanModule
+    NumberToBooleanModule,
+    MatDialogModule
   ]
 })
 export class PatientsModule {
