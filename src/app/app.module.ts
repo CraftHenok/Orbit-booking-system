@@ -17,7 +17,8 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatButtonModule} from '@angular/material/button';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatDialogModule} from '@angular/material/dialog';
-import {MatSelectModule} from '@angular/material/select';
+import {MatTableModule} from '@angular/material/table';
+import {MatInputModule} from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -34,11 +35,12 @@ import {MatSelectModule} from '@angular/material/select';
     MatButtonModule,
     MaterialDateModule,
     MatButtonToggleModule,
+    MatInputModule,
     CalendarModule.forRoot({provide: DateAdapter, useFactory: adapterFactory}),
     MatDialogModule,
     ReactiveFormsModule,
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
-    MatSelectModule
+    MatTableModule
   ],
   entryComponents: [AddEditDialogComponent],
   providers: [],
