@@ -53,4 +53,22 @@ export class PatientsService {
     return this.http.get<Patient[]>(url);
 
   }
+
+
+  getContactInfo(contactInfoId: string) {
+    const url = 'http://localhost:5000/patient/contactInfo/' + contactInfoId;
+    return this.http.get<Contact>(url);
+  }
+
+
+  getAddress(addressId: string) {
+    const url = 'http://localhost:5000/patient/address/' + addressId;
+    return this.http.get<Address>(url);
+  }
+
+
+  getEmergencyInfo(emergencyInfoId: string) {
+    const url = 'http://localhost:5000/patient/emergencyInfo/' + emergencyInfoId;
+    return this.http.get<EmergencyInfo>(url);
+  }
 }
