@@ -4,7 +4,6 @@ import {NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {NavigationComponent} from './components/navigation/navigation.component';
 import {AppointmentsComponent} from './components/appointments/appointments.component';
 import {MaterialDateModule} from './materialDateModule/materialDateModule';
 import {CalendarModule, DateAdapter} from 'angular-calendar';
@@ -20,6 +19,10 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatTableModule} from '@angular/material/table';
 import {MatInputModule} from '@angular/material/input';
 import {HttpClientModule} from '@angular/common/http';
+import {MatIconModule} from '@angular/material/icon';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatListModule} from '@angular/material/list';
+import {MatCardModule} from '@angular/material/card';
 
 // ng g module moduleName --flat --routing
 
@@ -27,7 +30,6 @@ import {HttpClientModule} from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
-    NavigationComponent,
     AppointmentsComponent,
     AddEditDialogComponent
   ],
@@ -45,7 +47,11 @@ import {HttpClientModule} from '@angular/common/http';
     ReactiveFormsModule,
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
     MatTableModule,
-    HttpClientModule
+    HttpClientModule,
+    MatIconModule,
+    MatSidenavModule,
+    MatListModule,
+    MatCardModule
   ],
   entryComponents: [AddEditDialogComponent],
   providers: [],
