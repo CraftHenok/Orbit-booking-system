@@ -1,0 +1,21 @@
+<mat-card class="example-card">
+  <mat-card-content>
+    <div class="doctorsTable">
+      <mat-form-field appearance="outline" style="width: 100%">
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. doctor name">
+      </mat-form-field>
+      <table mat-table [dataSource]="dataSource"
+             style="width: 100%;box-shadow: none;border: 1px solid #eee;border-radius: 5px;margin-top: -10px">
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Doctors name</th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+  </mat-card-content>
+</mat-card>

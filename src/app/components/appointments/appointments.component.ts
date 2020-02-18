@@ -7,8 +7,6 @@ import {LocalAppointments} from '../../models/Appointemts/LocalAppointments';
 import {MatDialog} from '@angular/material/dialog';
 import {AppointmentsServices} from '../../services/Appointments/appointments-services';
 import {LocalAppointmentsBuilder} from '../../models/Appointemts/LocalAppointmentsBuilder';
-import {DoctorsService} from '../../services/Doctors/doctors.service';
-import {MatTableDataSource} from '@angular/material/table';
 
 
 @Component({
@@ -19,9 +17,6 @@ import {MatTableDataSource} from '@angular/material/table';
 export class AppointmentsComponent implements OnInit {
 
   @ViewChild('modalContent', {static: true}) modalContent: TemplateRef<any>;
-
-  displayedColumns: string[] = ['name'];
-  dataSource;
 
   view: CalendarView = CalendarView.Week;
 
@@ -36,8 +31,7 @@ export class AppointmentsComponent implements OnInit {
   activeDayIsOpen = true;
 
   constructor(private dialog: MatDialog,
-              private calenderEventService: AppointmentsServices,
-              private doctorsService: DoctorsService) {
+              private calenderEventService: AppointmentsServices) {
   }
 
   ngOnInit(): void {
@@ -47,12 +41,6 @@ export class AppointmentsComponent implements OnInit {
       },
       error => {
         console.error('On appointment getAllEvents ngOnInit');
-      }
-    );
-
-    this.doctorsService.getAllDoctors().subscribe(
-      result => {
-        this.dataSource = new MatTableDataSource(result);
       }
     );
 
@@ -160,11 +148,5 @@ export class AppointmentsComponent implements OnInit {
         this.addEvent(newEvent);
       }
     });
-  }
-
-
-  applyFilter($event: KeyboardEvent) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 }
