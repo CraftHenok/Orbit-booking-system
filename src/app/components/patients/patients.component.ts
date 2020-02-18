@@ -26,7 +26,7 @@ export class PatientsComponent implements OnInit, OnDestroy {
 
   dataSource;
   displayedColumns: string[] = ['seq', 'regDate', 'active', 'name', 'gender', 'dateOfBirth', 'nationality',
-    'contactInfo', 'address', 'emergencyInfo', 'edit', 'delete'];
+    'contactInfo', 'address', 'emergencyInfo', 'action'];
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   private subscription: Subscription = new Subscription();

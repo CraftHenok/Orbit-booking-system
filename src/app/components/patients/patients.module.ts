@@ -12,6 +12,8 @@ import {MatButtonModule} from '@angular/material/button';
 import {NumberToBooleanModule} from '../../customPipes/numberToBoolean/number-to-boolean.module';
 import {PatientsdetaildialogComponent} from '../dialogs/patientsdetaildialog/patientsdetaildialog.component';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatIconModule} from '@angular/material/icon';
 
 
 @NgModule({
@@ -29,7 +31,9 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatInputModule,
     MatButtonModule,
     NumberToBooleanModule,
-    MatDialogModule
+    MatDialogModule,
+    MatMenuModule,
+    MatIconModule,
   ]
 })
 export class PatientsModule {

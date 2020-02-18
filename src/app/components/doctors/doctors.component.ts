@@ -15,7 +15,7 @@ export class DoctorsComponent implements OnInit, OnDestroy {
 
   dataSource;
   displayedColumns: string[] = ['seq', 'name', 'username', 'password', 'displayOrder', 'manageBlock',
-    'manageBooking', 'isDoctor', 'edit', 'delete'];
+    'manageBooking', 'isDoctor', 'action'];
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   private subscription: Subscription = new Subscription();

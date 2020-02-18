@@ -11,6 +11,8 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatButtonModule} from '@angular/material/button';
 import {NumberToBoolean} from '../../customPipes/numberToBoolean/numberToBoolean';
 import {NumberToBooleanModule} from '../../customPipes/numberToBoolean/number-to-boolean.module';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatIconModule} from '@angular/material/icon';
 
 
 @NgModule({
@@ -26,7 +28,9 @@ import {NumberToBooleanModule} from '../../customPipes/numberToBoolean/number-to
     MatInputModule,
     MatPaginatorModule,
     MatButtonModule,
-    NumberToBooleanModule
+    NumberToBooleanModule,
+    MatMenuModule,
+    MatIconModule
   ]
 })
 export class DoctorsModule {
