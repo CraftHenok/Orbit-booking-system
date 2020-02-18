@@ -23,6 +23,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
 import {MatCardModule} from '@angular/material/card';
+import { ShowDoctorsComponent } from './components/appointments/show-doctors/show-doctors.component';
 
 // ng g module moduleName --flat --routing
 
@@ -31,7 +32,8 @@ import {MatCardModule} from '@angular/material/card';
   declarations: [
     AppComponent,
     AppointmentsComponent,
-    AddEditDialogComponent
+    AddEditDialogComponent,
+    ShowDoctorsComponent
   ],
   imports: [
     BrowserModule,
