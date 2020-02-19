@@ -35,17 +35,21 @@
       <mat-label>Appointment Status</mat-label>
       <input matInput placeholder="Appointment Status" formControlName="AppointmentStatus">
     </mat-form-field>
+
     <mat-form-field appearance="outline">
-      <mat-label>Start date</mat-label>
-      <input matInput placeholder="Start date" formControlName="start" [matDatepicker]="myDatepicker1">
-      <mat-datepicker-toggle matSuffix [for]="myDatepicker1"></mat-datepicker-toggle>
-      <mat-datepicker #myDatepicker1></mat-datepicker>
+      <input matInput [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" formControlName="start" placeholder="Date Time">
+      <span [owlDateTimeTrigger]="dt1"><i class="fa fa-calendar"></i></span>
+      <owl-date-time #dt1></owl-date-time>
     </mat-form-field>
+
     <mat-form-field appearance="outline">
-      <mat-label>End date</mat-label>
-      <input matInput placeholder="end date" formControlName="end" [matDatepicker]="myDatepicker2">
-      <mat-datepicker-toggle matSuffix [for]="myDatepicker2"></mat-datepicker-toggle>
-      <mat-datepicker #myDatepicker2></mat-datepicker>
+      <mat-label>Duration</mat-label>
+      <mat-select formControlName="duration" [value]="duration">
+        <mat-option [value]="30">30 minutes</mat-option>
+        <mat-option [value]="60">1 hours</mat-option>
+        <mat-option [value]="120">2 hours</mat-option>
+        <mat-option [value]="180">3 hours</mat-option>
+      </mat-select>
     </mat-form-field>
 
     <mat-form-field appearance="outline">

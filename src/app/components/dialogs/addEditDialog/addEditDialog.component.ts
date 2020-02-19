@@ -3,6 +3,7 @@ import {LocalAppointments} from '../../../models/Appointemts/LocalAppointments';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
+import {addMinutes} from 'date-fns';
 
 
 /** Error when invalid control is dirty, touched, or submitted. */
@@ -23,12 +24,12 @@ export class AddEditDialogComponent implements OnInit {
 
   addForm = this.formBuilder.group({
     PatientId: [this.data.patientId, Validators.required],
-    AppointmentType: [this.data.appointmentType, Validators.required],
-    AppointmentStatus: [this.data.appointmentStatus, Validators.required],
+    AppointmentType: [this.data.appointmentTypeId, Validators.required],
+    AppointmentStatus: [this.data.appointmentStatusId, Validators.required],
     start: [this.data.start, Validators.required],
-    end: [this.data.end, Validators.required],
-    IsServed: [this.data.isServed],
-    ServedBy: [this.data.servedBy],
+    duration: ['30', Validators.required],
+    IsServed: [this.data.isServed, Validators.required],
+    ServedBy: [this.data.servedBy, Validators.required],
   });
 
   matcher = new MyErrorStateMatcher();
@@ -59,10 +60,10 @@ export class AddEditDialogComponent implements OnInit {
 
   bindData() {
     this.data.patientId = this.PatientId.value;
-    this.data.appointmentType = this.AppointmentType.value;
-    this.data.appointmentStatus = this.AppointmentStatus.value;
+    this.data.appointmentTypeId = this.AppointmentType.value;
+    this.data.appointmentStatusId = this.AppointmentStatus.value;
     this.data.start = this.start.value;
-    this.data.end = this.end.value;
+    this.data.end = addMinutes(this.data.start, this.duration.value);
     this.data.isServed = this.IsServed.value;
     this.data.servedBy = this.ServedBy.value;
   }
@@ -83,8 +84,8 @@ export class AddEditDialogComponent implements OnInit {
     return this.addForm.get('start');
   }
 
-  get end() {
-    return this.addForm.get('end');
+  get duration() {
+    return this.addForm.get('duration');
   }
 
   get IsServed() {
