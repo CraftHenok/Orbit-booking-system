@@ -5,6 +5,10 @@ const router = express.Router();
 router.get('/', appointmentController.getAllAppointments);
 router.get('/doctors/:doctorId', appointmentController.getDoctorAppointments);
 router.get('/patients/:patientId', appointmentController.getPatientAppointment);
+
+router.get('/appointmentType', appointmentController.getAppointmentTypes);
+router.get('/appointmentStatus', appointmentController.getAppointmentStatus);
+
 router.post('/', appointmentController.saveNewAppointment);
 router.delete('/:appointmentId', appointmentController.deleteAppointmentById);
 router.put('/:appointmentId', appointmentController.updateAppointment);
