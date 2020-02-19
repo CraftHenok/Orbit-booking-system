@@ -4,6 +4,9 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
 import {addMinutes} from 'date-fns';
+import {AppointmentStatus} from '../../../models/Appointemts/AppointmentStatus';
+import {AppointmentType} from '../../../models/Appointemts/AppointmentType';
+import {AppointmentsServices} from '../../../services/Appointments/appointments-services';
 
 
 /** Error when invalid control is dirty, touched, or submitted. */
@@ -34,14 +37,34 @@ export class AddEditDialogComponent implements OnInit {
 
   matcher = new MyErrorStateMatcher();
 
+  appointmentStatus: AppointmentStatus[] = [];
+  appointmentType: AppointmentType[] = [];
+
   constructor(
     private dialogRef: MatDialogRef<AddEditDialogComponent>,
     private formBuilder: FormBuilder,
+    private calenderEventService: AppointmentsServices,
     @Inject(MAT_DIALOG_DATA) public data: LocalAppointments) {
   }
 
   ngOnInit(): void {
+    this.calenderEventService.getAppointmentStatus().subscribe(
+      result => {
+        this.appointmentStatus = result;
+      },
+      error => {
+        console.log(error);
+      }
+    );
 
+    this.calenderEventService.getAppointmentTypes().subscribe(
+      result => {
+        this.appointmentType = result;
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
   deleteClicked() {
@@ -58,13 +81,17 @@ export class AddEditDialogComponent implements OnInit {
     this.dialogRef.close(this.data);
   }
 
+
   bindData() {
     this.data.patientId = this.PatientId.value;
     this.data.appointmentTypeId = this.AppointmentType.value;
     this.data.appointmentStatusId = this.AppointmentStatus.value;
     this.data.start = this.start.value;
+
     this.data.end = addMinutes(this.data.start, this.duration.value);
-    this.data.isServed = this.IsServed.value;
+
+
+    this.data.isServed = this.IsServed.value !== false;
     this.data.servedBy = this.ServedBy.value;
   }
 
