@@ -5,14 +5,14 @@ import {RemoteAppointment} from './RemoteAppointment';
 export class AppointmentWrapper {
 
   static toLocalAppointment(remoteAppointment: RemoteAppointment): LocalAppointments {
-    return new LocalAppointmentsBuilder(remoteAppointment.patientId, remoteAppointment.appointmentTypeId,
+    return new LocalAppointmentsBuilder(remoteAppointment.id, remoteAppointment.patientId, remoteAppointment.appointmentTypeId,
       remoteAppointment.appointmentStatusId, new Date(remoteAppointment.startDateTime),
       new Date(remoteAppointment.endDateTime), remoteAppointment.isServed,
       remoteAppointment.servedBy).setRandomColor().build();
   }
 
   static toRemoteAppointment(localAppointments: LocalAppointments): RemoteAppointment {
-    return new RemoteAppointment(localAppointments.patientId, localAppointments.appointmentTypeId,
+    return new RemoteAppointment(localAppointments.id, localAppointments.patientId, localAppointments.appointmentTypeId,
       localAppointments.appointmentStatusId, localAppointments.start, localAppointments.end,
       localAppointments.isServed, localAppointments.servedBy);
   }

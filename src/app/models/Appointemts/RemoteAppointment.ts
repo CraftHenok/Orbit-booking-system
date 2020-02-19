@@ -6,10 +6,12 @@ export class RemoteAppointment {
   endDateTime: Date;
   isServed: boolean;
   servedBy: number;
+  id: number;
 
 
-  constructor(patientId: number, appointmentType: string, appointmentStatus: string, startDateTime: Date,
+  constructor(id: number, patientId: number, appointmentType: string, appointmentStatus: string, startDateTime: Date,
               endDateTime: Date, isServed: boolean, servedBy: number) {
+    this.id = id;
     this.patientId = patientId;
     this.appointmentTypeId = appointmentType;
     this.appointmentStatusId = appointmentStatus;

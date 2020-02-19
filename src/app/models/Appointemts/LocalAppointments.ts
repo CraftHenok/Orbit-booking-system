@@ -11,6 +11,7 @@ export class LocalAppointments implements CalendarEvent {
   appointmentStatusId: string;
   isServed: boolean;
   servedBy: number;
+  id: number;
 
 
   // optional fields

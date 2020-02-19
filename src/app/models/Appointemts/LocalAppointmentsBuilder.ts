@@ -4,8 +4,9 @@ import {Color} from '../Color';
 export class LocalAppointmentsBuilder {
   private appointment = new LocalAppointments();
 
-  constructor(PatientId: number, AppointmentType: string, AppointmentStatus: string, start: Date,
+  constructor(id: number, PatientId: number, AppointmentType: string, AppointmentStatus: string, start: Date,
               end: Date, IsServed: boolean, ServedBy: number) {
+    this.appointment.id = id;
     this.appointment.patientId = PatientId;
     this.appointment.appointmentTypeId = AppointmentType;
     this.appointment.appointmentStatusId = AppointmentStatus;
