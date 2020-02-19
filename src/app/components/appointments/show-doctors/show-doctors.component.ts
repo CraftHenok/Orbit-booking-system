@@ -1,6 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {DoctorsService} from '../../../services/Doctors/doctors.service';
 import {MatTableDataSource} from '@angular/material/table';
+import {Doctor} from '../../../models/Doctor';
+import {MatPaginator} from '@angular/material/paginator';
 
 @Component({
   selector: 'app-show-doctors',
@@ -11,6 +13,7 @@ export class ShowDoctorsComponent implements OnInit {
 
   displayedColumns: string[] = ['name'];
   dataSource;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   constructor(private doctorsService: DoctorsService) {
   }
@@ -18,7 +21,8 @@ export class ShowDoctorsComponent implements OnInit {
   ngOnInit(): void {
     this.doctorsService.getAllDoctors().subscribe(
       result => {
-        this.dataSource = new MatTableDataSource(result);
+        this.dataSource = new MatTableDataSource<Doctor>(result);
+        this.dataSource.paginator = this.paginator;
       }
     );
   }
