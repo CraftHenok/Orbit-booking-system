@@ -1,12 +1,13 @@
 import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {CalendarEvent, CalendarEventTimesChangedEvent, CalendarView} from 'angular-calendar';
 import {Subject} from 'rxjs';
-import {isSameDay, isSameMonth} from 'date-fns';
+import {addHours, addMinutes, isSameDay, isSameMonth} from 'date-fns';
 import {AddEditDialogComponent} from '../dialogs/addEditDialog/addEditDialog.component';
 import {LocalAppointments} from '../../models/Appointemts/LocalAppointments';
 import {MatDialog} from '@angular/material/dialog';
 import {AppointmentsServices} from '../../services/Appointments/appointments-services';
 import {LocalAppointmentsBuilder} from '../../models/Appointemts/LocalAppointmentsBuilder';
+import {AppointmentWrapper} from '../../models/Appointemts/AppointmentWrapper';
 
 
 @Component({
@@ -37,10 +38,10 @@ export class AppointmentsComponent implements OnInit {
   ngOnInit(): void {
     this.calenderEventService.getAllAppointments().subscribe(
       result => {
-        this.events = result;
+        this.events = AppointmentWrapper.toLocalAppointmentBatch(result);
       },
       error => {
-        console.error('On appointment getAllEvents ngOnInit');
+        console.error(error + 'On appointment getAllEvents ngOnInit');
       }
     );
 
@@ -110,13 +111,13 @@ export class AppointmentsComponent implements OnInit {
     });
   }
 
-  addEvent(newEvent): void {
-
+  addEvent(newEvent: LocalAppointments): void {
+    console.table(newEvent);
     this.calenderEventService.addNewAppointment(newEvent).subscribe(
       result => {
         this.events = [
           ...this.events,
-          newEvent
+          AppointmentWrapper.toLocalAppointment(result)
         ];
       },
       error => {
@@ -141,10 +142,9 @@ export class AppointmentsComponent implements OnInit {
     const dialogRef = this.openDialogWith(emptyAppointment);
 
     dialogRef.afterClosed().subscribe((result: LocalAppointments) => {
-      console.log('The dialog was closed add dialog');
       if (result.patientId) {
-        const newEvent = new LocalAppointmentsBuilder(result.patientId, result.appointmentType,
-          result.appointmentStatus, result.start, result.end, result.isServed, result.servedBy).build();
+        const newEvent = new LocalAppointmentsBuilder(result.patientId, result.appointmentTypeId,
+          result.appointmentStatusId, result.start, result.end, result.isServed, result.servedBy).build();
         this.addEvent(newEvent);
       }
     });
