@@ -10,7 +10,8 @@
 .leftSide {
   position: relative;
   width: 18%;
-  padding: 1%;
+  padding-left: 1%;
+  padding-right: 1%;
   height: 100%;
 }
 
@@ -60,8 +61,32 @@
 }
 
 .showDate {
-  text-align: center;
+  position: relative;
+  height: 150px;
+  background-size: contain;
+  background: url('/assets/orginal winter.jpg') no-repeat fixed;
+  filter: brightness(0.7);
+  margin-bottom: 10px;
+  transition: all .4s ease-in-out;
+}
+
+.showDate:hover {
+  filter: brightness(0.83);
+}
+
+.showDateDate {
   font-weight: lighter;
-  padding-bottom: 3px;
-  padding-top: 3px;
+  font-size: 2em;
+  position: absolute;
+  color: #000;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.navigation {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translateX(-50%);
 }

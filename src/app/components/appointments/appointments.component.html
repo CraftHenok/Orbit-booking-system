@@ -1,20 +1,29 @@
+<div class="showDate">
+
+  <h2 class="showDateDate">{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h2>
+
+</div>
+
+
 <div class="leftSide">
   <app-show-doctors></app-show-doctors>
 </div>
 
 <div class="rightSide">
   <div class="topSide">
-    <h2 class="showDate">{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h2>
     <div>
       <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
         <mat-button-toggle value="Month" (click)="setView(CalendarView.Month)"
-                           [class.active]="view === CalendarView.Month">Month
+                           [class.active]="view === CalendarView.Month" matTooltip="Monthly view">
+          <mat-icon aria-hidden="false" aria-label="Example home icon" class="navigate_next">view_module</mat-icon>
         </mat-button-toggle>
         <mat-button-toggle value="Week" (click)="setView(CalendarView.Week)"
-                           [class.active]="view === CalendarView.Week">Week
+                           [class.active]="view === CalendarView.Week" matTooltip="Weekly view">
+          <mat-icon aria-hidden="false" aria-label="Example home icon" class="navigate_next">view_week</mat-icon>
         </mat-button-toggle>
         <mat-button-toggle value="Day" (click)="setView(CalendarView.Day)"
-                           [class.active]="view === CalendarView.Day">Day
+                           [class.active]="view === CalendarView.Day" matTooltip="Daily view">
+          <mat-icon aria-hidden="false" aria-label="Example home icon" class="navigate_next">view_day</mat-icon>
         </mat-button-toggle>
       </mat-button-toggle-group>
     </div>
@@ -22,20 +31,26 @@
       <mat-button-toggle-group name="fontStyle" aria-label="Font Style" class="calenderFormat">
         <mat-button-toggle value="Previous" mwlCalendarPreviousView [view]="view"
                            [(viewDate)]="viewDate"
-                           (viewDateChange)="closeOpenMonthViewDay()">Previous
+                           (viewDateChange)="closeOpenMonthViewDay()" matTooltip="Previous">
+          <mat-icon aria-hidden="false" aria-label="Example home icon" class="navigate_before">navigate_before
+          </mat-icon>
         </mat-button-toggle>
-        <mat-button-toggle value="Today" mwlCalendarToday [(viewDate)]="viewDate">Today</mat-button-toggle>
+        <mat-button-toggle value="Today" mwlCalendarToday [(viewDate)]="viewDate" matTooltip="Today">
+          <mat-icon aria-hidden="false" aria-label="Example home icon" class="arrow_drop_down">today
+          </mat-icon>
+        </mat-button-toggle>
         <mat-button-toggle value="Next" mwlCalendarNextView
                            [view]="view"
                            [(viewDate)]="viewDate"
-                           (viewDateChange)="closeOpenMonthViewDay()">Next
+                           (viewDateChange)="closeOpenMonthViewDay()" matTooltip="Next">
+          <mat-icon aria-hidden="false" aria-label="Example home icon" class="navigate_next">navigate_next</mat-icon>
         </mat-button-toggle>
       </mat-button-toggle-group>
     </div>
     <div>
       <mat-button-toggle-group name="fontStyle" aria-label="Font Style" class="addNew">
-        <mat-button-toggle value="Month" (click)="openAddDialog()">
-          New appointment
+        <mat-button-toggle value="Month" (click)="openAddDialog()" matTooltip="New appointment">
+          <mat-icon aria-hidden="false" aria-label="Example home icon" class="navigate_next">add</mat-icon>
         </mat-button-toggle>
       </mat-button-toggle-group>
     </div>
