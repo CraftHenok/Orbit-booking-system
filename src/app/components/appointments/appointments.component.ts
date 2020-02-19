@@ -8,6 +8,8 @@ import {MatDialog} from '@angular/material/dialog';
 import {AppointmentsServices} from '../../services/Appointments/appointments-services';
 import {LocalAppointmentsBuilder} from '../../models/Appointemts/LocalAppointmentsBuilder';
 import {AppointmentWrapper} from '../../models/Appointemts/AppointmentWrapper';
+import {AppointmentStatus} from '../../models/Appointemts/AppointmentStatus';
+import {AppointmentType} from '../../models/Appointemts/AppointmentType';
 
 
 @Component({
@@ -57,18 +59,9 @@ export class AppointmentsComponent implements OnInit {
 
   // called when items are Dropped or resized (do update)
   eventTimesChanged({event, newStart, newEnd}: CalendarEventTimesChangedEvent): void {
-
-    this.events = this.events.map(iEvent => {
-      if (iEvent === event) {
-        return {
-          ...event,
-          start: newStart,
-          end: newEnd
-        };
-      }
-      return iEvent;
-    });
-    // this.handleEvent('Dropped or resized', event);
+    event.start = newStart;
+    event.end = newEnd;
+    this.updateEvent(event as LocalAppointments);
   }
 
   // called when items are clicked
@@ -80,35 +73,49 @@ export class AppointmentsComponent implements OnInit {
       console.log('The dialog was closed handle event');
       console.table(result);
       if (result.action === 'D') {
+        // delete happens here
         this.deleteEvent(result);
       } else if (result.action === 'U') {
-
-        this.events = this.events.map(iEvent => {
-          if (iEvent === event) {
-            return {
-              ...event,
-              title: result.title,
-              start: result.start,
-              end: result.end
-            };
-          }
-          return iEvent;
-        });
+        // update Happens here
+        this.updateEvent(result);
       }
 
     });
 
   }
 
-  deleteEvent(eventToDelete: CalendarEvent) {
-    this.events = this.events.filter(event => event !== eventToDelete);
+  deleteEvent(eventToDelete: LocalAppointments) {
+    this.calenderEventService.deleteAppointment(eventToDelete).subscribe(
+      result => {
+        if (result !== 0) {
+          this.events = this.events.filter(event => event !== eventToDelete);
+        }
+      },
+      error => {
+        console.log(error);
+      }
+    );
+
   }
 
-  openDialogWith(appointment: CalendarEvent) {
-    return this.dialog.open(AddEditDialogComponent, {
-      width: '400px',
-      data: appointment
-    });
+  updateEvent(eventToUpdate: LocalAppointments) {
+    this.calenderEventService.updateAppointment(eventToUpdate).subscribe(
+      result => {
+        if (result !== 0) {
+          this.events = this.events.map(iEvent => {
+            if (iEvent === eventToUpdate) {
+              return {
+                ...eventToUpdate
+              };
+            }
+            return iEvent;
+          });
+        }
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
   addEvent(newEvent: LocalAppointments): void {
@@ -136,6 +143,13 @@ export class AppointmentsComponent implements OnInit {
     this.activeDayIsOpen = false;
   }
 
+  openDialogWith(appointment: CalendarEvent) {
+    return this.dialog.open(AddEditDialogComponent, {
+      width: '400px',
+      data: appointment
+    });
+  }
+
   openAddDialog() {
     const emptyAppointment = new LocalAppointments();
     emptyAppointment.start = new Date();
@@ -143,7 +157,7 @@ export class AppointmentsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: LocalAppointments) => {
       if (result.patientId) {
-        const newEvent = new LocalAppointmentsBuilder(result.patientId, result.appointmentTypeId,
+        const newEvent = new LocalAppointmentsBuilder(0, result.patientId, result.appointmentTypeId,
           result.appointmentStatusId, result.start, result.end, result.isServed, result.servedBy).build();
         this.addEvent(newEvent);
       }
