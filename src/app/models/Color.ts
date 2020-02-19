@@ -14,9 +14,18 @@ const colors: any = {
 };
 
 export class Color {
+  private static colorNames = ['red', 'blue', 'yellow'];
 
   public static getColorOf(colorName: string) {
     return colors[colorName];
+  }
+
+  public static getRandomColor() {
+    return colors[this.colorNames[this.getRandomInt(this.colorNames.length)]];
+  }
+
+  private static getRandomInt(max: number): number {
+    return Math.floor(Math.random() * Math.floor(max));
   }
 }
 
