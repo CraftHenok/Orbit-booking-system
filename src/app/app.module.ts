@@ -5,7 +5,6 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AppointmentsComponent} from './components/appointments/appointments.component';
-import {MaterialDateModule} from './materialDateModule/materialDateModule';
 import {CalendarModule, DateAdapter} from 'angular-calendar';
 import {adapterFactory} from 'angular-calendar/date-adapters/date-fns';
 import {AddEditDialogComponent} from './components/dialogs/addEditDialog/addEditDialog.component';
@@ -23,7 +22,10 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
 import {MatCardModule} from '@angular/material/card';
-import { ShowDoctorsComponent } from './components/appointments/show-doctors/show-doctors.component';
+import {ShowDoctorsComponent} from './components/appointments/show-doctors/show-doctors.component';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatSelectModule} from '@angular/material/select';
+import {OwlDateTimeModule, OwlNativeDateTimeModule} from 'ng-pick-datetime';
 
 // ng g module moduleName --flat --routing
 
@@ -41,7 +43,8 @@ import { ShowDoctorsComponent } from './components/appointments/show-doctors/sho
     BrowserAnimationsModule,
     MatToolbarModule,
     MatButtonModule,
-    MaterialDateModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
     MatButtonToggleModule,
     MatInputModule,
     CalendarModule.forRoot({provide: DateAdapter, useFactory: adapterFactory}),
@@ -52,8 +55,10 @@ import { ShowDoctorsComponent } from './components/appointments/show-doctors/sho
     HttpClientModule,
     MatIconModule,
     MatSidenavModule,
-    MatListModule,
-    MatCardModule
+    MatCardModule,
+    MatPaginatorModule,
+    MatSelectModule,
+    MatListModule
   ],
   entryComponents: [AddEditDialogComponent],
   providers: [],
