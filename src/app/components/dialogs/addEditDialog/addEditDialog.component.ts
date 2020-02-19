@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {LocalAppointments} from '../../../models/Appointemts/LocalAppointments';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
 import {addMinutes} from 'date-fns';
 import {AppointmentStatus} from '../../../models/Appointemts/AppointmentStatus';
@@ -25,20 +25,20 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 export class AddEditDialogComponent implements OnInit {
 
-  addForm = this.formBuilder.group({
+  private addForm = this.formBuilder.group({
     PatientId: [this.data.patientId, Validators.required],
     AppointmentType: [this.data.appointmentTypeId, Validators.required],
     AppointmentStatus: [this.data.appointmentStatusId, Validators.required],
     start: [this.data.start, Validators.required],
-    duration: ['30', Validators.required],
-    IsServed: [this.data.isServed, Validators.required],
+    duration: [0, Validators.required],
+    IsServed: [this.data.isServed ? this.data.isServed : false],
     ServedBy: [this.data.servedBy, Validators.required],
   });
 
-  matcher = new MyErrorStateMatcher();
+  private matcher = new MyErrorStateMatcher();
 
-  appointmentStatus: AppointmentStatus[] = [];
-  appointmentType: AppointmentType[] = [];
+  private appointmentStatus: AppointmentStatus[] = [];
+  private appointmentType: AppointmentType[] = [];
 
   constructor(
     private dialogRef: MatDialogRef<AddEditDialogComponent>,
