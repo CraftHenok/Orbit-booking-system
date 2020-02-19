@@ -7,8 +7,8 @@ export class LocalAppointmentsBuilder {
   constructor(PatientId: number, AppointmentType: string, AppointmentStatus: string, start: Date,
               end: Date, IsServed: boolean, ServedBy: number) {
     this.appointment.patientId = PatientId;
-    this.appointment.appointmentType = AppointmentType;
-    this.appointment.appointmentStatus = AppointmentStatus;
+    this.appointment.appointmentTypeId = AppointmentType;
+    this.appointment.appointmentStatusId = AppointmentStatus;
     this.appointment.start = start;
     this.appointment.end = end;
     this.appointment.isServed = IsServed;
@@ -17,6 +17,11 @@ export class LocalAppointmentsBuilder {
 
   setColor(color: string) {
     this.appointment.color = Color.getColorOf(color);
+    return this;
+  }
+
+  setRandomColor() {
+    this.appointment.color = Color.getRandomColor();
     return this;
   }
 

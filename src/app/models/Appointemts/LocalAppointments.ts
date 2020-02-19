@@ -7,8 +7,8 @@ export class LocalAppointments implements CalendarEvent {
   end: Date;
   title: string;
   patientId: number;
-  appointmentType: string;
-  appointmentStatus: string;
+  appointmentTypeId: string;
+  appointmentStatusId: string;
   isServed: boolean;
   servedBy: number;
 
