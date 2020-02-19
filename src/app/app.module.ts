@@ -26,6 +26,9 @@ import {ShowDoctorsComponent} from './components/appointments/show-doctors/show-
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSelectModule} from '@angular/material/select';
 import {OwlDateTimeModule, OwlNativeDateTimeModule} from 'ng-pick-datetime';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatRippleModule} from '@angular/material/core';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 // ng g module moduleName --flat --routing
 
@@ -58,7 +61,10 @@ import {OwlDateTimeModule, OwlNativeDateTimeModule} from 'ng-pick-datetime';
     MatCardModule,
     MatPaginatorModule,
     MatSelectModule,
-    MatListModule
+    MatListModule,
+    MatCheckboxModule,
+    MatRippleModule,
+    MatTooltipModule
   ],
   entryComponents: [AddEditDialogComponent],
   providers: [],
