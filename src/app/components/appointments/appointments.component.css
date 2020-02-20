@@ -64,7 +64,7 @@
   position: relative;
   height: 150px;
   background-size: contain;
-  background: url('/assets/orginal winter.jpg') no-repeat;
+  background: url('/assets/orginal winter.jpg') fixed no-repeat;
   filter: brightness(0.7);
   margin-bottom: 10px;
   transition: all .6s ease-in-out;
