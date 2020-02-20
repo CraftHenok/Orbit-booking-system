@@ -25,7 +25,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 export class AddEditDialogComponent implements OnInit {
 
-  private addForm = this.formBuilder.group({
+  public addForm = this.formBuilder.group({
     PatientId: [this.data.patientId, Validators.required],
     AppointmentType: [this.data.appointmentTypeId, Validators.required],
     AppointmentStatus: [this.data.appointmentStatusId, Validators.required],
@@ -35,10 +35,10 @@ export class AddEditDialogComponent implements OnInit {
     ServedBy: [this.data.servedBy, Validators.required],
   });
 
-  private matcher = new MyErrorStateMatcher();
+  public matcher = new MyErrorStateMatcher();
 
-  private appointmentStatus: AppointmentStatus[] = [];
-  private appointmentType: AppointmentType[] = [];
+  public appointmentStatus: AppointmentStatus[] = [];
+  public appointmentType: AppointmentType[] = [];
 
   constructor(
     private dialogRef: MatDialogRef<AddEditDialogComponent>,
