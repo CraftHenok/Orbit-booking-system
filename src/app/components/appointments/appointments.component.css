@@ -64,14 +64,15 @@
   position: relative;
   height: 150px;
   background-size: contain;
-  background: url('/assets/orginal winter.jpg') no-repeat fixed;
+  background: url('/assets/orginal winter.jpg') no-repeat;
   filter: brightness(0.7);
   margin-bottom: 10px;
-  transition: all .4s ease-in-out;
+  transition: all .6s ease-in-out;
 }
 
 .showDate:hover {
   filter: brightness(0.83);
+  background-size: cover;
 }
 
 .showDateDate {
