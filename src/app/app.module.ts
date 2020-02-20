@@ -38,7 +38,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     AppComponent,
     AppointmentsComponent,
     AddEditDialogComponent,
-    ShowDoctorsComponent
+    ShowDoctorsComponent,
   ],
   imports: [
     BrowserModule,
@@ -64,7 +64,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     MatListModule,
     MatCheckboxModule,
     MatRippleModule,
-    MatTooltipModule
+    MatTooltipModule,
   ],
   entryComponents: [AddEditDialogComponent],
   providers: [],

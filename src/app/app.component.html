@@ -1,27 +1,21 @@
-<mat-toolbar color="accent">
+<mat-toolbar class="mat-elevation-z1">
   <mat-toolbar-row>
-    <button mat-icon-button>
-      <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
-    </button>
-    <h1 routerLink="/">Orbit booking system</h1>
+    <h1 routerLink="/" matTooltip="Home" style="outline: none">{{ 'Orbit booking system' | uppercase }}</h1>
   </mat-toolbar-row>
 </mat-toolbar>
 
-<mat-sidenav-container>
-  <mat-sidenav #sidenav>
-    <mat-nav-list>
-      <a routerLink="doctors" (click)="sidenav.toggle()" mat-list-item routerLinkActive="active">Doctors list</a>
-      <a routerLink="patients" (click)="sidenav.toggle()" mat-list-item routerLinkActive="active">Patient list</a>
-      <a routerLink="setting" (click)="sidenav.toggle()" mat-list-item routerLinkActive="active">Setting</a>
-      <a routerLink="addPatient" (click)="sidenav.toggle()" mat-list-item routerLinkActive="active">New Patient</a>
-      <a routerLink="addDoctor" (click)="sidenav.toggle()" mat-list-item routerLinkActive="active">New Doctor</a>
-    </mat-nav-list>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <div style="height: 100vh;">
-      <router-outlet></router-outlet>
-    </div>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+<div class="iconNavigation">
+  <mat-icon matRipple matRippleUnbounded="true" matTooltip="Doctors" routerLink="doctors" routerLinkActive="active">
+    local_hospital
+  </mat-icon>
+  <mat-icon matRipple matRippleUnbounded="true" matTooltip="Patients" routerLink="patients" routerLinkActive="active">
+    hotel
+  </mat-icon>
+  <mat-icon matRipple matRippleUnbounded="true" matTooltip="Settings" routerLink="setting" routerLinkActive="active">
+    settings
+  </mat-icon>
+</div>
 
-
+<div class="routerOutLetContainer">
+  <router-outlet></router-outlet>
+</div>
