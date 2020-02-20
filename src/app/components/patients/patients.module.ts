@@ -14,6 +14,7 @@ import {PatientsdetaildialogComponent} from '../dialogs/patientsdetaildialog/pat
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatIconModule} from '@angular/material/icon';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import {MatIconModule} from '@angular/material/icon';
     MatDialogModule,
     MatMenuModule,
     MatIconModule,
+    MatTooltipModule,
   ]
 })
 export class PatientsModule {
