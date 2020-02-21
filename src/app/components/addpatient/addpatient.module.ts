@@ -11,6 +11,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatSelectModule} from '@angular/material/select';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {OwlDateTimeModule} from 'ng-pick-datetime';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 @NgModule({
@@ -27,7 +28,9 @@ import {OwlDateTimeModule} from 'ng-pick-datetime';
     MatButtonModule,
     MatSelectModule,
     MatAutocompleteModule,
-    OwlDateTimeModule
+    OwlDateTimeModule,
+    MatSnackBarModule
   ]
 })
-export class AddpatientModule { }
+export class AddpatientModule {
+}
