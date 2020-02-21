@@ -1,15 +1,16 @@
 <div class="showDate">
-
-  <h2 class="showDateDate">{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h2>
-
+  <h2 class="showDateContent">{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h2>
+  <mat-form-field appearance="outline">
+    <mat-label>Filter</mat-label>
+    <input matInput placeholder="Ex. doctor name" [(ngModel)]="doctorName">
+  </mat-form-field>
 </div>
 
-
-<div class="leftSide">
-  <app-show-doctors></app-show-doctors>
+<div class="doctorsList">
+  <app-show-doctors [doctorName]="doctorName"></app-show-doctors>
 </div>
 
-<div class="rightSide">
+<div class="calenderArea">
   <div class="topSide">
     <div>
       <mat-button-toggle-group name="fontStyle" aria-label="Font Style">

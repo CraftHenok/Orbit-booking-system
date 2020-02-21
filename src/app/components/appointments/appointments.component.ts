@@ -32,6 +32,7 @@ export class AppointmentsComponent implements OnInit {
   events: CalendarEvent[] = [];
 
   activeDayIsOpen = true;
+  doctorName: string;
 
   constructor(private dialog: MatDialog,
               private calenderEventService: AppointmentsServices) {
