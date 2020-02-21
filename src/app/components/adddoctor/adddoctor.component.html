@@ -1,1 +1,63 @@
-<p>adddoctor works!</p>
+<mat-vertical-stepper [linear]="true" #stepper>
+  <mat-step [stepControl]="primaryInfo">
+    <form [formGroup]="primaryInfo">
+      <ng-template matStepLabel>Primary info</ng-template>
+
+      <div>
+        <mat-form-field appearance="outline">
+          <mat-label>Name</mat-label>
+          <input matInput placeholder="first name" formControlName="name" required>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field appearance="outline">
+          <mat-label>Username</mat-label>
+          <input matInput placeholder="lastName" formControlName="username" required>
+        </mat-form-field>
+      </div>
+
+
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" required>
+        <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hidePassword">
+          <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="appointmentRelatedInfo">
+    <form [formGroup]="appointmentRelatedInfo">
+      <ng-template matStepLabel>Contact info</ng-template>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Display Order</mat-label>
+        <input matInput formControlName="displayOrder" type="number" placeholder="display order"
+               required>
+      </mat-form-field>
+
+      <div>
+        <mat-checkbox formControlName="manageBlock">Manage blocks</mat-checkbox>
+        <mat-checkbox formControlName="manageBooking">Manage booking</mat-checkbox>
+      </div>
+      <mat-checkbox formControlName="isDoctor">Is doctor</mat-checkbox>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    <p>You are now done.</p>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="stepper.reset()">Reset</button>
+    </div>
+  </mat-step>
+</mat-vertical-stepper>
