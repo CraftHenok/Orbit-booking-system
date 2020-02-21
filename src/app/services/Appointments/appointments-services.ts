@@ -7,8 +7,8 @@ import {LocalAppointmentsBuilder} from '../../models/Appointemts/LocalAppointmen
 import {AppointmentWrapper} from '../../models/Appointemts/AppointmentWrapper';
 import {HttpClient} from '@angular/common/http';
 import {RemoteAppointment} from '../../models/Appointemts/RemoteAppointment';
-import {AppointmentType} from '../../models/Appointemts/AppointmentType';
-import {AppointmentStatus} from '../../models/Appointemts/AppointmentStatus';
+import {GeneralType} from '../../models/GeneralType';
+import {GeneralStatus} from '../../models/GeneralStatus';
 import {shareReplay} from 'rxjs/operators';
 
 @Injectable({
@@ -16,27 +16,8 @@ import {shareReplay} from 'rxjs/operators';
 })
 export class AppointmentsServices {
 
-  // appointment1: LocalAppointments = new LocalAppointmentsBuilder(1, 'Type 1', 'Pending',
-  //   subDays(startOfDay(new Date()), 1),
-  //   addDays(new Date(), 1), false, 1).setColor('red').makeAllDay().build();
-  //
-  // appointment2: LocalAppointments = new LocalAppointmentsBuilder(2, 'A long event that spans 2 months', 'Pending',
-  //   subDays(endOfMonth(new Date()), 3),
-  //   addDays(endOfMonth(new Date()), 3), false, 2).setColor('blue').build();
-  //
-  // appointment3: LocalAppointments = new LocalAppointmentsBuilder(3, 'A draggable and resizable event', 'Pending',
-  //   addHours(startOfDay(new Date()), 2),
-  //   addHours(new Date(), 2), false, 3).setColor('yellow').build();
-  //
-  //
-  // private appointmentsEvents: LocalAppointments[] = [
-  //   this.appointment1,
-  //   this.appointment2,
-  //   this.appointment3
-  // ];
-
-  private appointmentTypes$: Observable<AppointmentType[]>;
-  private appointmentStatus$: Observable<AppointmentStatus[]>;
+  private appointmentTypes$: Observable<GeneralType[]>;
+  private appointmentStatus$: Observable<GeneralStatus[]>;
 
   constructor(private http: HttpClient) {
   }
@@ -64,7 +45,7 @@ export class AppointmentsServices {
   getAppointmentTypes() {
     const url = 'http://localhost:5000/appointment/appointmentType';
     if (!this.appointmentTypes$) {
-      this.appointmentTypes$ = this.http.get<AppointmentType[]>(url).pipe(
+      this.appointmentTypes$ = this.http.get<GeneralType[]>(url).pipe(
         shareReplay(1)
       );
     }
@@ -74,7 +55,7 @@ export class AppointmentsServices {
   getAppointmentStatus() {
     const url = 'http://localhost:5000/appointment/appointmentStatus';
     if (!this.appointmentStatus$) {
-      this.appointmentStatus$ = this.http.get<AppointmentStatus[]>(url).pipe(
+      this.appointmentStatus$ = this.http.get<GeneralStatus[]>(url).pipe(
         shareReplay(1)
       );
     }
