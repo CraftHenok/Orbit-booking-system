@@ -1012,27 +1012,27 @@ export class AddpatientComponent implements OnInit {
     gender: ['', Validators.required],
     dateOfBirth: ['', Validators.required],
     age: ['', Validators.required],
-    nationality: ['', Validators.required],
+    nationality: [''],
   });
 
   contactInfoForm = this.formBuilder.group({
-    email: ['', Validators.required],
-    primaryPhoneNumber: ['', Validators.required],
-    alternatePhoneNumber: ['', Validators.required]
+    email: ['', Validators.email],
+    primaryPhoneNumber: [''],
+    alternatePhoneNumber: ['']
   });
 
   addressForm = this.formBuilder.group({
-    line1: ['', Validators.required],
-    line2: ['', Validators.required],
-    city: ['', Validators.required],
-    country: ['', Validators.required],
+    line1: [''],
+    line2: [''],
+    city: [''],
+    country: [''],
   });
 
   emergencyInfoForm = this.formBuilder.group({
-    title: ['', Validators.required],
-    name: ['', Validators.required],
-    primaryPhoneNumber: ['', Validators.required],
-    alternatePhoneNumber: ['', Validators.required],
+    title: [''],
+    name: [''],
+    primaryPhoneNumber: [''],
+    alternatePhoneNumber: [''],
   });
 
   ngOnInit(): void {

@@ -10,6 +10,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {MatSelectModule} from '@angular/material/select';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {OwlDateTimeModule} from 'ng-pick-datetime';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     MatInputModule,
     MatButtonModule,
     MatSelectModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    OwlDateTimeModule
   ]
 })
 export class AddpatientModule { }

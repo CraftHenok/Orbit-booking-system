@@ -6,3 +6,8 @@
   margin-top: 16px;
   margin-right: 10px;
 }
+
+mat-checkbox {
+  margin-right: 10px;
+  margin-bottom: 16px;
+}
