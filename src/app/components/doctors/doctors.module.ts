@@ -13,6 +13,7 @@ import {NumberToBoolean} from '../../customPipes/numberToBoolean/numberToBoolean
 import {NumberToBooleanModule} from '../../customPipes/numberToBoolean/number-to-boolean.module';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatIconModule} from '@angular/material/icon';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import {MatIconModule} from '@angular/material/icon';
     MatButtonModule,
     NumberToBooleanModule,
     MatMenuModule,
-    MatIconModule
+    MatIconModule,
+    MatTooltipModule
   ]
 })
 export class DoctorsModule {
