@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {DoctorsService} from '../../../services/Doctors/doctors.service';
 import {MatTableDataSource} from '@angular/material/table';
 import {Doctor} from '../../../models/Doctor';
@@ -10,6 +10,19 @@ import {MatPaginator} from '@angular/material/paginator';
   styleUrls: ['./show-doctors.component.css']
 })
 export class ShowDoctorsComponent implements OnInit {
+
+  private docName: string;
+
+  @Input()
+  set doctorName(name: string) {
+    this.docName = (name && name.trim()) || '';
+    this.applyFilter(name);
+  }
+
+  get name(): string {
+    return this.docName;
+  }
+
 
   displayedColumns: string[] = ['name'];
   dataSource;
@@ -27,9 +40,8 @@ export class ShowDoctorsComponent implements OnInit {
     );
   }
 
-  applyFilter($event: KeyboardEvent) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  applyFilter(name: string) {
+    this.dataSource.filter = name.trim().toLowerCase();
   }
 
 }
