@@ -18,5 +18,6 @@ router.get('/emergencyInfo/:emergencyInfoId', patientsController.getEmergencyInf
 
 
 router.get('/titles', patientsController.getPatientsTitle);
+router.get('/emergencyTitle', patientsController.getEmergencyTitle);
 
 module.exports = router;

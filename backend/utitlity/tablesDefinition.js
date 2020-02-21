@@ -9,12 +9,12 @@ const appointmentTable = "CREATE TABLE \"Appointment\" (\n" +
     "\t\"servedBy\"\tINTEGER\n" +
     ");";
 
-const appointmentType = "CREATE TABLE \"AppointmentType\" (\n" +
+const appointmentType = "CREATE TABLE \"GeneralType\" (\n" +
     "\t\"id\"\tINTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n" +
     "\t\"type\"\tTEXT NOT NULL\n" +
     ");";
 
-const appointmentStatus = "CREATE TABLE \"AppointmentStatus\" (\n" +
+const appointmentStatus = "CREATE TABLE \"GeneralStatus\" (\n" +
     "\t\"id\"\tINTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n" +
     "\t\"status\"\tTEXT NOT NULL\n" +
     ");";

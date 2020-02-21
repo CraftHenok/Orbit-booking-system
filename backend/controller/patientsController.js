@@ -87,7 +87,7 @@ exports.getPatientById = (req, res) => {
 };
 
 exports.getAllPatients = async (req, res) => {
-  await db.all("SELECT * FROM patient", function (err, rows) {
+  await db.all("SELECT * from Patient ORDER by regDate DESC", function (err, rows) {
     return res.json(rows);
   });
 };
@@ -196,6 +196,16 @@ exports.getEmergencyInfoById = async (req, res) => {
 
 exports.getPatientsTitle = async (req, res) => {
   await db.all("select * from PatientTitle", (err, row) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    return res.json(row);
+  })
+};
+
+exports.getEmergencyTitle = async (req, res) => {
+  await db.all("SELECT * from emergencyTitle", (err, row) => {
     if (err) {
       console.log(err);
       return;

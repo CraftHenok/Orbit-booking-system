@@ -56,7 +56,7 @@ const doSeeding = () => {
 
   db.serialize(function () {
     //Seed appointment type
-    db.run("INSERT into AppointmentType(type)\n" +
+    db.run("INSERT into GeneralType(type)\n" +
       "VALUES (?),(?),(?),(?),(?)", ["type 1", "type 2", "type 3", "type 4", "type 5"], (err) => {
       if (err) {
         console.log(err);
@@ -64,7 +64,7 @@ const doSeeding = () => {
     });
 
     //Seed appointment status
-    db.run("INSERT into AppointmentStatus(status)\n" +
+    db.run("INSERT into GeneralStatus(status)\n" +
       "VALUES (?),(?),(?),(?),(?)", ["status 1", "status 2", "status 3", "status 4", "status 5"], (err) => {
       if (err) {
         console.log(err);
