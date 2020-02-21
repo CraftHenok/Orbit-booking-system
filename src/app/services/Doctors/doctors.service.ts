@@ -25,4 +25,9 @@ export class DoctorsService {
     return this.doctors$;
 
   }
+
+  saveDoctor(doctor: Doctor) {
+    const url = 'http://localhost:5000/doctor/';
+    return this.http.post<Doctor>(url, doctor);
+  }
 }
