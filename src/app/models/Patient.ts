@@ -7,7 +7,7 @@ export class Patient {
   regDate: Date;
 
   // primary info
-  titleId: number;
+  patientTitleId: number;
   firstName: string;
   middleName: string;
   lastName: string;
@@ -17,7 +17,7 @@ export class Patient {
   nationality: string;
 
   // optional fields
-  contactInfo: Contact;
+  contact: Contact;
   address: Address;
   emergencyInfo: EmergencyInfo;
 
@@ -31,12 +31,12 @@ export class Patient {
   // used when we click view on the patient table
   code: string;
 
-  constructor(seqNumber: number, regDate: Date, titleId: number, firstName: string, middleName: string,
+  constructor(seqNumber: number, regDate: Date, patientTitleId: number, firstName: string, middleName: string,
               lastName: string, gender: string, dateOfBirth: Date, age: number,
               contactInfo: Contact, address: Address, emergencyInfo: EmergencyInfo, nationality?: string) {
     this.seq = seqNumber;
     this.regDate = regDate;
-    this.titleId = titleId;
+    this.patientTitleId = patientTitleId;
     this.firstName = firstName;
     this.middleName = middleName;
     this.lastName = lastName;
@@ -44,7 +44,7 @@ export class Patient {
     this.dateOfBirth = dateOfBirth;
     this.age = age;
     this.nationality = nationality;
-    this.contactInfo = contactInfo;
+    this.contact = contactInfo;
     this.address = address;
     this.emergencyInfo = emergencyInfo;
   }
