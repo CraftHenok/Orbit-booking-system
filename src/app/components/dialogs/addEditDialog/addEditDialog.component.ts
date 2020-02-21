@@ -4,8 +4,8 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {FormBuilder, FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
 import {addMinutes} from 'date-fns';
-import {AppointmentStatus} from '../../../models/Appointemts/AppointmentStatus';
-import {AppointmentType} from '../../../models/Appointemts/AppointmentType';
+import {GeneralStatus} from '../../../models/GeneralStatus';
+import {GeneralType} from '../../../models/GeneralType';
 import {AppointmentsServices} from '../../../services/Appointments/appointments-services';
 
 
@@ -37,8 +37,8 @@ export class AddEditDialogComponent implements OnInit {
 
   public matcher = new MyErrorStateMatcher();
 
-  public appointmentStatus: AppointmentStatus[] = [];
-  public appointmentType: AppointmentType[] = [];
+  public appointmentStatus: GeneralStatus[] = [];
+  public appointmentType: GeneralType[] = [];
 
   constructor(
     private dialogRef: MatDialogRef<AddEditDialogComponent>,
