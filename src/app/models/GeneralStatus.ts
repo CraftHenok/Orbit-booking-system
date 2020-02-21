@@ -1,4 +1,4 @@
-export class AppointmentStatus {
+export class GeneralStatus {
   id: number;
   status: string;
 }
