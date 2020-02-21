@@ -8,8 +8,8 @@ import {MatDialog} from '@angular/material/dialog';
 import {AppointmentsServices} from '../../services/Appointments/appointments-services';
 import {LocalAppointmentsBuilder} from '../../models/Appointemts/LocalAppointmentsBuilder';
 import {AppointmentWrapper} from '../../models/Appointemts/AppointmentWrapper';
-import {AppointmentStatus} from '../../models/Appointemts/AppointmentStatus';
-import {AppointmentType} from '../../models/Appointemts/AppointmentType';
+import {GeneralStatus} from '../../models/GeneralStatus';
+import {GeneralType} from '../../models/GeneralType';
 
 
 @Component({
