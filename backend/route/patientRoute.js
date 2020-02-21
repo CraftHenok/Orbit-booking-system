@@ -16,4 +16,7 @@ router.get('/contactInfo/:contactId', patientsController.getContactById);
 router.get('/address/:addressId', patientsController.getAddressById);
 router.get('/emergencyInfo/:emergencyInfoId', patientsController.getEmergencyInfoById);
 
+
+router.get('/titles', patientsController.getPatientsTitle);
+
 module.exports = router;

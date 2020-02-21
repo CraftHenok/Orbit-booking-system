@@ -193,3 +193,13 @@ exports.getEmergencyInfoById = async (req, res) => {
     }
   })
 };
+
+exports.getPatientsTitle = async (req, res) => {
+  await db.all("select * from PatientTitle", (err, row) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    return res.json(row);
+  })
+};
