@@ -8,7 +8,7 @@ import {AppointmentsComponent} from './components/appointments/appointments.comp
 import {CalendarModule, DateAdapter} from 'angular-calendar';
 import {adapterFactory} from 'angular-calendar/date-adapters/date-fns';
 import {AddEditDialogComponent} from './components/dialogs/addEditDialog/addEditDialog.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ServiceWorkerModule} from '@angular/service-worker';
 import {environment} from '../environments/environment';
 import {MatToolbarModule} from '@angular/material/toolbar';
@@ -38,7 +38,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     AppComponent,
     AppointmentsComponent,
     AddEditDialogComponent,
-    ShowDoctorsComponent,
+    ShowDoctorsComponent
   ],
   imports: [
     BrowserModule,
@@ -65,6 +65,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     MatCheckboxModule,
     MatRippleModule,
     MatTooltipModule,
+    FormsModule,
   ],
   entryComponents: [AddEditDialogComponent],
   providers: [],
