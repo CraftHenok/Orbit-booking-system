@@ -54,7 +54,7 @@ export class AdddoctorComponent implements OnInit {
       result => {
         this.openSnackBar('😊 New Doctor added', 'Ok');
         console.log(result);
-        this.stepper.reset();
+        // this.stepper.reset();
       },
       error => {
         console.error(error);
