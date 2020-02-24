@@ -23,6 +23,7 @@ table td {
 table td:hover {
   background: #e8f0fe;
   cursor: pointer;
+  box-shadow: none;
 }
 
 mat-paginator {
