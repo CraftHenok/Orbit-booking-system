@@ -4,7 +4,9 @@ const router = express.Router();
 
 
 router.get('/', patientsController.getAllPatients);
-router.get('/byId/:patientId', patientsController.getPatientById);
+router.get('/byIdPartial/:patientId', patientsController.getPatientByIdPartial);
+router.get('/byIdFull/:patientId', patientsController.getPatientByIdFull);
+
 router.get('/byName/:name', patientsController.getPatientByName);
 router.post('/', patientsController.saveNewPatient);
 router.delete('/:patientId', patientsController.deleteByPatientId);

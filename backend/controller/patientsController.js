@@ -76,7 +76,7 @@ exports.getPatientByName = (req, res) => {
   })
 };
 
-exports.getPatientById = (req, res) => {
+exports.getPatientByIdPartial = (req, res) => {
   db.get("Select * from patient where seq = ?", req.params["patientId"], (err, row) => {
     if (err) {
       res.json(err).status(400);
@@ -84,6 +84,56 @@ exports.getPatientById = (req, res) => {
       res.json(row);
     }
   })
+};
+
+// here
+exports.getPatientByIdFull = async (req, res) => {
+  // get patient
+  db.get("SELECT p.*,c.email as ce,c.phoneNumber as cp,c.alternatePhoneNumber as cap,e.*,a.* from Patient p\n" +
+    "INNER JOIN Address a on p.addressId = a.id\n" +
+    "INNER join Contact c  on p.contactId = c.id \n" +
+    "INNER join EmergencyContact e on p.emergencyInfoId = e.id where p.seq = ?;",
+    [req.params["patientId"]], (err, row) => {
+      if (err) {
+        console.log(err)
+      } else {
+        const result = {
+          "seq": row.seq,
+          "patientTitleId": row.patientTitleId,
+          "firstName": row.firstName,
+          "middleName": row.middleName,
+          "lastName": row.lastName,
+          "gender": row.gender,
+          "dateOfBirth": row.dateOfBirth,
+          "age": row.age,
+          "nationality": row.nationality,
+          "active": row.active,
+          "regDate": row.regDate,
+          "contact": {
+            "id": row.contactId,
+            "email": row.ce,
+            "phoneNumber": row.cp,
+            "alternatePhoneNumber": row.cap,
+          },
+          "address": {
+            "id": row.addressId,
+            "line1": row.line1,
+            "line2": row.line2,
+            "city": row.city,
+            "country": row.country
+          },
+          "emergencyInfo": {
+            "id": row.emergencyInfoId,
+            "emergencyTitleId": row.emergencyTitleId,
+            "name": row.name,
+            "phoneNumber": row.phoneNumber,
+            "alternatePhoneNumber": row.alternatePhoneNumber,
+          },
+        };
+
+        return res.json(result);
+      }
+    })
 };
 
 exports.getAllPatients = async (req, res) => {
@@ -110,7 +160,7 @@ exports.updatePatientById = (req, res) => {
   };
 
   db.serialize(function () {
-    //save to contact
+    //update contact
     db.run("update contact set email=?,phoneNumber=?,alternatePhoneNumber=? where id=?", [updatePatientData.contact.email, updatePatientData.contact.phoneNumber,
       updatePatientData.contact.alternatePhoneNumber, updatePatientData.contact.id], (err) => {
       if (err) {
@@ -118,7 +168,7 @@ exports.updatePatientById = (req, res) => {
       }
     });
 
-    //save to address
+    //update address
     db.run("update address set line1=?,line2=?,city=?,country=? where id=?", [updatePatientData.address.line1, updatePatientData.address.line2,
       updatePatientData.address.city, updatePatientData.address.country, updatePatientData.address.id], function (err) {
       if (err) {
@@ -126,7 +176,7 @@ exports.updatePatientById = (req, res) => {
       }
     });
 
-    // save to contact info
+    // update contact info
     db.run("update EmergencyContact set emergencyTitleId=?,name=?,phoneNumber=?,alternatePhoneNumber=? where id=?", [updatePatientData.emergencyInfo.emergencyTitleId, updatePatientData.emergencyInfo.name,
       updatePatientData.emergencyInfo.phoneNumber, updatePatientData.emergencyInfo.alternatePhoneNumber, updatePatientData.emergencyInfo.id], function (err) {
       if (err) {
@@ -134,6 +184,8 @@ exports.updatePatientById = (req, res) => {
       }
     });
 
+
+    //update patient
     db.run("update Patient set patientTitleId=?,firstName=?,middleName=?,lastName=?," +
       "gender=?,dateOfBirth=?,nationality=?,age=?,active=? where seq = ?",
       [updatePatientData.patientTitleId, updatePatientData.firstName, updatePatientData.middleName,
