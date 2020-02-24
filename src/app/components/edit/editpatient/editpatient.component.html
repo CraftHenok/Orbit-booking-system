@@ -159,9 +159,14 @@
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>Done</ng-template>
+
     <p>You are now done.</p>
+
+
     <div>
-      <button mat-flat-button color="primary" (click)="submit()">Update</button>
+      <button mat-flat-button color="primary" (click)="submit()" [disabled]="primaryInfoForm.invalid
+      || contactInfoForm.invalid || addressForm.invalid || emergencyInfoForm.invalid">Update
+      </button>
       <button mat-button matStepperPrevious>Back</button>
       <button mat-button (click)="stepper.reset()">Reset</button>
     </div>

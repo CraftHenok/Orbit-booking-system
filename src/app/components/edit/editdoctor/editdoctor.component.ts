@@ -14,6 +14,7 @@ import {Doctor} from '../../../models/Doctor';
 export class EditdoctorComponent implements OnInit {
 
   hidePassword = true;
+  doctor: Doctor;
 
   primaryInfo = this.formBuilder.group({
     name: ['', Validators.required],
@@ -40,6 +41,7 @@ export class EditdoctorComponent implements OnInit {
     this.activatedRoute.paramMap.pipe(
       switchMap(params => this.doctorService.getDoctorById(Number(params.get('doctorId'))))
     ).subscribe(result => {
+      this.doctor = result;
       this.bindDate(result);
     }, error => {
       console.error(error);
@@ -60,6 +62,31 @@ export class EditdoctorComponent implements OnInit {
   }
 
   submit() {
+    const updatedDoctor = new Doctor(
+      this.doctor.seq,
+      this.primaryInfo.get('name').value,
+      this.primaryInfo.get('username').value,
+      this.primaryInfo.get('password').value,
+      this.appointmentRelatedInfo.get('displayOrder').value,
+      this.appointmentRelatedInfo.get('manageBlock').value,
+      this.appointmentRelatedInfo.get('manageBooking').value,
+      this.appointmentRelatedInfo.get('isDoctor').value,
+    );
 
+    this.doctorService.updateDoctor(updatedDoctor).subscribe(
+      result => {
+        if (result > 0) {
+          this.openSnackBar('Doctor updated successfully', 'Ok');
+        }
+      }, error => {
+        console.error(error);
+      }
+    );
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 4000,
+    });
   }
 }
