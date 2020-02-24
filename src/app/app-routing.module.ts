@@ -10,6 +10,14 @@ const routes: Routes = [
   {path: 'setting', loadChildren: () => import('./components/setting/setting.module').then(m => m.SettingModule)},
   {path: 'addDoctor', loadChildren: () => import('./components/adddoctor/adddoctor.module').then(m => m.AdddoctorModule)},
   {path: 'addPatient', loadChildren: () => import('./components/addpatient/addpatient.module').then(m => m.AddpatientModule)},
+  {
+    path: 'editPatient/:patientId',
+    loadChildren: () => import('./components/editpatient/editpatient.module').then(m => m.EditpatientModule)
+  },
+  {
+    path: 'editDoctor/:doctorId',
+    loadChildren: () => import('./components/editdoctor/edit-doctor.module').then(m => m.EditDoctorModule)
+  },
   {path: '**', redirectTo: '/', pathMatch: 'full'},
 ];
 
