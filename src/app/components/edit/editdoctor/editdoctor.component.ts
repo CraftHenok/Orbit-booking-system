@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {DoctorsService} from '../../services/Doctors/doctors.service';
+import {DoctorsService} from '../../../services/Doctors/doctors.service';
 import {switchMap} from 'rxjs/operators';
 import {ActivatedRoute} from '@angular/router';
-import {Doctor} from '../../models/Doctor';
+import {Doctor} from '../../../models/Doctor';
 
 @Component({
   selector: 'app-editdoctor',

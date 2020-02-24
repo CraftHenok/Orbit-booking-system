@@ -2,14 +2,14 @@ import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {CalendarEvent, CalendarEventTimesChangedEvent, CalendarView} from 'angular-calendar';
 import {Subject} from 'rxjs';
 import {addHours, addMinutes, isSameDay, isSameMonth} from 'date-fns';
-import {AddEditDialogComponent} from '../dialogs/addEditDialog/addEditDialog.component';
-import {LocalAppointments} from '../../models/Appointemts/LocalAppointments';
+import {AddEditDialogComponent} from '../../dialogs/addEditDialog/addEditDialog.component';
+import {LocalAppointments} from '../../../models/Appointemts/LocalAppointments';
 import {MatDialog} from '@angular/material/dialog';
-import {AppointmentsServices} from '../../services/Appointments/appointments-services';
-import {LocalAppointmentsBuilder} from '../../models/Appointemts/LocalAppointmentsBuilder';
-import {AppointmentWrapper} from '../../models/Appointemts/AppointmentWrapper';
-import {GeneralStatus} from '../../models/GeneralStatus';
-import {GeneralType} from '../../models/GeneralType';
+import {AppointmentsServices} from '../../../services/Appointments/appointments-services';
+import {LocalAppointmentsBuilder} from '../../../models/Appointemts/LocalAppointmentsBuilder';
+import {AppointmentWrapper} from '../../../models/Appointemts/AppointmentWrapper';
+import {GeneralStatus} from '../../../models/GeneralStatus';
+import {GeneralType} from '../../../models/GeneralType';
 
 
 @Component({

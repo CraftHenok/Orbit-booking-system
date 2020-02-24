@@ -2,14 +2,14 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
-import {PatientsService} from '../../services/Patients/patients.service';
-import {GeneralTitle} from '../../models/GeneralTitle';
-import {Patient} from '../../models/Patient';
-import {Contact} from '../../models/Contact';
-import {Address} from '../../models/Address';
-import {EmergencyInfo} from '../../models/EmergencyInfo';
+import {PatientsService} from '../../../services/Patients/patients.service';
+import {GeneralTitle} from '../../../models/GeneralTitle';
+import {Patient} from '../../../models/Patient';
+import {Contact} from '../../../models/Contact';
+import {Address} from '../../../models/Address';
+import {EmergencyInfo} from '../../../models/EmergencyInfo';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {Country} from '../../models/Country';
+import {Country} from '../../../models/Country';
 
 export const filter = (opt: string[], value: string): string[] => {
   const filterValue = value.toLowerCase();

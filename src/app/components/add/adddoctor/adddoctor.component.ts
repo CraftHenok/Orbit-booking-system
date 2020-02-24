@@ -1,7 +1,7 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
-import {Doctor} from '../../models/Doctor';
-import {DoctorsService} from '../../services/Doctors/doctors.service';
+import {Doctor} from '../../../models/Doctor';
+import {DoctorsService} from '../../../services/Doctors/doctors.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {Observable} from 'rxjs';
 

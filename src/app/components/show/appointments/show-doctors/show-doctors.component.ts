@@ -1,7 +1,7 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {DoctorsService} from '../../../services/Doctors/doctors.service';
+import {DoctorsService} from '../../../../services/Doctors/doctors.service';
 import {MatTableDataSource} from '@angular/material/table';
-import {Doctor} from '../../../models/Doctor';
+import {Doctor} from '../../../../models/Doctor';
 import {MatPaginator} from '@angular/material/paginator';
 
 @Component({
