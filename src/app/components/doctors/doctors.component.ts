@@ -5,6 +5,7 @@ import {Subscription} from 'rxjs';
 import {MatTableDataSource} from '@angular/material/table';
 import {DoctorsService} from '../../services/Doctors/doctors.service';
 import {Doctor} from '../../models/Doctor';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-doctors',
@@ -21,7 +22,8 @@ export class DoctorsComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
 
 
-  constructor(private patientService: DoctorsService) {
+  constructor(private patientService: DoctorsService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -48,4 +50,7 @@ export class DoctorsComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
+  navigateToEditDoctor(seq: number) {
+    this.router.navigate(['/editDoctor', seq]);
+  }
 }
