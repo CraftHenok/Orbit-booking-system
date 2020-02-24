@@ -1,0 +1,89 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.showDate {
+  position: relative;
+  height: 150px;
+  background-size: contain;
+  background: url('/assets/orginal winter.jpg') fixed no-repeat;
+  /*filter: brightness(0.7);*/
+  transition: all .6s ease-in-out;
+}
+
+.showDateContent {
+  font-weight: lighter;
+  font-size: 2em;
+  position: absolute;
+  color: #000;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.showDate mat-form-field {
+  position: absolute;
+  left: 50%;
+  width: 30%;
+  bottom: 15px;
+  border-color: tomato;
+  transform: translateX(-50%);
+}
+
+.showDate:hover {
+  filter: brightness(0.83);
+  background-size: cover;
+}
+
+
+.calenderArea {
+  position: relative;
+  width: 99%;
+  padding-left: 0.5%;
+  padding-right: 0.5%;
+}
+
+.calenderArea .topSide {
+  width: 100%;
+  position: relative;
+}
+
+.calenderArea .topSide div {
+  position: relative;
+  display: inline-block;
+  width: 33.3%;
+  margin-bottom: 15px;
+}
+
+.calenderFormat {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.addNew {
+  position: relative;
+  left: 100%;
+  bottom: 0;
+  transform: translateX(-100%);
+}
+
+.showDate::ng-deep .mat-form-field-flex > .mat-form-field-infix {
+  padding: 0.4em 0px !important;
+}
+
+.showDate::ng-deep .mat-form-field-label-wrapper {
+  top: -1.5em;
+}
+
+.showDate::ng-deep .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+  transform: translateY(-1.1em) scale(.75);
+  width: 133.33333%;
+}
+
+.showDate::ng-deep .mat-form-field-wrapper {
+  margin-bottom: -1.25em;
+}
+
+

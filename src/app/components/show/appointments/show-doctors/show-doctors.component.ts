@@ -41,7 +41,9 @@ export class ShowDoctorsComponent implements OnInit {
   }
 
   applyFilter(name: string) {
-    this.dataSource.filter = name.trim().toLowerCase();
+    if (name !== undefined) {
+      this.dataSource.filter = name.trim().toLowerCase();
+    }
   }
 
 }
