@@ -9,6 +9,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 import {MatDialog} from '@angular/material/dialog';
 import {AddEditDialogComponent} from '../dialogs/addEditDialog/addEditDialog.component';
 import {PatientsdetaildialogComponent} from '../dialogs/patientsdetaildialog/patientsdetaildialog.component';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-patients',
@@ -34,6 +35,7 @@ export class PatientsComponent implements OnInit, OnDestroy {
 
 
   constructor(private patientService: PatientsService,
+              private router: Router,
               private dialog: MatDialog) {
   }
 
@@ -68,5 +70,9 @@ export class PatientsComponent implements OnInit, OnDestroy {
       width: '400px',
       data: element
     });
+  }
+
+  navigateToEditPatient(seq: number) {
+    this.router.navigate(['/editPatient', seq]);
   }
 }
