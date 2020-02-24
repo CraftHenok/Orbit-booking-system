@@ -73,4 +73,9 @@ export class PatientsService {
     const url = 'http://localhost:5000/patient/';
     return this.http.post<Patient>(url, patient);
   }
+
+  getPatientByIdFull(id: number) {
+    const url = 'http://localhost:5000/patient/byIdFull/' + id;
+    return this.http.get<Patient>(url);
+  }
 }
