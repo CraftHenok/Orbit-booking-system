@@ -78,4 +78,14 @@ export class PatientsService {
     const url = 'http://localhost:5000/patient/byIdFull/' + id;
     return this.http.get<Patient>(url);
   }
+
+  deletePatientById(seq: number) {
+    const url = 'http://localhost:5000/patient/' + seq;
+    return this.http.delete<number>(url);
+  }
+
+  updatePatient(patient: Patient) {
+    const url = 'http://localhost:5000/patient/' + patient.seq;
+    return this.http.put<number>(url, patient);
+  }
 }
