@@ -1,0 +1,35 @@
+.patientsList {
+  width: 95%;
+  margin: auto;
+}
+
+.addNewArea {
+  position: relative;
+  width: 40%;
+  margin-left: 30%;
+  margin-right: 30%;
+}
+
+.addNewArea mat-form-field {
+  padding-top: 1.34375em;
+  position: relative;
+  width: 100%;
+}
+
+table {
+  width: 100%;
+}
+
+table tr:hover {
+  background: #eee;
+  cursor: pointer;
+}
+
+
+.addNewPatient {
+  position: fixed;
+  bottom: 50px;
+  right: 20px;
+  transform: translateX(-95%);
+}
+
