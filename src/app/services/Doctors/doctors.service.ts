@@ -30,4 +30,9 @@ export class DoctorsService {
     const url = 'http://localhost:5000/doctor/';
     return this.http.post<Doctor>(url, doctor);
   }
+
+  getDoctorById(doctorId: number) {
+    const url = 'http://localhost:5000/doctor/byId/1';
+    return this.http.get<Doctor>(url);
+  }
 }
