@@ -35,4 +35,14 @@ export class DoctorsService {
     const url = 'http://localhost:5000/doctor/byId/' + doctorId;
     return this.http.get<Doctor>(url);
   }
+
+  deleteDoctorById(doctorId: number) {
+    const url = 'http://localhost:5000/doctor/' + doctorId;
+    return this.http.delete<number>(url);
+  }
+
+  updateDoctor(doctor: Doctor) {
+    const url = 'http://localhost:5000/doctor/' + doctor.seq;
+    return this.http.put<number>(url, doctor);
+  }
 }
