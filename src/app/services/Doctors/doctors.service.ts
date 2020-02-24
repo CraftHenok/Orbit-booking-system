@@ -32,7 +32,7 @@ export class DoctorsService {
   }
 
   getDoctorById(doctorId: number) {
-    const url = 'http://localhost:5000/doctor/byId/1';
+    const url = 'http://localhost:5000/doctor/byId/' + doctorId;
     return this.http.get<Doctor>(url);
   }
 }
