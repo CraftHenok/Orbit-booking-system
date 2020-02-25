@@ -1,11 +1,10 @@
 import {Injectable} from '@angular/core';
 import {Patient} from '../../models/Patient';
-import {Observable, of} from 'rxjs';
+import {Observable} from 'rxjs';
 import {Contact} from '../../models/Contact';
 import {Address} from '../../models/Address';
 import {EmergencyInfo} from '../../models/EmergencyInfo';
 import {HttpClient} from '@angular/common/http';
-import {GeneralType} from '../../models/GeneralType';
 import {GeneralTitle} from '../../models/GeneralTitle';
 import {shareReplay} from 'rxjs/operators';
 
@@ -79,8 +78,8 @@ export class PatientsService {
     return this.http.get<Patient>(url);
   }
 
-  deletePatientById(seq: number) {
-    const url = 'http://localhost:5000/patient/' + seq;
+  deletePatientById(patient: Patient) {
+    const url = `http://localhost:5000/patient/${patient.seq}/${patient.addressId}/${patient.contactId}/${patient.emergencyInfoId}`;
     return this.http.delete<number>(url);
   }
 

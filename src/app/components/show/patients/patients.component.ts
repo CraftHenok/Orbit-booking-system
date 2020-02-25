@@ -97,7 +97,8 @@ export class PatientsComponent implements OnInit, OnDestroy {
   }
 
   private deletePatient(seq: number) {
-    this.patientService.deletePatientById(seq).subscribe(
+    const patientToDelete = this.patients.filter(it => it.seq === seq);
+    this.patientService.deletePatientById(patientToDelete[0]).subscribe(
       result => {
         if (result > 0) {
           const filteredPatients = this.patients.filter(it => it.seq !== seq);
