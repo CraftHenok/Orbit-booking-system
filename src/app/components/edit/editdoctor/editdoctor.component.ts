@@ -1,10 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {DoctorsService} from '../../../services/Doctors/doctors.service';
 import {switchMap} from 'rxjs/operators';
 import {ActivatedRoute} from '@angular/router';
 import {Doctor} from '../../../models/Doctor';
+import {DoctorsFormManager} from '../../../utility/doctorsFormManager';
+import {SnackBarManager} from '../../../utility/snackBarManager';
 
 @Component({
   selector: 'app-editdoctor',
@@ -16,24 +18,20 @@ export class EditdoctorComponent implements OnInit {
   hidePassword = true;
   doctor: Doctor;
 
-  primaryInfo = this.formBuilder.group({
-    name: ['', Validators.required],
-    username: ['', Validators.required],
-    password: ['', [Validators.required, Validators.min(6)]]
-  });
-
-  appointmentRelatedInfo = this.formBuilder.group({
-    displayOrder: ['', Validators.required],
-    manageBlock: ['', Validators.required],
-    manageBooking: ['', Validators.required],
-    isDoctor: ['', Validators.required]
-  });
+  private commonFormBuilder: DoctorsFormManager;
+  primaryInfo: FormGroup;
+  appointmentRelatedInfo: FormGroup;
+  private snackBarMan: SnackBarManager;
 
 
   constructor(private formBuilder: FormBuilder,
               private snackBar: MatSnackBar,
               private activatedRoute: ActivatedRoute,
               private doctorService: DoctorsService) {
+    this.commonFormBuilder = new DoctorsFormManager(this.formBuilder);
+    this.primaryInfo = this.commonFormBuilder.getFormBuilders().primaryInfo;
+    this.appointmentRelatedInfo = this.commonFormBuilder.getFormBuilders().appointmentRelatedInfo;
+    this.snackBarMan = new SnackBarManager(this.snackBar);
   }
 
   ngOnInit(): void {
@@ -42,14 +40,13 @@ export class EditdoctorComponent implements OnInit {
       switchMap(params => this.doctorService.getDoctorById(Number(params.get('doctorId'))))
     ).subscribe(result => {
       this.doctor = result;
-      this.bindDate(result);
+      this.updateForm(result);
     }, error => {
       console.error(error);
     });
   }
 
-  private bindDate(doctor: Doctor) {
-    // primary info
+  private updateForm(doctor: Doctor) {
     this.primaryInfo.get('name').setValue(doctor.name);
     this.primaryInfo.get('username').setValue(doctor.username);
     this.primaryInfo.get('password').setValue(doctor.password);
@@ -62,21 +59,12 @@ export class EditdoctorComponent implements OnInit {
   }
 
   submit() {
-    const updatedDoctor = new Doctor(
-      this.doctor.seq,
-      this.primaryInfo.get('name').value,
-      this.primaryInfo.get('username').value,
-      this.primaryInfo.get('password').value,
-      this.appointmentRelatedInfo.get('displayOrder').value,
-      this.appointmentRelatedInfo.get('manageBlock').value,
-      this.appointmentRelatedInfo.get('manageBooking').value,
-      this.appointmentRelatedInfo.get('isDoctor').value,
-    );
+    const updatedDoctor = DoctorsFormManager.bindDataToNewDoctor(this.doctor.seq, this.primaryInfo, this.appointmentRelatedInfo);
 
     this.doctorService.updateDoctor(updatedDoctor).subscribe(
       result => {
         if (result > 0) {
-          this.openSnackBar('Doctor updated successfully', 'Ok');
+          this.snackBarMan.show('Doctor updated successfully', 'Ok');
         }
       }, error => {
         console.error(error);
@@ -84,9 +72,4 @@ export class EditdoctorComponent implements OnInit {
     );
   }
 
-  openSnackBar(message: string, action: string) {
-    this.snackBar.open(message, action, {
-      duration: 4000,
-    });
-  }
 }
