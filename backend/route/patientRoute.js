@@ -9,7 +9,7 @@ router.get('/byIdFull/:patientId', patientsController.getPatientByIdFull);
 
 router.get('/byName/:name', patientsController.getPatientByName);
 router.post('/', patientsController.saveNewPatient);
-router.delete('/:patientId', patientsController.deleteByPatientId);
+router.delete('/:patientId/:addressId/:contactId/:emergencyInfoId', patientsController.deleteByPatientId);
 router.patch('/:patientId', patientsController.updatePatientById);
 router.put('/:patientId', patientsController.updatePatientById);
 

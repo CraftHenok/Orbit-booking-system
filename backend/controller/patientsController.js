@@ -143,7 +143,7 @@ exports.getAllPatients = async (req, res) => {
 };
 
 
-exports.updatePatientById = (req, res) => {
+exports.updatePatientById = async (req, res) => {
   const updatePatientData = {
     patientTitleId: req.body.patientTitleId,
     firstName: req.body.firstName,
@@ -159,51 +159,59 @@ exports.updatePatientById = (req, res) => {
     active: 0
   };
 
-  db.serialize(function () {
-    //update contact
-    db.run("update contact set email=?,phoneNumber=?,alternatePhoneNumber=? where id=?", [updatePatientData.contact.email, updatePatientData.contact.phoneNumber,
-      updatePatientData.contact.alternatePhoneNumber, updatePatientData.contact.id], (err) => {
-      if (err) {
-        console.log(err);
-      }
-    });
-
-    //update address
-    db.run("update address set line1=?,line2=?,city=?,country=? where id=?", [updatePatientData.address.line1, updatePatientData.address.line2,
-      updatePatientData.address.city, updatePatientData.address.country, updatePatientData.address.id], function (err) {
-      if (err) {
-        console.log(err);
-      }
-    });
-
-    // update contact info
-    db.run("update EmergencyContact set emergencyTitleId=?,name=?,phoneNumber=?,alternatePhoneNumber=? where id=?", [updatePatientData.emergencyInfo.emergencyTitleId, updatePatientData.emergencyInfo.name,
-      updatePatientData.emergencyInfo.phoneNumber, updatePatientData.emergencyInfo.alternatePhoneNumber, updatePatientData.emergencyInfo.id], function (err) {
-      if (err) {
-        console.log(err);
-      }
-    });
-
-
-    //update patient
-    db.run("update Patient set patientTitleId=?,firstName=?,middleName=?,lastName=?," +
-      "gender=?,dateOfBirth=?,nationality=?,age=?,active=? where seq = ?",
-      [updatePatientData.patientTitleId, updatePatientData.firstName, updatePatientData.middleName,
-        updatePatientData.lastName, updatePatientData.gender, updatePatientData.dateOfBirth, updatePatientData.nationality,
-        updatePatientData.age, updatePatientData.active, req.params['patientId']], function (err) {
-        if (err) {
-          console.log(err);
-          return res.json(err).status(401);
-        } else {
-          return res.json(this.changes);
-        }
-      });
+  db.run("update contact set email=?,phoneNumber=?,alternatePhoneNumber=? where id=?", [updatePatientData.contact.email, updatePatientData.contact.phoneNumber,
+    updatePatientData.contact.alternatePhoneNumber, updatePatientData.contact.id], (err) => {
+    if (err) {
+      console.log(err);
+    }
   });
+
+  //update address
+  db.run("update address set line1=?,line2=?,city=?,country=? where id=?", [updatePatientData.address.line1, updatePatientData.address.line2,
+    updatePatientData.address.city, updatePatientData.address.country, updatePatientData.address.id], function (err) {
+    if (err) {
+      console.log(err);
+    }
+  });
+
+  // update contact info
+  db.run("update EmergencyContact set emergencyTitleId=?,name=?,phoneNumber=?,alternatePhoneNumber=? where id=?", [updatePatientData.emergencyInfo.emergencyTitleId, updatePatientData.emergencyInfo.name,
+    updatePatientData.emergencyInfo.phoneNumber, updatePatientData.emergencyInfo.alternatePhoneNumber, updatePatientData.emergencyInfo.id], function (err) {
+    if (err) {
+      console.log(err);
+    }
+  });
+
+
+  //update patient
+  await db.run("update Patient set patientTitleId=?,firstName=?,middleName=?,lastName=?," +
+    "gender=?,dateOfBirth=?,nationality=?,age=?,active=? where seq = ?",
+    [updatePatientData.patientTitleId, updatePatientData.firstName, updatePatientData.middleName,
+      updatePatientData.lastName, updatePatientData.gender, updatePatientData.dateOfBirth, updatePatientData.nationality,
+      updatePatientData.age, updatePatientData.active, req.params['patientId']], function (err) {
+      if (err) {
+        console.log(err);
+        return res.json(err).status(401);
+      } else {
+        return res.json(this.changes);
+      }
+    });
 
 
 };
 
 exports.deleteByPatientId = async (req, res) => {
+
+  db.run("DELETE from address WHERE id= ?", req.params['addressId'], (err) => {
+    if (err) console.log(err);
+  });
+  db.run("DELETE from contact WHERE id= ?", req.params['contactId'], (err) => {
+    if (err) console.log(err);
+  });
+  db.run("DELETE from EmergencyContact WHERE id= ?", req.params['emergencyInfoId'], (err) => {
+    if (err) console.log(err);
+  });
+
   await db.run("DELETE from patient WHERE seq= ?", req.params['patientId'], function (err) {
     if (err) {
       res.json(err.message).status(404);
@@ -211,11 +219,12 @@ exports.deleteByPatientId = async (req, res) => {
       res.json(this.changes);
     }
   });
+
 };
 
 
-exports.getContactById = (req, res) => {
-  db.get("Select * from Contact where id = ?", req.params["contactId"], (err, row) => {
+exports.getContactById = async (req, res) => {
+  await db.get("Select * from Contact where id = ?", req.params["contactId"], (err, row) => {
     if (err) {
       console.log(err);
     } else {
