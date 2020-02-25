@@ -1,17 +1,14 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {PatientsService} from '../../../services/Patients/patients.service';
 import {GeneralTitle} from '../../../models/GeneralTitle';
-import {Patient} from '../../../models/Patient';
-import {Contact} from '../../../models/Contact';
-import {Address} from '../../../models/Address';
-import {EmergencyInfo} from '../../../models/EmergencyInfo';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {Country} from '../../../models/Country';
 import {PatientsFormManager} from '../../../utility/patientsFormManager';
 import {SnackBarManager} from '../../../utility/snackBarManager';
+import {DateManager} from '../../../utility/dateManager';
 
 export const filter = (opt: string[], value: string): string[] => {
   const filterValue = value.toLowerCase();
@@ -110,4 +107,8 @@ export class AddpatientComponent implements OnInit {
 
   }
 
+  setBirthDate() {
+    const age = this.primaryInfoForm.get('age').value;
+    this.primaryInfoForm.get('dateOfBirth').setValue(DateManager.getDateFromAge(age));
+  }
 }

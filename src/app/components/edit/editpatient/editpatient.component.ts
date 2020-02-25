@@ -10,6 +10,7 @@ import {Patient} from '../../../models/Patient';
 import {ActivatedRoute} from '@angular/router';
 import {PatientsFormManager} from '../../../utility/patientsFormManager';
 import {SnackBarManager} from '../../../utility/snackBarManager';
+import {DateManager} from '../../../utility/dateManager';
 
 @Component({
   selector: 'app-editpatient',
@@ -142,5 +143,10 @@ export class EditpatientComponent implements OnInit {
         console.error(error);
       }
     );
+  }
+
+  setBirthDate() {
+    const age = this.primaryInfoForm.get('age').value;
+    this.primaryInfoForm.get('dateOfBirth').setValue(DateManager.getDateFromAge(age));
   }
 }

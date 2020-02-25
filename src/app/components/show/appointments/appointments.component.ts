@@ -144,7 +144,8 @@ export class AppointmentsComponent implements OnInit {
 
   openDialogWith(appointment: CalendarEvent) {
     return this.dialog.open(AddEditDialogComponent, {
-      width: '400px',
+      width: '700px',
+      height: 'auto',
       data: appointment
     });
   }
