@@ -30,7 +30,7 @@ export class AddEditDialogComponent implements OnInit {
     AppointmentType: [this.data.appointmentTypeId, Validators.required],
     AppointmentStatus: [this.data.appointmentStatusId, Validators.required],
     start: [this.data.start, Validators.required],
-    duration: [0, Validators.required],
+    duration: [this.getDuration(), Validators.required],
     IsServed: [this.data.isServed ? this.data.isServed : false],
     ServedBy: [this.data.servedBy, Validators.required],
   });
@@ -124,4 +124,14 @@ export class AddEditDialogComponent implements OnInit {
   }
 
 
+  private getDuration() {
+    let duration = 30;
+    try {
+      duration = (this.data.end.valueOf() - this.data.start.valueOf());
+      duration = Math.round((duration / 1000) / 60);
+    } catch (e) {
+      //
+    }
+    return duration;
+  }
 }
