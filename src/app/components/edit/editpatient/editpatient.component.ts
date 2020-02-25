@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {GeneralTitle} from '../../../models/GeneralTitle';
-import {FormBuilder, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {PatientsService} from '../../../services/Patients/patients.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {map, startWith, switchMap} from 'rxjs/operators';
@@ -8,9 +8,8 @@ import {Observable} from 'rxjs';
 import {Country} from '../../../models/Country';
 import {Patient} from '../../../models/Patient';
 import {ActivatedRoute} from '@angular/router';
-import {Contact} from '../../../models/Contact';
-import {Address} from '../../../models/Address';
-import {EmergencyInfo} from '../../../models/EmergencyInfo';
+import {PatientsFormManager} from '../../../utility/patientsFormManager';
+import {SnackBarManager} from '../../../utility/snackBarManager';
 
 @Component({
   selector: 'app-editpatient',
@@ -29,41 +28,28 @@ export class EditpatientComponent implements OnInit {
 
   patient: Patient;
 
-  public primaryInfoForm = this.formBuilder.group({
-    patientTitleId: ['', Validators.required],
-    firstName: ['', Validators.required],
-    middleName: ['', Validators.required],
-    lastName: ['', Validators.required],
-    gender: ['', Validators.required],
-    dateOfBirth: ['', Validators.required],
-    age: ['', Validators.required],
-    nationality: [''],
-  });
+  private patientsFormManager: PatientsFormManager;
 
-  contactInfoForm = this.formBuilder.group({
-    email: ['', Validators.email],
-    primaryPhoneNumber: ['', Validators.required],
-    alternatePhoneNumber: ['']
-  });
+  primaryInfoForm: FormGroup;
 
-  addressForm = this.formBuilder.group({
-    line1: [''],
-    line2: [''],
-    city: [''],
-    country: [''],
-  });
+  contactInfoForm: FormGroup;
 
-  emergencyInfoForm = this.formBuilder.group({
-    title: [''],
-    name: [''],
-    primaryPhoneNumber: [''],
-    alternatePhoneNumber: [''],
-  });
+  addressForm: FormGroup;
+
+  emergencyInfoForm: FormGroup;
+
+  private snackBarMan: SnackBarManager;
 
   constructor(private formBuilder: FormBuilder,
               private patientService: PatientsService,
               private activatedRoute: ActivatedRoute,
               private snackBar: MatSnackBar) {
+    this.patientsFormManager = new PatientsFormManager(formBuilder);
+    this.primaryInfoForm = this.patientsFormManager.getFormBuilder().primaryInfoForm;
+    this.contactInfoForm = this.patientsFormManager.getFormBuilder().contactInfoForm;
+    this.addressForm = this.patientsFormManager.getFormBuilder().addressForm;
+    this.emergencyInfoForm = this.patientsFormManager.getFormBuilder().emergencyInfoForm;
+    this.snackBarMan = new SnackBarManager(this.snackBar);
   }
 
   ngOnInit(): void {
@@ -71,13 +57,13 @@ export class EditpatientComponent implements OnInit {
     this.filteredCountry = this.primaryInfoForm.get('nationality')!.valueChanges
       .pipe(
         startWith(''),
-        map(country => country ? this.filterCountry(country) : this.countries.slice())
+        map(country => country ? Country.filter(country) : this.countries.slice())
       );
 
     this.filteredCountry2 = this.addressForm.get('country')!.valueChanges
       .pipe(
         startWith(''),
-        map(country => country ? this.filterCountry(country) : this.countries.slice())
+        map(country => country ? Country.filter(country) : this.countries.slice())
       );
 
     this.patientService.getPatientTitle().subscribe(
@@ -102,7 +88,7 @@ export class EditpatientComponent implements OnInit {
       switchMap(params => this.patientService.getPatientByIdFull(Number(params.get('patientId'))))
     ).subscribe(result => {
       this.patient = result;
-      this.bindDate(result);
+      this.updateData(result);
     }, error => {
       console.error(error);
     });
@@ -110,7 +96,7 @@ export class EditpatientComponent implements OnInit {
 
   }
 
-  private bindDate(patient: Patient) {
+  private updateData(patient: Patient) {
 
     // primary info
     this.primaryInfoForm.get('patientTitleId').setValue(patient.patientTitleId);
@@ -141,65 +127,20 @@ export class EditpatientComponent implements OnInit {
 
   }
 
-  private filterCountry(name: string): Country[] {
-    const filterValue = name.toLowerCase();
-    return this.countries.filter(state => state.name.toLowerCase().indexOf(filterValue) === 0);
-  }
-
   submit() {
-    const updateContactInfo = new Contact(
-      this.contactInfoForm.get('primaryPhoneNumber').value,
-      this.contactInfoForm.get('email').value,
-      this.contactInfoForm.get('alternatePhoneNumber').value,
-    );
 
-    const updateAddressInfo = new Address(
-      this.addressForm.get('line1').value,
-      this.addressForm.get('line2').value,
-      this.addressForm.get('city').value,
-      this.addressForm.get('country').value
-    );
+    this.patient = PatientsFormManager.bindDateToOldPatient(this.primaryInfoForm, this.contactInfoForm,
+      this.addressForm, this.emergencyInfoForm, this.patient);
 
-    const updateEmergencyInfo = new EmergencyInfo(
-      this.emergencyInfoForm.get('title').value,
-      this.emergencyInfoForm.get('name').value,
-      this.emergencyInfoForm.get('primaryPhoneNumber').value,
-      this.emergencyInfoForm.get('alternatePhoneNumber').value
-    );
-
-
-    const updateNewPatient = new Patient(
-      this.patient.seq,
-      new Date(),
-      this.primaryInfoForm.get('patientTitleId').value,
-      this.primaryInfoForm.get('firstName').value,
-      this.primaryInfoForm.get('middleName').value,
-      this.primaryInfoForm.get('lastName').value,
-      this.primaryInfoForm.get('gender').value,
-      this.primaryInfoForm.get('dateOfBirth').value,
-      this.primaryInfoForm.get('age').value,
-      updateContactInfo,
-      updateAddressInfo,
-      updateEmergencyInfo,
-      this.primaryInfoForm.get('nationality').value,
-    );
-
-
-    this.patientService.updatePatient(updateNewPatient).subscribe(
+    this.patientService.updatePatient(this.patient).subscribe(
       result => {
         if (result > 0) {
-          this.openSnackBar('Patient updated successfully', 'Ok');
+          this.snackBarMan.show('Patient updated successfully', 'Ok');
         }
       },
       error => {
         console.error(error);
       }
     );
-  }
-
-  openSnackBar(message: string, action: string) {
-    this.snackBar.open(message, action, {
-      duration: 4000,
-    });
   }
 }
