@@ -62,4 +62,10 @@ export class AppointmentsServices {
     return this.appointmentStatus$;
   }
 
+
+  getAppointmentByDoctor(seq: number) {
+    const url = 'http://localhost:5000/appointment/doctors/' + seq;
+    return this.http.get<RemoteAppointment[]>(url);
+  }
+
 }

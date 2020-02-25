@@ -132,8 +132,6 @@ export class AppointmentsComponent implements OnInit {
         console.log(error);
       }
     );
-
-
   }
 
   setView(view: CalendarView) {
@@ -163,5 +161,25 @@ export class AppointmentsComponent implements OnInit {
         this.addEvent(newEvent);
       }
     });
+  }
+
+  updateWithDoctor(seq: number) {
+    if (seq === 0) {
+      this.calenderEventService.getAllAppointments().subscribe(
+        result => {
+          this.events = AppointmentWrapper.toLocalAppointmentBatch(result);
+        }, error => {
+          console.error(error);
+        }
+      );
+    } else if (seq > 0) {
+      this.calenderEventService.getAppointmentByDoctor(seq).subscribe(
+        result => {
+          this.events = AppointmentWrapper.toLocalAppointmentBatch(result);
+        }, error => {
+          console.error(error);
+        }
+      );
+    }
   }
 }

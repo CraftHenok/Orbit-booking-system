@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {DoctorsService} from '../../../../services/Doctors/doctors.service';
 import {MatTableDataSource} from '@angular/material/table';
 import {Doctor} from '../../../../models/Doctor';
@@ -12,6 +12,12 @@ import {MatPaginator} from '@angular/material/paginator';
 export class ShowDoctorsComponent implements OnInit {
 
   private docName: string;
+
+  doctors: Doctor[] = [];
+
+  currentActive = 0;
+
+  @Output() doctorSelected = new EventEmitter<number>();
 
   @Input()
   set doctorName(name: string) {
@@ -29,12 +35,14 @@ export class ShowDoctorsComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   constructor(private doctorsService: DoctorsService) {
+    this.doctors.push(Doctor.getAllDoctorsTemplate());
   }
 
   ngOnInit(): void {
     this.doctorsService.getAllDoctors().subscribe(
       result => {
-        this.dataSource = new MatTableDataSource<Doctor>(result);
+        this.doctors.push(...result);
+        this.dataSource = new MatTableDataSource<Doctor>(this.doctors);
         this.dataSource.paginator = this.paginator;
       }
     );
@@ -46,4 +54,14 @@ export class ShowDoctorsComponent implements OnInit {
     }
   }
 
+  doctorClicked(seq: number) {
+    this.currentActive = seq;
+    this.doctorSelected.emit(seq);
+  }
+
+  isActive(seq: number) {
+    return {
+      'active': seq === this.currentActive
+    };
+  }
 }

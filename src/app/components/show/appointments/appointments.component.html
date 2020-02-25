@@ -7,7 +7,7 @@
 </div>
 
 <div class="doctorsList">
-  <app-show-doctors [doctorName]="doctorName"></app-show-doctors>
+  <app-show-doctors [doctorName]="doctorName" (doctorSelected)="updateWithDoctor($event)"></app-show-doctors>
 </div>
 
 <div class="calenderArea">
