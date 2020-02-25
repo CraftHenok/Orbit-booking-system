@@ -978,4 +978,9 @@ export class Country {
       }
     ];
   }
+
+  static filter(name: string): Country[] {
+    const filterValue = name.toLowerCase();
+    return this.getAll().filter(c => c.name.toLowerCase().indexOf(filterValue) === 0);
+  }
 }
