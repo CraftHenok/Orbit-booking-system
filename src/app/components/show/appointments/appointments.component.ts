@@ -1,6 +1,6 @@
-import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {CalendarEvent, CalendarEventTimesChangedEvent, CalendarView} from 'angular-calendar';
-import {Subject} from 'rxjs';
+import {Subject, Subscription} from 'rxjs';
 import {addHours, addMinutes, isSameDay, isSameMonth} from 'date-fns';
 import {AddEditDialogComponent} from '../../dialogs/addEditDialog/addEditDialog.component';
 import {LocalAppointments} from '../../../models/Appointemts/LocalAppointments';
@@ -17,7 +17,7 @@ import {GeneralType} from '../../../models/GeneralType';
   templateUrl: './appointments.component.html',
   styleUrls: ['./appointments.component.css']
 })
-export class AppointmentsComponent implements OnInit {
+export class AppointmentsComponent implements OnInit, OnDestroy {
 
   @ViewChild('modalContent', {static: true}) modalContent: TemplateRef<any>;
 
@@ -33,20 +33,21 @@ export class AppointmentsComponent implements OnInit {
 
   activeDayIsOpen = true;
   doctorName: string;
+  private subscription: Subscription = new Subscription();
 
   constructor(private dialog: MatDialog,
               private calenderEventService: AppointmentsServices) {
   }
 
   ngOnInit(): void {
-    this.calenderEventService.getAllAppointments().subscribe(
+    this.subscription.add(this.calenderEventService.getAllAppointments().subscribe(
       result => {
         this.events = AppointmentWrapper.toLocalAppointmentBatch(result);
       },
       error => {
         console.error(error + 'On appointment getAllEvents ngOnInit');
       }
-    );
+    ));
 
   }
 
@@ -70,7 +71,7 @@ export class AppointmentsComponent implements OnInit {
     const dialogRef = this.openDialogWith(event);
 
     // re-use code
-    dialogRef.afterClosed().subscribe(result => {
+    this.subscription.add(dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed handle event');
       console.table(result);
       if (result.action === 'D') {
@@ -81,12 +82,12 @@ export class AppointmentsComponent implements OnInit {
         this.updateEvent(result);
       }
 
-    });
+    }));
 
   }
 
   deleteEvent(eventToDelete: LocalAppointments) {
-    this.calenderEventService.deleteAppointment(eventToDelete).subscribe(
+    this.subscription.add(this.calenderEventService.deleteAppointment(eventToDelete).subscribe(
       result => {
         if (result !== 0) {
           this.events = this.events.filter(event => event !== eventToDelete);
@@ -95,12 +96,12 @@ export class AppointmentsComponent implements OnInit {
       error => {
         console.log(error);
       }
-    );
+    ));
 
   }
 
   updateEvent(eventToUpdate: LocalAppointments) {
-    this.calenderEventService.updateAppointment(eventToUpdate).subscribe(
+    this.subscription.add(this.calenderEventService.updateAppointment(eventToUpdate).subscribe(
       result => {
         if (result !== 0) {
           this.events = this.events.map(iEvent => {
@@ -116,12 +117,12 @@ export class AppointmentsComponent implements OnInit {
       error => {
         console.log(error);
       }
-    );
+    ));
   }
 
   addEvent(newEvent: LocalAppointments): void {
     console.table(newEvent);
-    this.calenderEventService.addNewAppointment(newEvent).subscribe(
+    this.subscription.add(this.calenderEventService.addNewAppointment(newEvent).subscribe(
       result => {
         this.events = [
           ...this.events,
@@ -131,7 +132,7 @@ export class AppointmentsComponent implements OnInit {
       error => {
         console.log(error);
       }
-    );
+    ));
   }
 
   setView(view: CalendarView) {
@@ -155,32 +156,36 @@ export class AppointmentsComponent implements OnInit {
     emptyAppointment.start = new Date();
     const dialogRef = this.openDialogWith(emptyAppointment);
 
-    dialogRef.afterClosed().subscribe((result: LocalAppointments) => {
+    this.subscription.add(dialogRef.afterClosed().subscribe((result: LocalAppointments) => {
       if (result.patientId) {
         const newEvent = new LocalAppointmentsBuilder(0, result.patientId, result.appointmentTypeId,
           result.appointmentStatusId, result.start, result.end, result.isServed, result.servedBy).build();
         this.addEvent(newEvent);
       }
-    });
+    }));
   }
 
   updateWithDoctor(seq: number) {
     if (seq === 0) {
-      this.calenderEventService.getAllAppointments().subscribe(
+      this.subscription.add(this.calenderEventService.getAllAppointments().subscribe(
         result => {
           this.events = AppointmentWrapper.toLocalAppointmentBatch(result);
         }, error => {
           console.error(error);
         }
-      );
+      ));
     } else if (seq > 0) {
-      this.calenderEventService.getAppointmentByDoctor(seq).subscribe(
+      this.subscription.add(this.calenderEventService.getAppointmentByDoctor(seq).subscribe(
         result => {
           this.events = AppointmentWrapper.toLocalAppointmentBatch(result);
         }, error => {
           console.error(error);
         }
-      );
+      ));
     }
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

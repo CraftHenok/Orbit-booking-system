@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {LocalAppointments} from '../../../models/Appointemts/LocalAppointments';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {FormBuilder, FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
@@ -7,6 +7,7 @@ import {addMinutes} from 'date-fns';
 import {GeneralStatus} from '../../../models/GeneralStatus';
 import {GeneralType} from '../../../models/GeneralType';
 import {AppointmentsServices} from '../../../services/Appointments/appointments-services';
+import {Subscription} from 'rxjs';
 
 
 /** Error when invalid control is dirty, touched, or submitted. */
@@ -23,7 +24,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   templateUrl: './addEditDialog.component.html',
   styleUrls: ['./addEditDialog.component.css']
 })
-export class AddEditDialogComponent implements OnInit {
+export class AddEditDialogComponent implements OnInit, OnDestroy {
 
   public addForm = this.formBuilder.group({
     PatientId: [this.data.patientId, Validators.required],
@@ -40,6 +41,8 @@ export class AddEditDialogComponent implements OnInit {
   public appointmentStatus: GeneralStatus[] = [];
   public appointmentType: GeneralType[] = [];
 
+  private subscription: Subscription = new Subscription();
+
   constructor(
     private dialogRef: MatDialogRef<AddEditDialogComponent>,
     private formBuilder: FormBuilder,
@@ -48,23 +51,23 @@ export class AddEditDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.calenderEventService.getAppointmentStatus().subscribe(
+    this.subscription.add(this.calenderEventService.getAppointmentStatus().subscribe(
       result => {
         this.appointmentStatus = result;
       },
       error => {
         console.log(error);
       }
-    );
+    ));
 
-    this.calenderEventService.getAppointmentTypes().subscribe(
+    this.subscription.add(this.calenderEventService.getAppointmentTypes().subscribe(
       result => {
         this.appointmentType = result;
       },
       error => {
         console.log(error);
       }
-    );
+    ));
   }
 
   deleteClicked() {
@@ -134,4 +137,10 @@ export class AddEditDialogComponent implements OnInit {
     }
     return duration;
   }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+
 }

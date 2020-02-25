@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {DoctorsService} from '../../../services/Doctors/doctors.service';
@@ -7,13 +7,14 @@ import {ActivatedRoute} from '@angular/router';
 import {Doctor} from '../../../models/Doctor';
 import {DoctorsFormManager} from '../../../utility/doctorsFormManager';
 import {SnackBarManager} from '../../../utility/snackBarManager';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-editdoctor',
   templateUrl: './editdoctor.component.html',
   styleUrls: ['./editdoctor.component.css']
 })
-export class EditdoctorComponent implements OnInit {
+export class EditdoctorComponent implements OnInit, OnDestroy {
 
   hidePassword = true;
   doctor: Doctor;
@@ -22,6 +23,8 @@ export class EditdoctorComponent implements OnInit {
   primaryInfo: FormGroup;
   appointmentRelatedInfo: FormGroup;
   private snackBarMan: SnackBarManager;
+
+  private subscription: Subscription = new Subscription();
 
 
   constructor(private formBuilder: FormBuilder,
@@ -36,14 +39,14 @@ export class EditdoctorComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.activatedRoute.paramMap.pipe(
+    this.subscription.add(this.activatedRoute.paramMap.pipe(
       switchMap(params => this.doctorService.getDoctorById(Number(params.get('doctorId'))))
     ).subscribe(result => {
       this.doctor = result;
       this.updateForm(result);
     }, error => {
       console.error(error);
-    });
+    }));
   }
 
   private updateForm(doctor: Doctor) {
@@ -61,7 +64,7 @@ export class EditdoctorComponent implements OnInit {
   submit() {
     const updatedDoctor = DoctorsFormManager.bindDataToNewDoctor(this.doctor.seq, this.primaryInfo, this.appointmentRelatedInfo);
 
-    this.doctorService.updateDoctor(updatedDoctor).subscribe(
+    this.subscription.add(this.doctorService.updateDoctor(updatedDoctor).subscribe(
       result => {
         if (result > 0) {
           this.snackBarMan.show('Doctor updated successfully', 'Ok');
@@ -69,7 +72,11 @@ export class EditdoctorComponent implements OnInit {
       }, error => {
         console.error(error);
       }
-    );
+    ));
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
 }

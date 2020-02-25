@@ -1,21 +1,24 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {DoctorsService} from '../../../../services/Doctors/doctors.service';
 import {MatTableDataSource} from '@angular/material/table';
 import {Doctor} from '../../../../models/Doctor';
 import {MatPaginator} from '@angular/material/paginator';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-show-doctors',
   templateUrl: './show-doctors.component.html',
   styleUrls: ['./show-doctors.component.css']
 })
-export class ShowDoctorsComponent implements OnInit {
+export class ShowDoctorsComponent implements OnInit, OnDestroy {
 
   private docName: string;
 
   doctors: Doctor[] = [];
 
   currentActive = 0;
+
+  private susbscription: Subscription = new Subscription();
 
   @Output() doctorSelected = new EventEmitter<number>();
 
@@ -39,13 +42,13 @@ export class ShowDoctorsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.doctorsService.getAllDoctors().subscribe(
+    this.susbscription.add(this.doctorsService.getAllDoctors().subscribe(
       result => {
         this.doctors.push(...result);
         this.dataSource = new MatTableDataSource<Doctor>(this.doctors);
         this.dataSource.paginator = this.paginator;
       }
-    );
+    ));
   }
 
   applyFilter(name: string) {
@@ -63,5 +66,9 @@ export class ShowDoctorsComponent implements OnInit {
     return {
       'active': seq === this.currentActive
     };
+  }
+
+  ngOnDestroy(): void {
+    this.susbscription.unsubscribe();
   }
 }

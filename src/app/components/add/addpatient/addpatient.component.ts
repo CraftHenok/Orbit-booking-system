@@ -1,6 +1,6 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {Observable} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {PatientsService} from '../../../services/Patients/patients.service';
 import {GeneralTitle} from '../../../models/GeneralTitle';
@@ -20,7 +20,7 @@ export const filter = (opt: string[], value: string): string[] => {
   templateUrl: './addpatient.component.html',
   styleUrls: ['./addpatient.component.css']
 })
-export class AddpatientComponent implements OnInit {
+export class AddpatientComponent implements OnInit, OnDestroy {
 
   countries: Country[] = Country.getAll();
 
@@ -41,6 +41,8 @@ export class AddpatientComponent implements OnInit {
   addressForm: FormGroup;
 
   emergencyInfoForm: FormGroup;
+
+  private subscription: Subscription = new Subscription();
 
   private snackBarMan: SnackBarManager;
 
@@ -70,23 +72,23 @@ export class AddpatientComponent implements OnInit {
         map(country => country ? Country.filter(country) : this.countries.slice())
       );
 
-    this.patientService.getPatientTitle().subscribe(
+    this.subscription.add(this.patientService.getPatientTitle().subscribe(
       result => {
         this.patientsTitles = result;
       },
       error => {
         console.error(error);
       }
-    );
+    ));
 
-    this.patientService.getEmergencyTitle().subscribe(
+    this.subscription.add(this.patientService.getEmergencyTitle().subscribe(
       result => {
         this.emergencyTitle = result;
       },
       error => {
         console.error(error);
       }
-    );
+    ));
 
   }
 
@@ -96,19 +98,23 @@ export class AddpatientComponent implements OnInit {
     const newPatient = PatientsFormManager.bindDateToNewPatient(this.primaryInfoForm, this.contactInfoForm,
       this.addressForm, this.emergencyInfoForm);
 
-    this.patientService.savePatient(newPatient).subscribe(
+    this.subscription.add(this.patientService.savePatient(newPatient).subscribe(
       result => {
         this.snackBarMan.show('New patient added', 'Ok');
       },
       error => {
         console.error(error);
       }
-    );
+    ));
 
   }
 
   setBirthDate() {
     const age = this.primaryInfoForm.get('age').value;
     this.primaryInfoForm.get('dateOfBirth').setValue(DateManager.getDateFromAge(age));
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

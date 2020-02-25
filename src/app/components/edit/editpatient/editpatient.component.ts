@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {GeneralTitle} from '../../../models/GeneralTitle';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {PatientsService} from '../../../services/Patients/patients.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {map, startWith, switchMap} from 'rxjs/operators';
-import {Observable} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {Country} from '../../../models/Country';
 import {Patient} from '../../../models/Patient';
 import {ActivatedRoute} from '@angular/router';
@@ -17,7 +17,7 @@ import {DateManager} from '../../../utility/dateManager';
   templateUrl: './editpatient.component.html',
   styleUrls: ['./editpatient.component.css']
 })
-export class EditpatientComponent implements OnInit {
+export class EditpatientComponent implements OnInit, OnDestroy {
 
   countries: Country[] = Country.getAll();
 
@@ -41,6 +41,8 @@ export class EditpatientComponent implements OnInit {
 
   private snackBarMan: SnackBarManager;
 
+  private subscriptiom: Subscription = new Subscription();
+
   constructor(private formBuilder: FormBuilder,
               private patientService: PatientsService,
               private activatedRoute: ActivatedRoute,
@@ -55,6 +57,15 @@ export class EditpatientComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.subscriptiom.add(this.activatedRoute.paramMap.pipe(
+      switchMap(params => this.patientService.getPatientByIdFull(Number(params.get('patientId'))))
+    ).subscribe(result => {
+      this.patient = result;
+      this.updateData(result);
+    }, error => {
+      console.error(error);
+    }));
+
     this.filteredCountry = this.primaryInfoForm.get('nationality')!.valueChanges
       .pipe(
         startWith(''),
@@ -67,32 +78,23 @@ export class EditpatientComponent implements OnInit {
         map(country => country ? Country.filter(country) : this.countries.slice())
       );
 
-    this.patientService.getPatientTitle().subscribe(
+    this.subscriptiom.add(this.patientService.getPatientTitle().subscribe(
       result => {
         this.patientsTitles = result;
       },
       error => {
         console.error(error);
       }
-    );
+    ));
 
-    this.patientService.getEmergencyTitle().subscribe(
+    this.subscriptiom.add(this.patientService.getEmergencyTitle().subscribe(
       result => {
         this.emergencyTitle = result;
       },
       error => {
         console.error(error);
       }
-    );
-
-    this.activatedRoute.paramMap.pipe(
-      switchMap(params => this.patientService.getPatientByIdFull(Number(params.get('patientId'))))
-    ).subscribe(result => {
-      this.patient = result;
-      this.updateData(result);
-    }, error => {
-      console.error(error);
-    });
+    ));
 
 
   }
@@ -133,7 +135,7 @@ export class EditpatientComponent implements OnInit {
     this.patient = PatientsFormManager.bindDateToOldPatient(this.primaryInfoForm, this.contactInfoForm,
       this.addressForm, this.emergencyInfoForm, this.patient);
 
-    this.patientService.updatePatient(this.patient).subscribe(
+    this.subscriptiom.add(this.patientService.updatePatient(this.patient).subscribe(
       result => {
         if (result > 0) {
           this.snackBarMan.show('Patient updated successfully', 'Ok');
@@ -142,11 +144,15 @@ export class EditpatientComponent implements OnInit {
       error => {
         console.error(error);
       }
-    );
+    ));
   }
 
   setBirthDate() {
     const age = this.primaryInfoForm.get('age').value;
     this.primaryInfoForm.get('dateOfBirth').setValue(DateManager.getDateFromAge(age));
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptiom.unsubscribe();
   }
 }

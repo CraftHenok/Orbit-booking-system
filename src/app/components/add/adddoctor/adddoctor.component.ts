@@ -1,9 +1,9 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Doctor} from '../../../models/Doctor';
 import {DoctorsService} from '../../../services/Doctors/doctors.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {Observable} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {DoctorsFormManager} from '../../../utility/doctorsFormManager';
 import {SnackBarManager} from '../../../utility/snackBarManager';
 
@@ -12,7 +12,7 @@ import {SnackBarManager} from '../../../utility/snackBarManager';
   templateUrl: './adddoctor.component.html',
   styleUrls: ['../addpatient/addpatient.component.css'] // reuse
 })
-export class AdddoctorComponent implements OnInit {
+export class AdddoctorComponent implements OnInit, OnDestroy {
 
   hidePassword = true;
   @ViewChild('stepper') stepper: ElementRef;
@@ -21,6 +21,8 @@ export class AdddoctorComponent implements OnInit {
   primaryInfo: FormGroup;
   appointmentRelatedInfo: FormGroup;
   private snackBarMan: SnackBarManager;
+
+  private subscription: Subscription = new Subscription();
 
   constructor(private formBuilder: FormBuilder,
               private snackBar: MatSnackBar,
@@ -40,7 +42,7 @@ export class AdddoctorComponent implements OnInit {
 
     console.log(newDoctor);
 
-    this.doctorService.saveDoctor(newDoctor).subscribe(
+    this.subscription.add(this.doctorService.saveDoctor(newDoctor).subscribe(
       result => {
         this.snackBarMan.show('New Doctor added', 'Ok');
         console.log(result);
@@ -48,8 +50,12 @@ export class AdddoctorComponent implements OnInit {
       error => {
         console.error(error);
       }
-    );
+    ));
 
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
 

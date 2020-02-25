@@ -55,10 +55,6 @@ export class DoctorsComponent implements OnInit, OnDestroy {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
-
   navigateToEditDoctor(seq: number) {
     this.router.navigate(['/editDoctor', seq]);
   }
@@ -66,16 +62,16 @@ export class DoctorsComponent implements OnInit, OnDestroy {
   confirmAction(seq: number) {
     const dialogRef = this.openDialog();
 
-    dialogRef.afterClosed().subscribe((result: boolean) => {
+    this.subscription.add(dialogRef.afterClosed().subscribe((result: boolean) => {
       if (result) {
         this.deleteDoctor(seq);
       }
-    });
+    }));
 
   }
 
   private deleteDoctor(seq: number) {
-    this.doctorsService.deleteDoctorById(seq).subscribe(
+    this.subscription.add(this.doctorsService.deleteDoctorById(seq).subscribe(
       result => {
         if (result > 0) {
           const filteredDoctors = this.doctors.filter(it => it.seq !== seq);
@@ -84,12 +80,16 @@ export class DoctorsComponent implements OnInit, OnDestroy {
       }, error => {
         console.error(error);
       }
-    );
+    ));
   }
 
   openDialog() {
     return this.dialog.open(ConfirmActionDialogComponent, {
       width: '400px',
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

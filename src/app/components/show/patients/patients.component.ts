@@ -52,7 +52,7 @@ export class PatientsComponent implements OnInit, OnDestroy {
         this.configureDataSource(result);
       },
       error => {
-
+        console.error(error);
       }
     ));
 
@@ -67,10 +67,6 @@ export class PatientsComponent implements OnInit, OnDestroy {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
   }
 
   openPatientDetailDialog(code: string, element: Patient) {
@@ -98,7 +94,7 @@ export class PatientsComponent implements OnInit, OnDestroy {
 
   private deletePatient(seq: number) {
     const patientToDelete = this.patients.filter(it => it.seq === seq);
-    this.patientService.deletePatientById(patientToDelete[0]).subscribe(
+    this.subscription.add(this.patientService.deletePatientById(patientToDelete[0]).subscribe(
       result => {
         if (result > 0) {
           const filteredPatients = this.patients.filter(it => it.seq !== seq);
@@ -107,13 +103,18 @@ export class PatientsComponent implements OnInit, OnDestroy {
       }, error => {
         console.error(error);
       }
-    );
+    ));
   }
 
   openDialog() {
     return this.dialog.open(ConfirmActionDialogComponent, {
       width: '400px',
     });
+  }
+
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
 
