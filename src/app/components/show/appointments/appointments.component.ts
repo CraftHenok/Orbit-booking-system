@@ -94,7 +94,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
         }
       },
       error => {
-        console.log(error);
+        console.error(error);
       }
     ));
 
@@ -116,7 +116,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
         });
       },
       error => {
-        console.log(error);
+        console.error(error);
       }
     ));
   }

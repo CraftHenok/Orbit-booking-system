@@ -40,8 +40,6 @@ export class AdddoctorComponent implements OnInit, OnDestroy {
   submit() {
     const newDoctor = DoctorsFormManager.bindDataToNewDoctor(0, this.primaryInfo, this.appointmentRelatedInfo);
 
-    console.log(newDoctor);
-
     this.subscription.add(this.doctorService.saveDoctor(newDoctor).subscribe(
       result => {
         this.snackBarMan.show('New Doctor added', 'Ok');

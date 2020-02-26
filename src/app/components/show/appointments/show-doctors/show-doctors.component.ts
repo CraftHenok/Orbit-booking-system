@@ -64,7 +64,7 @@ export class ShowDoctorsComponent implements OnInit, OnDestroy {
 
   isActive(seq: number) {
     return {
-      'active': seq === this.currentActive
+      active: seq === this.currentActive
     };
   }
 

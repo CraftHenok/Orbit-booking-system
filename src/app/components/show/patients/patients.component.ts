@@ -84,11 +84,11 @@ export class PatientsComponent implements OnInit, OnDestroy {
   confirmAction(seq: number) {
     const dialogRef = this.openDialog();
 
-    dialogRef.afterClosed().subscribe((result: boolean) => {
+    this.subscription.add(dialogRef.afterClosed().subscribe((result: boolean) => {
       if (result) {
         this.deletePatient(seq);
       }
-    });
+    }));
 
   }
 

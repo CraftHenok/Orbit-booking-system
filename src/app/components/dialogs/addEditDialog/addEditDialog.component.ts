@@ -57,7 +57,7 @@ export class AddEditDialogComponent implements OnInit, OnDestroy {
         this.appointmentStatus = result;
       },
       error => {
-        console.log(error);
+        console.error(error);
       }
     ));
 
@@ -66,7 +66,7 @@ export class AddEditDialogComponent implements OnInit, OnDestroy {
         this.appointmentType = result;
       },
       error => {
-        console.log(error);
+        console.error(error);
       }
     ));
   }

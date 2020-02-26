@@ -38,7 +38,7 @@ export class DoctorsComponent implements OnInit, OnDestroy {
         this.configureDataSource(result);
       },
       error => {
-
+        console.error(error);
       }
     ));
 
