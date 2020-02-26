@@ -9,78 +9,72 @@
 <form [formGroup]="addForm" (ngSubmit)="onSubmit(data.patientId ? 'U' : 'S')">
 
   <mat-dialog-content class="mat-typography">
-    <div class="one">
-      Important messages or image goes here!
-    </div>
-    <div class="two">
 
 
-      <mat-form-field appearance="outline">
-        <mat-label>Patient Id</mat-label>
-        <input matInput placeholder="Patient Id" id="PatientId" type="number" formControlName="PatientId"
-               [errorStateMatcher]="matcher">
+    <mat-form-field appearance="outline">
+      <mat-label>Patient Id</mat-label>
+      <input matInput placeholder="Patient Id" id="PatientId" type="number" formControlName="PatientId"
+             [errorStateMatcher]="matcher">
 
-        <mat-error *ngIf="PatientId.hasError('required')">
-          Patient id is <strong>required</strong>
-        </mat-error>
+      <mat-error *ngIf="PatientId.hasError('required')">
+        Patient id is <strong>required</strong>
+      </mat-error>
 
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Appointment Type</mat-label>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Appointment Type</mat-label>
 
-        <mat-select formControlName="AppointmentType" [errorStateMatcher]="matcher" [value]="data.appointmentTypeId">
-          <mat-option *ngFor="let types of appointmentType" [value]="types.id">
-            {{types.type | uppercase}}
-          </mat-option>
-        </mat-select>
+      <mat-select formControlName="AppointmentType" [errorStateMatcher]="matcher" [value]="data.appointmentTypeId">
+        <mat-option *ngFor="let types of appointmentType" [value]="types.id">
+          {{types.type | uppercase}}
+        </mat-option>
+      </mat-select>
 
-        <mat-error *ngIf="AppointmentType.hasError('required')">
-          Appointment Type is <strong>required</strong>
-        </mat-error>
+      <mat-error *ngIf="AppointmentType.hasError('required')">
+        Appointment Type is <strong>required</strong>
+      </mat-error>
 
-      </mat-form-field>
+    </mat-form-field>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Appointment Status</mat-label>
+    <mat-form-field appearance="outline">
+      <mat-label>Appointment Status</mat-label>
 
-        <mat-select formControlName="AppointmentStatus" [errorStateMatcher]="matcher"
-                    [value]="data.appointmentStatusId">
-          <mat-option *ngFor="let status of appointmentStatus" [value]="status.id">
-            {{status.status | uppercase}}
-          </mat-option>
-        </mat-select>
+      <mat-select formControlName="AppointmentStatus" [errorStateMatcher]="matcher"
+                  [value]="data.appointmentStatusId">
+        <mat-option *ngFor="let status of appointmentStatus" [value]="status.id">
+          {{status.status | uppercase}}
+        </mat-option>
+      </mat-select>
 
-        <mat-error *ngIf="AppointmentType.hasError('required')">
-          Appointment Status <strong>required</strong>
-        </mat-error>
+      <mat-error *ngIf="AppointmentType.hasError('required')">
+        Appointment Status <strong>required</strong>
+      </mat-error>
 
-      </mat-form-field>
+    </mat-form-field>
 
-      <mat-form-field appearance="outline">
-        <input matInput [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" formControlName="start"
-               placeholder="Date Time">
-        <span [owlDateTimeTrigger]="dt1"><i class="fa fa-calendar"></i></span>
-        <owl-date-time #dt1></owl-date-time>
-      </mat-form-field>
+    <mat-form-field appearance="outline">
+      <input matInput [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" formControlName="start"
+             placeholder="Date Time">
+      <span [owlDateTimeTrigger]="dt1"><i class="fa fa-calendar"></i></span>
+      <owl-date-time #dt1></owl-date-time>
+    </mat-form-field>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Duration</mat-label>
-        <mat-select formControlName="duration" required>
-          <mat-option [value]="30">30 minutes</mat-option>
-          <mat-option [value]="60">1 hours</mat-option>
-          <mat-option [value]="120">2 hours</mat-option>
-          <mat-option [value]="180">3 hours</mat-option>
-        </mat-select>
-      </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Duration</mat-label>
+      <mat-select formControlName="duration" required>
+        <mat-option [value]="30">30 minutes</mat-option>
+        <mat-option [value]="60">1 hours</mat-option>
+        <mat-option [value]="120">2 hours</mat-option>
+        <mat-option [value]="180">3 hours</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Served By</mat-label>
-        <input matInput placeholder="Served By" type="number" formControlName="ServedBy">
-      </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Served By</mat-label>
+      <input matInput placeholder="Served By" type="number" formControlName="ServedBy">
+    </mat-form-field>
 
-      <mat-checkbox formControlName="IsServed">Is served</mat-checkbox>
-
-    </div>
+    <mat-checkbox formControlName="IsServed">Is served</mat-checkbox>
   </mat-dialog-content>
 
 

@@ -1,15 +1,13 @@
 import {Component, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {CalendarEvent, CalendarEventTimesChangedEvent, CalendarView} from 'angular-calendar';
 import {Subject, Subscription} from 'rxjs';
-import {addHours, addMinutes, isSameDay, isSameMonth} from 'date-fns';
+import {isSameDay, isSameMonth} from 'date-fns';
 import {AddEditDialogComponent} from '../../dialogs/addEditDialog/addEditDialog.component';
 import {LocalAppointments} from '../../../models/Appointemts/LocalAppointments';
 import {MatDialog} from '@angular/material/dialog';
 import {AppointmentsServices} from '../../../services/Appointments/appointments-services';
 import {LocalAppointmentsBuilder} from '../../../models/Appointemts/LocalAppointmentsBuilder';
 import {AppointmentWrapper} from '../../../models/Appointemts/AppointmentWrapper';
-import {GeneralStatus} from '../../../models/GeneralStatus';
-import {GeneralType} from '../../../models/GeneralType';
 
 
 @Component({
@@ -33,6 +31,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
 
   activeDayIsOpen = true;
   doctorName: string;
+
+  private currentSelectedDoctorSeq = 0;
   private subscription: Subscription = new Subscription();
 
   constructor(private dialog: MatDialog,
@@ -103,16 +103,17 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
   updateEvent(eventToUpdate: LocalAppointments) {
     this.subscription.add(this.calenderEventService.updateAppointment(eventToUpdate).subscribe(
       result => {
-        if (result !== 0) {
-          this.events = this.events.map(iEvent => {
-            if (iEvent === eventToUpdate) {
-              return {
-                ...eventToUpdate
-              };
-            }
-            return iEvent;
-          });
+        if (result === 0) {
+          return;
         }
+        this.events = this.events.map(iEvent => {
+          if (iEvent === eventToUpdate) {
+            return {
+              ...eventToUpdate
+            };
+          }
+          return iEvent;
+        });
       },
       error => {
         console.log(error);
@@ -145,15 +146,15 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
 
   openDialogWith(appointment: CalendarEvent) {
     return this.dialog.open(AddEditDialogComponent, {
-      width: '700px',
-      height: 'auto',
+      width: '500px',
       data: appointment
     });
   }
 
-  openAddDialog() {
+  openAddDialog(date?: Date) {
     const emptyAppointment = new LocalAppointments();
-    emptyAppointment.start = new Date();
+    emptyAppointment.start = date ? date : (new Date());
+    emptyAppointment.servedBy = this.currentSelectedDoctorSeq === 0 ? null : this.currentSelectedDoctorSeq;
     const dialogRef = this.openDialogWith(emptyAppointment);
 
     this.subscription.add(dialogRef.afterClosed().subscribe((result: LocalAppointments) => {
@@ -166,6 +167,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
   }
 
   updateWithDoctor(seq: number) {
+    if (this.currentSelectedDoctorSeq === seq) {
+      return;
+    }
+    this.currentSelectedDoctorSeq = seq;
     if (seq === 0) {
       this.subscription.add(this.calenderEventService.getAllAppointments().subscribe(
         result => {

@@ -6,4 +6,15 @@ export class DateManager {
     }
     return currentDate;
   }
+
+  static findDuration(startDate: Date, endDate: Date) {
+    let duration = 30;
+    try {
+      duration = (endDate.valueOf() - startDate.valueOf());
+      duration = Math.round((duration / 1000) / 60);
+    } catch (e) {
+      //
+    }
+    return duration;
+  }
 }

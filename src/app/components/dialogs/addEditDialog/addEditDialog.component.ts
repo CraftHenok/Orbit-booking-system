@@ -8,6 +8,7 @@ import {GeneralStatus} from '../../../models/GeneralStatus';
 import {GeneralType} from '../../../models/GeneralType';
 import {AppointmentsServices} from '../../../services/Appointments/appointments-services';
 import {Subscription} from 'rxjs';
+import {DateManager} from '../../../utility/dateManager';
 
 
 /** Error when invalid control is dirty, touched, or submitted. */
@@ -31,7 +32,7 @@ export class AddEditDialogComponent implements OnInit, OnDestroy {
     AppointmentType: [this.data.appointmentTypeId, Validators.required],
     AppointmentStatus: [this.data.appointmentStatusId, Validators.required],
     start: [this.data.start, Validators.required],
-    duration: [this.getDuration(), Validators.required],
+    duration: [DateManager.findDuration(this.data.start, this.data.end), Validators.required],
     IsServed: [this.data.isServed ? this.data.isServed : false],
     ServedBy: [this.data.servedBy, Validators.required],
   });
@@ -124,18 +125,6 @@ export class AddEditDialogComponent implements OnInit, OnDestroy {
 
   get ServedBy() {
     return this.addForm.get('ServedBy');
-  }
-
-
-  private getDuration() {
-    let duration = 30;
-    try {
-      duration = (this.data.end.valueOf() - this.data.start.valueOf());
-      duration = Math.round((duration / 1000) / 60);
-    } catch (e) {
-      //
-    }
-    return duration;
   }
 
   ngOnDestroy(): void {

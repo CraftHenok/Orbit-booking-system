@@ -1,5 +1,6 @@
 import {LocalAppointments} from './LocalAppointments';
 import {Color} from '../Color';
+import {DateManager} from '../../utility/dateManager';
 
 export class LocalAppointmentsBuilder {
   private appointment = new LocalAppointments();
@@ -14,6 +15,7 @@ export class LocalAppointmentsBuilder {
     this.appointment.end = end;
     this.appointment.isServed = IsServed;
     this.appointment.servedBy = ServedBy;
+    this.appointment.title = `Patient id: ${PatientId}<br> Duration: ${DateManager.findDuration(start, end)} min`;
   }
 
   setColor(color: string) {

@@ -1,4 +1,5 @@
 import {CalendarEvent} from 'calendar-utils';
+import {DateManager} from '../../utility/dateManager';
 
 
 export class LocalAppointments implements CalendarEvent {
@@ -6,6 +7,7 @@ export class LocalAppointments implements CalendarEvent {
   start: Date;
   end: Date;
   title: string;
+
   patientId: number;
   appointmentTypeId: string;
   appointmentStatusId: string;
@@ -17,7 +19,7 @@ export class LocalAppointments implements CalendarEvent {
   // optional fields
   allDay = false;
   color: { primary: string; secondary: string; };
-  cssClass: string;
+  cssClass = 'my-custom-class';
   draggable = true;
   resizable: { beforeStart: boolean; afterEnd: boolean } = {beforeStart: true, afterEnd: true};
 

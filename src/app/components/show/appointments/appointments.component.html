@@ -1,6 +1,6 @@
 <div class="showDate">
   <h2 class="showDateContent">{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h2>
-  <mat-form-field appearance="outline">
+  <mat-form-field appearance="outline" style="color: #fff;border-color: #fff !important;">
     <mat-label>Filter</mat-label>
     <input matInput placeholder="Ex. doctor name" [(ngModel)]="doctorName">
   </mat-form-field>
@@ -77,6 +77,8 @@
           [refresh]="refresh"
           (eventClicked)="handleEvent('Clicked', $event.event)"
           (eventTimesChanged)="eventTimesChanged($event)"
+          (dayHeaderClicked)="openAddDialog($event.day.date)"
+          (hourSegmentClicked)="openAddDialog($event.date)"
         >
         </mwl-calendar-week-view>
         <mwl-calendar-day-view
@@ -86,6 +88,7 @@
           [refresh]="refresh"
           (eventClicked)="handleEvent('Clicked', $event.event)"
           (eventTimesChanged)="eventTimesChanged($event)"
+          (hourSegmentClicked)="openAddDialog($event.date)"
         >
         </mwl-calendar-day-view>
       </div>
