@@ -146,7 +146,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
 
   openDialogWith(appointment: CalendarEvent) {
     return this.dialog.open(AddEditDialogComponent, {
-      width: '500px',
+      width: '400px',
       data: appointment
     });
   }

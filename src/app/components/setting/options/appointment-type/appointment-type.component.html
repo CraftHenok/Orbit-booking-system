@@ -1,0 +1,16 @@
+<mat-card class="example-card" style="width: 40%;margin-top: 10px">
+  <mat-card-header>
+    <mat-card-title>Appointment types</mat-card-title>
+    <mat-card-subtitle>List of available appointment types click to remove</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-action-list>
+      <button mat-list-item *ngFor="let type of dataSource"> {{ type.type | titlecase }} </button>
+    </mat-action-list>
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <button mat-stroked-button color="primary">Add</button>
+  </mat-card-actions>
+</mat-card>
+
+

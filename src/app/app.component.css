@@ -4,7 +4,7 @@ mat-toolbar {
 }
 
 .active {
-  color: tomato;
+  background: #d4f2fe;
 }
 
 .iconNavigation, .routerOutLetContainer {

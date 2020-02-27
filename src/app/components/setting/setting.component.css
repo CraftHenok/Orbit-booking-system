@@ -1,0 +1,16 @@
+.main {
+  width: 100%;
+  position: relative;
+}
+
+.main div {
+  float: left;
+}
+
+.main .options {
+  width: 20%;
+}
+
+.main .content {
+  width: 80%;
+}
