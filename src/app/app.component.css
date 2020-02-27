@@ -34,15 +34,22 @@ mat-icon {
   width: 100%;
   display: block;
   text-align: center;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding-top: 15px;
+  padding-bottom: 15px;
   outline: none;
   cursor: pointer;
-  transition: all 0.7s ease-in-out;
+  transition: all 0.5s ease-in-out;
 }
 
 mat-icon:hover {
   color: tomato;
-  transform: rotate(360deg);
+}
+
+.iconNavigation div p {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 5px;
+  color: #330;
+  font-size: 0.75em;
 }
 
