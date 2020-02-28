@@ -1,6 +1,6 @@
 {
-  "name": "bookingsystem",
-  "short_name": "bookingsystem",
+  "name": "Orbit booking system",
+  "short_name": "Orbit",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",
