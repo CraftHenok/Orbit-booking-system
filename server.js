@@ -11,10 +11,10 @@ app.use(express.json());
 app.use(cors());
 
 // ---------For angular only-------
-app.use(express.static(__dirname + '/dist/bookingsystem'));
-app.get('/*', function (req, res) {
-  res.sendFile(path.join(__dirname + '/dist/bookingsystem'));
-});
+// app.use(express.static(__dirname + '/dist/bookingsystem'));
+// app.get('/*', function (req, res) {
+//   res.sendFile(path.join(__dirname + '/dist/bookingsystem'));
+// });
 
 
 //---------For node api--------

@@ -34,4 +34,5 @@ mat-paginator {
 .active {
   background: #e8f0fe;
   box-shadow: none;
+  font-weight: normal;
 }

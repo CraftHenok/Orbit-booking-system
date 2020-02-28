@@ -5,7 +5,7 @@
 
 .showDate {
   position: relative;
-  height: 150px;
+  height: 130px;
   background: url('/assets/canyon2.jpg') fixed no-repeat;
   background-size: 100% 100%;
   transition: all .6s ease-in-out;
@@ -31,6 +31,14 @@
 
 .showDate:hover {
   filter: brightness(0.83);
+}
+
+.updown {
+  position: absolute;
+  bottom: 0;
+  transform: translateY(50%);
+  right: 20px;
+  transition: all 0.7s ease-in-out;
 }
 
 

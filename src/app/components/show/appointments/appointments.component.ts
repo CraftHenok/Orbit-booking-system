@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {CalendarEvent, CalendarEventTimesChangedEvent, CalendarView} from 'angular-calendar';
 import {Subject, Subscription} from 'rxjs';
 import {isSameDay, isSameMonth} from 'date-fns';
@@ -18,6 +18,9 @@ import {AppointmentWrapper} from '../../../models/Appointemts/AppointmentWrapper
 export class AppointmentsComponent implements OnInit, OnDestroy {
 
   @ViewChild('modalContent', {static: true}) modalContent: TemplateRef<any>;
+
+  @ViewChild('shoeDate') showDate: ElementRef;
+  isFabHidden = false;
 
   view: CalendarView = CalendarView.Week;
 
@@ -192,5 +195,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  resizeShowDate() {
+    this.showDate.nativeElement.style = 'height:0';
+    this.isFabHidden = true;
   }
 }

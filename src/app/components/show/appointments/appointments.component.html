@@ -1,9 +1,13 @@
-<div class="showDate">
+<div class="showDate" #shoeDate>
   <h2 class="showDateContent">{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h2>
   <mat-form-field appearance="outline" style="color: #fff;border-color: #fff !important;">
     <mat-label>Filter</mat-label>
     <input matInput placeholder="Ex. doctor name" [(ngModel)]="doctorName">
   </mat-form-field>
+  <button mat-mini-fab aria-label="Example icon-button with a heart icon" class="updown" (click)="resizeShowDate()"
+          [style.transform]="isFabHidden ? 'scale(0)': ''" color="accent" matTooltip="Hide this box">
+    <mat-icon>arrow_drop_up</mat-icon>
+  </button>
 </div>
 
 <div class="doctorsList">
