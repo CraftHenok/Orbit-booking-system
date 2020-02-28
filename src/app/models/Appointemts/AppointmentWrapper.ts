@@ -8,7 +8,7 @@ export class AppointmentWrapper {
     return new LocalAppointmentsBuilder(remoteAppointment.id, remoteAppointment.patientId, remoteAppointment.appointmentTypeId,
       remoteAppointment.appointmentStatusId, new Date(remoteAppointment.startDateTime),
       new Date(remoteAppointment.endDateTime), remoteAppointment.isServed,
-      remoteAppointment.servedBy).setRandomColor().build();
+      remoteAppointment.servedBy).setColor().build();
   }
 
   static toRemoteAppointment(localAppointments: LocalAppointments): RemoteAppointment {
