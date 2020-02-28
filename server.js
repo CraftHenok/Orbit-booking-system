@@ -1,28 +1,24 @@
+const compression = require('compression');
 const express = require('express');
+const path = require('path');
 const cors = require('cors');
 const migrationManager = require('./backend/utitlity/migrationManager');
 const stateManager = require("./backend/utitlity/stateManager");
-const compression = require('compression');
 
 const app = express();
-//compress what you serve
 app.use(compression());
-
-
-// Body Parser Middleware
 app.use(express.json());
-app.use(express.urlencoded({extended: false}));
-
-// cors
 app.use(cors());
 
-// Serve only the static files form the dist directory
-app.use('/appointment', require('./backend/route/appointmetsRoute'));
-app.use('/doctor', require('./backend/route/doctorRoute'));
-app.use('/patient', require('./backend/route/patientRoute'));
-app.use('/web', express.static(__dirname + '/dist/bookingsystem'));
+// ---------For angular only-------
+app.use(express.static(__dirname + '/dist/bookingsystem'));
+app.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname + '/dist/bookingsystem'));
+});
 
 
+//---------For node api--------
+// migration and seeding
 if (stateManager.createTables()) {
   //create tables
   console.log("Need to create tables");
@@ -31,15 +27,17 @@ if (stateManager.createTables()) {
 }
 
 
+// apis
+app.use('/appointment', require('./backend/route/appointmetsRoute'));
+app.use('/doctor', require('./backend/route/doctorRoute'));
+app.use('/patient', require('./backend/route/patientRoute'));
+
+
 // In case there comes a need to migrate data without file use
 // don't run this if there are already table or don't know what you are doing
 app.get("/doManualMigration/OrbitHealth", () => {
   migrationManager.doMigrationThenSeeding();
   stateManager.createFile();
-});
-
-app.get('/web/*', function (req, res) {
-  res.sendFile(path.join(__dirname + '/dist/bookingsystem/index.html'));
 });
 
 
