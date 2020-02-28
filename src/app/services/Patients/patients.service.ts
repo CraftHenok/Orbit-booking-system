@@ -7,6 +7,7 @@ import {EmergencyInfo} from '../../models/EmergencyInfo';
 import {HttpClient} from '@angular/common/http';
 import {GeneralTitle} from '../../models/GeneralTitle';
 import {shareReplay} from 'rxjs/operators';
+import {UrlManager} from '../../utility/urlManager';
 
 @Injectable({
   providedIn: 'root'
@@ -22,30 +23,30 @@ export class PatientsService {
 
 
   getAllPatients() {
-    const url = 'http://localhost:5000/patient/';
+    const url = UrlManager.getSupperUrl() + '/patient/';
     return this.http.get<Patient[]>(url);
   }
 
 
   getContactInfo(contactInfoId: string) {
-    const url = 'http://localhost:5000/patient/contactInfo/' + contactInfoId;
+    const url = UrlManager.getSupperUrl() + '/patient/contactInfo/' + contactInfoId;
     return this.http.get<Contact>(url);
   }
 
 
   getAddress(addressId: string) {
-    const url = 'http://localhost:5000/patient/address/' + addressId;
+    const url = UrlManager.getSupperUrl() + '/patient/address/' + addressId;
     return this.http.get<Address>(url);
   }
 
 
   getEmergencyInfo(emergencyInfoId: string) {
-    const url = 'http://localhost:5000/patient/emergencyInfo/' + emergencyInfoId;
+    const url = UrlManager.getSupperUrl() + '/patient/emergencyInfo/' + emergencyInfoId;
     return this.http.get<EmergencyInfo>(url);
   }
 
   getPatientTitle() {
-    const url = 'http://localhost:5000/patient/titles';
+    const url = UrlManager.getSupperUrl() + '/patient/titles';
 
     if (!this.patientTitle$) {
       this.patientTitle$ = this.http.get<GeneralTitle[]>(url).pipe(
@@ -57,7 +58,7 @@ export class PatientsService {
   }
 
   getEmergencyTitle() {
-    const url = 'http://localhost:5000/patient/emergencyTitle';
+    const url = UrlManager.getSupperUrl() + '/patient/emergencyTitle';
 
     if (!this.emergencyTitle$) {
       this.emergencyTitle$ = this.http.get<GeneralTitle[]>(url).pipe(
@@ -69,22 +70,22 @@ export class PatientsService {
   }
 
   savePatient(patient: Patient) {
-    const url = 'http://localhost:5000/patient/';
+    const url = UrlManager.getSupperUrl() + '/patient/';
     return this.http.post<Patient>(url, patient);
   }
 
   getPatientByIdFull(id: number) {
-    const url = 'http://localhost:5000/patient/byIdFull/' + id;
+    const url = UrlManager.getSupperUrl() + '/patient/byIdFull/' + id;
     return this.http.get<Patient>(url);
   }
 
   deletePatientById(patient: Patient) {
-    const url = `http://localhost:5000/patient/${patient.seq}/${patient.addressId}/${patient.contactId}/${patient.emergencyInfoId}`;
+    const url = UrlManager.getSupperUrl() + `/patient/${patient.seq}/${patient.addressId}/${patient.contactId}/${patient.emergencyInfoId}`;
     return this.http.delete<number>(url);
   }
 
   updatePatient(patient: Patient) {
-    const url = 'http://localhost:5000/patient/' + patient.seq;
+    const url = UrlManager.getSupperUrl() + '/patient/' + patient.seq;
     return this.http.put<number>(url, patient);
   }
 }
