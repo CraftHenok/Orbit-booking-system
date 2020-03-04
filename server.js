@@ -60,7 +60,8 @@ app.use('/patient', require('./backend/route/patientRoute'));
  * @swagger
  * /doManualMigration/OrbitHealth:
  *  get:
- *    description: do manual migration
+ *    description: do manual migration = migration is to seed any initial data(at the start of tha app) the application handles this by default use this if special case
+ *
  */
 app.get("/doManualMigration/OrbitHealth", () => {
   migrationManager.doMigrationThenSeeding();
