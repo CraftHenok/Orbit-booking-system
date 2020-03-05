@@ -1,5 +1,5 @@
 const express = require("express");
-const patientsController = require("../controller/patientsController");
+const patientsController = require("../../controller/patient/patientsController");
 const router = express.Router();
 
 /**
@@ -369,35 +369,5 @@ router.get('/address/:addressId', patientsController.getAddressById);
  *        description: full emergency info
  */
 router.get('/emergencyInfo/:emergencyInfoId', patientsController.getEmergencyInfoById);
-
-/**
- * @swagger
- * /patient/titles:
- *  get:
- *    description: get available patient titles
- *    tags:
- *      - patient
- *    produces:
- *      -application/json
- *    responses:
- *      200:
- *        description: available list of patients title
- */
-router.get('/titles', patientsController.getPatientsTitle);
-
-/**
- * @swagger
- * /patient/emergencyTitle:
- *  get:
- *    description: get available patient emergencyTitle
- *    tags:
- *      - patient
- *    produces:
- *      -application/json
- *    responses:
- *      200:
- *        description: available list of patients emergencyTitle
- */
-router.get('/emergencyTitle', patientsController.getEmergencyTitle);
 
 module.exports = router;

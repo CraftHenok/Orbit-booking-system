@@ -1,5 +1,5 @@
 const express = require("express");
-const appointmentController = require("../controller/appointmentsController");
+const appointmentController = require("../../controller/appointment/appointmentsController");
 const router = express.Router();
 
 
@@ -107,36 +107,6 @@ router.get('/doctors/:doctorId', appointmentController.getDoctorAppointments);
  *        description: list of patient's appointment
  */
 router.get('/patients/:patientId', appointmentController.getPatientAppointment);
-
-/**
- * @swagger
- * /appointment/appointmentType:
- *  get:
- *    description: get appointment types
- *    tags:
- *      - appointment
- *    produces:
- *      -application/json
- *    responses:
- *      200:
- *        description: list of appointment types
- */
-router.get('/appointmentType', appointmentController.getAppointmentTypes);
-
-/**
- * @swagger
- * /appointment/appointmentStatus:
- *  get:
- *    description: get appointment status
- *    tags:
- *      - appointment
- *    produces:
- *      -application/json
- *    responses:
- *      200:
- *        description: list of appointment status
- */
-router.get('/appointmentStatus', appointmentController.getAppointmentStatus);
 
 /**
  * @swagger

@@ -78,12 +78,6 @@ exports.getAllAppointments = async (req, res) => {
   });
 };
 
-exports.getAppointmentTypes = async (req, res) => {
-  await db.all("SELECT * FROM appointmentType", function (err, rows) {
-    return res.json(rows);
-  });
-};
-
 exports.getAppointmentStatus = async (req, res) => {
   await db.all("SELECT * FROM appointmentStatus", function (err, rows) {
     return res.json(rows);

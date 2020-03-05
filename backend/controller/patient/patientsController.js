@@ -97,41 +97,45 @@ exports.getPatientByIdFull = async (req, res) => {
       if (err) {
         console.log(err)
       } else {
-        const result = {
-          "seq": row.seq,
-          "patientTitleId": row.patientTitleId,
-          "firstName": row.firstName,
-          "middleName": row.middleName,
-          "lastName": row.lastName,
-          "gender": row.gender,
-          "dateOfBirth": row.dateOfBirth,
-          "age": row.age,
-          "nationality": row.nationality,
-          "active": row.active,
-          "regDate": row.regDate,
-          "contact": {
-            "id": row.contactId,
-            "email": row.ce,
-            "phoneNumber": row.cp,
-            "alternatePhoneNumber": row.cap,
-          },
-          "address": {
-            "id": row.addressId,
-            "line1": row.line1,
-            "line2": row.line2,
-            "city": row.city,
-            "country": row.country
-          },
-          "emergencyInfo": {
-            "id": row.emergencyInfoId,
-            "emergencyTitleId": row.emergencyTitleId,
-            "name": row.name,
-            "phoneNumber": row.phoneNumber,
-            "alternatePhoneNumber": row.alternatePhoneNumber,
-          },
-        };
+        if (row === undefined) {
+          return res.status(404).json("resource doesn't exist")
+        } else {
+          const result = {
+            "seq": row.seq,
+            "patientTitleId": row.patientTitleId,
+            "firstName": row.firstName,
+            "middleName": row.middleName,
+            "lastName": row.lastName,
+            "gender": row.gender,
+            "dateOfBirth": row.dateOfBirth,
+            "age": row.age,
+            "nationality": row.nationality,
+            "active": row.active,
+            "regDate": row.regDate,
+            "contact": {
+              "id": row.contactId,
+              "email": row.ce,
+              "phoneNumber": row.cp,
+              "alternatePhoneNumber": row.cap,
+            },
+            "address": {
+              "id": row.addressId,
+              "line1": row.line1,
+              "line2": row.line2,
+              "city": row.city,
+              "country": row.country
+            },
+            "emergencyInfo": {
+              "id": row.emergencyInfoId,
+              "emergencyTitleId": row.emergencyTitleId,
+              "name": row.name,
+              "phoneNumber": row.phoneNumber,
+              "alternatePhoneNumber": row.alternatePhoneNumber,
+            },
+          };
 
-        return res.json(result);
+          return res.json(result);
+        }
       }
     })
 };

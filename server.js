@@ -34,9 +34,14 @@ if (stateManager.createTables()) {
 
 
 // apis
-app.use('/appointment', require('./backend/route/appointmetsRoute'));
+app.use('/appointment', require('./backend/route/appointment/appointmetsRoute'));
 app.use('/doctor', require('./backend/route/doctorRoute'));
-app.use('/patient', require('./backend/route/patientRoute'));
+app.use('/patient', require('./backend/route/patient/patientRoute'));
+app.use('/appointmentType', require('./backend/route/appointment/appointmentTypeRoute'));
+app.use('/appointmentStatus', require('./backend/route/appointment/appointmentStatusRoute'));
+app.use('/emergencyTitle', require('./backend/route/emerergencyTitleRoute'));
+app.use('/patientTitle', require('./backend/route/patient/patientTitleRoute'));
+app.use('/duration', require('./backend/route/durationRoute'));
 
 
 // In case there comes a need to migrate data without file use

@@ -43,6 +43,9 @@ exports.doMigration = () => {
     db.run(tablesCollection.doctor);
     console.log("doctor table created");
 
+    db.run(tablesCollection.duration);
+    console.log("duration table created");
+
   });
 
   console.log("All tables are created");
