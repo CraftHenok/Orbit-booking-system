@@ -2,28 +2,14 @@ const compression = require('compression');
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
-const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 const migrationManager = require('./backend/utitlity/migrationManager');
 const stateManager = require("./backend/utitlity/stateManager");
-
+const swaggerConfig = require('./backend/utitlity/swaggerConfiguration.js');
 const app = express();
 
-const options = {
-  definition: {
-    openapi: '3.0.0', // Specification (optional, defaults to swagger: '2.0')
-    info: {
-      title: 'Orbit booking system API Doc', // Title (required)
-      version: '1.0.0', // Version (required)
-    },
-  },
-  // Path to the API docs
-  apis: ['server.js', './backend/route/*.js'],
-};
 
-// Initialize swagger-jsdoc -> returns validated swagger spec in json format
-const swaggerSpec = swaggerJSDoc(options);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerConfig.swaggerSpec));
 
 
 app.use(compression());
@@ -41,8 +27,8 @@ app.use(cors());
 // migration and seeding
 if (stateManager.createTables()) {
   //create tables
-  console.log("Need to create tables");
-  migrationManager.doMigrationThenSeeding();
+  console.log("No state found Need to create tables");
+  migrationManager.doMigration();
   stateManager.createFile();
 }
 

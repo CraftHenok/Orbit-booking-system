@@ -6,7 +6,7 @@ const fileName = "State.txt";
 exports.createFile = () => {
   fs.appendFile(fileName, (new Date()).toString(), (err) => {
     if (err) throw err;
-    console.log("file created");
+    console.log("state manager file created");
   });
 };
 
