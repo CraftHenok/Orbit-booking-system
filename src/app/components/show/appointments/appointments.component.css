@@ -8,7 +8,7 @@
   height: 130px;
   background: url('/assets/canyon2.jpg') fixed no-repeat;
   background-size: 100% 100%;
-  transition: all .6s ease-in-out;
+  transition: all .5s ease-out;
 }
 
 .showDateContent {
@@ -94,10 +94,6 @@
 /* Border */
 .showDate::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
   color: white;
-}
-
-.my-custom-class {
-  color: red !important;
 }
 
 

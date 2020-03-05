@@ -9,7 +9,6 @@ const stateManager = require("./backend/utitlity/stateManager");
 
 const app = express();
 
-
 const options = {
   definition: {
     openapi: '3.0.0', // Specification (optional, defaults to swagger: '2.0')
