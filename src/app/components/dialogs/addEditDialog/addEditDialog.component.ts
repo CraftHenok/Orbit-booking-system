@@ -9,6 +9,8 @@ import {GeneralType} from '../../../models/GeneralType';
 import {AppointmentsServices} from '../../../services/Appointments/appointments-services';
 import {Subscription} from 'rxjs';
 import {DateManager} from '../../../utility/dateManager';
+import {AppointmentStatusService} from '../../../services/Appointments/Status/appointment-status.service';
+import {AppointmentTypeService} from '../../../services/Appointments/Type/appointment-type.service';
 
 
 /** Error when invalid control is dirty, touched, or submitted. */
@@ -48,11 +50,13 @@ export class AddEditDialogComponent implements OnInit, OnDestroy {
     private dialogRef: MatDialogRef<AddEditDialogComponent>,
     private formBuilder: FormBuilder,
     private calenderEventService: AppointmentsServices,
+    private appointmentStatusService: AppointmentStatusService,
+    private appointmentTypeService: AppointmentTypeService,
     @Inject(MAT_DIALOG_DATA) public data: LocalAppointments) {
   }
 
   ngOnInit(): void {
-    this.subscription.add(this.calenderEventService.getAppointmentStatus().subscribe(
+    this.subscription.add(this.appointmentStatusService.get().subscribe(
       result => {
         this.appointmentStatus = result;
       },
@@ -61,7 +65,7 @@ export class AddEditDialogComponent implements OnInit, OnDestroy {
       }
     ));
 
-    this.subscription.add(this.calenderEventService.getAppointmentTypes().subscribe(
+    this.subscription.add(this.appointmentTypeService.get().subscribe(
       result => {
         this.appointmentType = result;
       },

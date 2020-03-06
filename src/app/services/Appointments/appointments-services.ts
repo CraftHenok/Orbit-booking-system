@@ -6,7 +6,6 @@ import {HttpClient} from '@angular/common/http';
 import {RemoteAppointment} from '../../models/Appointemts/RemoteAppointment';
 import {GeneralType} from '../../models/GeneralType';
 import {GeneralStatus} from '../../models/GeneralStatus';
-import {shareReplay} from 'rxjs/operators';
 import {UrlManager} from '../../utility/urlManager';
 
 @Injectable({
@@ -16,53 +15,33 @@ export class AppointmentsServices {
 
   private appointmentTypes$: Observable<GeneralType[]>;
   private appointmentStatus$: Observable<GeneralStatus[]>;
+  private readonly appointmentUrl: string;
 
   constructor(private http: HttpClient) {
+    this.appointmentUrl = UrlManager.getSupperUrl() + '/appointment/';
   }
 
   getAllAppointments() {
-    const url = UrlManager.getSupperUrl() + '/appointment/';
-    return this.http.get<RemoteAppointment[]>(url);
+    return this.http.get<RemoteAppointment[]>(this.appointmentUrl);
   }
 
   addNewAppointment(newAppointment: LocalAppointments) {
-    const url = UrlManager.getSupperUrl() + '/appointment/';
-    return this.http.post<RemoteAppointment>(url, AppointmentWrapper.toRemoteAppointment(newAppointment));
+    return this.http.post<RemoteAppointment>(this.appointmentUrl, AppointmentWrapper.toRemoteAppointment(newAppointment));
   }
 
   updateAppointment(appointmentToUpdate: LocalAppointments) {
-    const url = UrlManager.getSupperUrl() + '/appointment/' + appointmentToUpdate.id;
+    const url = this.appointmentUrl + appointmentToUpdate.id;
     return this.http.put<number>(url, AppointmentWrapper.toRemoteAppointment(appointmentToUpdate));
   }
 
   deleteAppointment(appointmentToDelete: LocalAppointments) {
-    const url = UrlManager.getSupperUrl() + '/appointment/' + appointmentToDelete.id;
+    const url = this.appointmentUrl + appointmentToDelete.id;
     return this.http.delete<number>(url);
-  }
-
-  getAppointmentTypes() {
-    const url = UrlManager.getSupperUrl() + '/appointment/appointmentType';
-    if (!this.appointmentTypes$) {
-      this.appointmentTypes$ = this.http.get<GeneralType[]>(url).pipe(
-        shareReplay(1)
-      );
-    }
-    return this.appointmentTypes$;
-  }
-
-  getAppointmentStatus() {
-    const url = UrlManager.getSupperUrl() + '/appointment/appointmentStatus';
-    if (!this.appointmentStatus$) {
-      this.appointmentStatus$ = this.http.get<GeneralStatus[]>(url).pipe(
-        shareReplay(1)
-      );
-    }
-    return this.appointmentStatus$;
   }
 
 
   getAppointmentByDoctor(seq: number) {
-    const url = UrlManager.getSupperUrl() + '/appointment/doctors/' + seq;
+    const url = this.appointmentUrl + 'doctors/' + seq;
     return this.http.get<RemoteAppointment[]>(url);
   }
 

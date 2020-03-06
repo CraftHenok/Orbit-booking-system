@@ -45,30 +45,6 @@ export class PatientsService {
     return this.http.get<EmergencyInfo>(url);
   }
 
-  getPatientTitle() {
-    const url = UrlManager.getSupperUrl() + '/patient/titles';
-
-    if (!this.patientTitle$) {
-      this.patientTitle$ = this.http.get<GeneralTitle[]>(url).pipe(
-        shareReplay(1)
-      );
-    }
-
-    return this.patientTitle$;
-  }
-
-  getEmergencyTitle() {
-    const url = UrlManager.getSupperUrl() + '/patient/emergencyTitle';
-
-    if (!this.emergencyTitle$) {
-      this.emergencyTitle$ = this.http.get<GeneralTitle[]>(url).pipe(
-        shareReplay(1)
-      );
-    }
-
-    return this.emergencyTitle$;
-  }
-
   savePatient(patient: Patient) {
     const url = UrlManager.getSupperUrl() + '/patient/';
     return this.http.post<Patient>(url, patient);

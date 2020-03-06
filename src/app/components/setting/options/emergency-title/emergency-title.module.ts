@@ -6,6 +6,7 @@ import {EmergencyTitleComponent} from './emergency-title.component';
 import {MatCardModule} from '@angular/material/card';
 import {MatListModule} from '@angular/material/list';
 import {MatButtonModule} from '@angular/material/button';
+import {SettingModule} from '../../setting.module';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import {MatButtonModule} from '@angular/material/button';
     EmergencyTitleRoutingModule,
     MatCardModule,
     MatListModule,
-    MatButtonModule
+    MatButtonModule,
+    SettingModule
   ]
 })
 export class EmergencyTitleModule {

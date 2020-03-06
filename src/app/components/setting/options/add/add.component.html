@@ -1,0 +1,25 @@
+<div *ngIf="data.get('id') === '0'">
+  <h1 mat-dialog-title>Add new {{ data.get('dataName') }}</h1>
+</div>
+<div *ngIf="data.get('id') !== '0'">
+  <h1 mat-dialog-title>Edit or delete {{ data.get('dataName') }}</h1>
+</div>
+
+<div mat-dialog-content>
+  <mat-form-field class="example-full-width" appearance="outline" style="width: 100%">
+    <mat-label>Favorite food</mat-label>
+    <input matInput placeholder="Enter what to add" [(ngModel)]="value">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions align="end">
+  <div *ngIf="data.get('id') === '0'">
+    <button mat-flat-button mat-dialog-close>Cancel</button>
+    <button mat-flat-button color="primary">Add</button>
+  </div>
+  <div *ngIf="data.get('id') !== '0'">
+    <button mat-flat-button mat-dialog-close>Cancel</button>
+    <button mat-flat-button color="warn">Delete</button>
+    <button mat-flat-button color="primary">Update</button>
+  </div>
+</div>
+

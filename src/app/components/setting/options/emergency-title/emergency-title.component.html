@@ -1,7 +1,7 @@
-<mat-card class="example-card" style="width: 40%;margin-top: 10px">
+<mat-card class="example-card">
   <mat-card-header>
-    <mat-card-title>Appointment Status</mat-card-title>
-    <mat-card-subtitle>List of available appointment status click to remove</mat-card-subtitle>
+    <mat-card-title>Emergency title</mat-card-title>
+    <mat-card-subtitle>List of available emergency title click to remove</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
     <mat-action-list>
@@ -9,6 +9,6 @@
     </mat-action-list>
   </mat-card-content>
   <mat-card-actions align="end">
-    <button mat-stroked-button color="primary">Add</button>
+    <button mat-flat-button color="primary" (click)="openDialog()">Add</button>
   </mat-card-actions>
 </mat-card>

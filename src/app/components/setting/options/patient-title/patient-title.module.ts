@@ -7,6 +7,7 @@ import {PatientTitleComponent} from './patient-title.component';
 import {MatCardModule} from '@angular/material/card';
 import {MatListModule} from '@angular/material/list';
 import {MatButtonModule} from '@angular/material/button';
+import {SettingModule} from '../../setting.module';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import {MatButtonModule} from '@angular/material/button';
     PatientTitleRoutingModule,
     MatCardModule,
     MatListModule,
-    MatButtonModule
+    MatButtonModule,
+    SettingModule
   ]
 })
 export class PatientTitleModule {

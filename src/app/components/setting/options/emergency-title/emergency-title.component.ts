@@ -1,14 +1,14 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {GeneralStatus} from '../../../../models/GeneralStatus';
 import {Subscription} from 'rxjs';
-import {AppointmentsServices} from '../../../../services/Appointments/appointments-services';
-import {PatientsService} from '../../../../services/Patients/patients.service';
 import {GeneralTitle} from '../../../../models/GeneralTitle';
+import {EmergencyTitleService} from '../../../../services/Patients/EmergencyTitle/emergency-title.service';
+import {AddComponent} from '../add/add.component';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-emergency-title',
   templateUrl: './emergency-title.component.html',
-  styleUrls: ['./emergency-title.component.css']
+  styleUrls: ['../patient-title/patient-title.component.css']
 })
 export class EmergencyTitleComponent implements OnInit, OnDestroy {
 
@@ -16,11 +16,12 @@ export class EmergencyTitleComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription = new Subscription();
 
-  constructor(private patientService: PatientsService) {
+  constructor(private emergencyTitleService: EmergencyTitleService,
+              public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
-    this.subscription.add(this.patientService.getEmergencyTitle().subscribe(
+    this.subscription.add(this.emergencyTitleService.get().subscribe(
       result => {
         this.dataSource = result;
       },
@@ -32,6 +33,21 @@ export class EmergencyTitleComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  openDialog() {
+
+    const map: Map<string, string> = new Map();
+    map.set('A', 'B');
+
+    const dialogRef = this.dialog.open(AddComponent, {
+      width: '400px',
+      data: map
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 
 }

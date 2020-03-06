@@ -9,6 +9,7 @@ import {MatListModule} from '@angular/material/list';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatMenuModule} from '@angular/material/menu';
+import {SettingModule} from '../../setting.module';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import {MatMenuModule} from '@angular/material/menu';
     MatListModule,
     MatButtonModule,
     MatIconModule,
-    MatMenuModule
+    MatMenuModule,
+    SettingModule
   ]
 })
 export class AppointmentStatusModule {

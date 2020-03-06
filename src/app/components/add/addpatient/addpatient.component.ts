@@ -9,6 +9,8 @@ import {Country} from '../../../models/Country';
 import {PatientsFormManager} from '../../../utility/patientsFormManager';
 import {SnackBarManager} from '../../../utility/snackBarManager';
 import {DateManager} from '../../../utility/dateManager';
+import {PatientTitleService} from '../../../services/Patients/PatientTitle/patient-title.service';
+import {EmergencyTitleService} from '../../../services/Patients/EmergencyTitle/emergency-title.service';
 
 export const filter = (opt: string[], value: string): string[] => {
   const filterValue = value.toLowerCase();
@@ -48,6 +50,8 @@ export class AddpatientComponent implements OnInit, OnDestroy {
 
   constructor(private formBuilder: FormBuilder,
               private patientService: PatientsService,
+              private patientTitleService: PatientTitleService,
+              private emergencyTitleService: EmergencyTitleService,
               private snackBar: MatSnackBar) {
     this.patientsFormManager = new PatientsFormManager(formBuilder);
     this.primaryInfoForm = this.patientsFormManager.getFormBuilder().primaryInfoForm;
@@ -60,19 +64,21 @@ export class AddpatientComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
+    // tslint:disable-next-line:no-non-null-assertion
     this.filteredCountry = this.primaryInfoForm.get('nationality')!.valueChanges
       .pipe(
         startWith(''),
         map(country => country ? Country.filter(country) : this.countries.slice())
       );
 
+    // tslint:disable-next-line:no-non-null-assertion
     this.filteredCountry2 = this!.addressForm.get('country')!.valueChanges
       .pipe(
         startWith(''),
         map(country => country ? Country.filter(country) : this.countries.slice())
       );
 
-    this.subscription.add(this.patientService.getPatientTitle().subscribe(
+    this.subscription.add(this.patientTitleService.get().subscribe(
       result => {
         this.patientsTitles = result;
       },
@@ -81,7 +87,7 @@ export class AddpatientComponent implements OnInit, OnDestroy {
       }
     ));
 
-    this.subscription.add(this.patientService.getEmergencyTitle().subscribe(
+    this.subscription.add(this.emergencyTitleService.get().subscribe(
       result => {
         this.emergencyTitle = result;
       },

@@ -9,6 +9,7 @@ import {MatListModule} from '@angular/material/list';
 import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import {SettingModule} from '../../setting.module';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import {MatInputModule} from '@angular/material/input';
     MatListModule,
     MatButtonModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    SettingModule
   ]
 })
 export class AppointmentTypeModule {

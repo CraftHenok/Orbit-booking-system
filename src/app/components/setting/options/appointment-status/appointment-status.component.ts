@@ -1,12 +1,14 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
-import {AppointmentsServices} from '../../../../services/Appointments/appointments-services';
 import {GeneralStatus} from '../../../../models/GeneralStatus';
+import {AppointmentStatusService} from '../../../../services/Appointments/Status/appointment-status.service';
+import {AddComponent} from '../add/add.component';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-appointment-status',
   templateUrl: './appointment-status.component.html',
-  styleUrls: ['./appointment-status.component.css']
+  styleUrls: ['../patient-title/patient-title.component.css']
 })
 export class AppointmentStatusComponent implements OnInit, OnDestroy {
 
@@ -14,11 +16,12 @@ export class AppointmentStatusComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription = new Subscription();
 
-  constructor(private appointmentService: AppointmentsServices) {
+  constructor(private appointmentStatusService: AppointmentStatusService,
+              public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
-    this.subscription.add(this.appointmentService.getAppointmentStatus().subscribe(
+    this.subscription.add(this.appointmentStatusService.get().subscribe(
       result => {
         this.dataSource = result;
       },
@@ -30,5 +33,20 @@ export class AppointmentStatusComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  openDialog() {
+
+    const map: Map<string, string> = new Map();
+    map.set('A', 'B');
+
+    const dialogRef = this.dialog.open(AddComponent, {
+      width: '400px',
+      data: map
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 }
