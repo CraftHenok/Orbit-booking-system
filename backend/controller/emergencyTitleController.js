@@ -1,5 +1,6 @@
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('demo.db');
+const uuidv4 = require('uuid/v4');
 
 exports.deleteEmergencyTitle = async (req, res) => {
   await db.run("DELETE from EmergencyTitle WHERE id= ?", req.params['id'], function (err) {
@@ -12,13 +13,20 @@ exports.deleteEmergencyTitle = async (req, res) => {
 };
 
 exports.saveEmergencyTitle = async (req, res) => {
-  await db.run("INSERT INTO EmergencyTitle(title) VALUES(?)", [req.body.title], function (err) {
-    if (err) {
-      return res.status(400).send(err.message);
-    } else {
-      return res.json(req.body.title);
-    }
-  });
+  const newEmergencyTitle = {
+    id: uuidv4(),
+    title: req.body.title
+  };
+
+
+  await db.run("INSERT INTO EmergencyTitle(id,title) VALUES(?,?)", [newEmergencyTitle.id, newEmergencyTitle.title],
+    function (err) {
+      if (err) {
+        return res.status(400).send(err.message);
+      } else {
+        return res.json(newEmergencyTitle);
+      }
+    });
 };
 
 exports.getAllEmergencyTitle = async (req, res) => {

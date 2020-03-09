@@ -10,12 +10,12 @@ const appointmentTable = "CREATE TABLE \"Appointment\" (\n" +
   ");";
 
 const appointmentType = "CREATE TABLE \"GeneralType\" (\n" +
-  "\t\"id\"\tINTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n" +
+  "\t\"id\"\tTEXT NOT NULL UNIQUE,\n" +
   "\t\"type\"\tTEXT NOT NULL\n" +
   ");";
 
 const appointmentStatus = "CREATE TABLE \"GeneralStatus\" (\n" +
-  "\t\"id\"\tINTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n" +
+  "\t\"id\"\tTEXT NOT NULL UNIQUE,\n" +
   "\t\"status\"\tTEXT NOT NULL\n" +
   ");";
 
@@ -37,7 +37,7 @@ const patient = "CREATE TABLE \"Patient\" (\n" +
   ");";
 
 const patientTitle = "CREATE TABLE \"PatientTitle\" (\n" +
-  "\t\"id\"\tINTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n" +
+  "\t\"id\"\tTEXT NOT NULL UNIQUE,\n" +
   "\t\"title\"\tTEXT NOT NULL\n" +
   ");";
 
@@ -65,7 +65,7 @@ const emergencyContact = "CREATE TABLE \"EmergencyContact\" (\n" +
   ");";
 
 const emergencyTitle = "CREATE TABLE \"emergencyTitle\" (\n" +
-  "\t\"id\"\tINTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n" +
+  "\t\"id\"\tTEXT NOT NULL UNIQUE,\n" +
   "\t\"title\"\tTEXT NOT NULL\n" +
   ");";
 
@@ -81,7 +81,7 @@ const doctor = "CREATE TABLE \"Doctor\" (\n" +
   ");";
 
 const duration = "CREATE TABLE \"duration\" (\n" +
-  "\t\"id\"\tINTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+  "\t\"id\"\tTEXT NOT NULL UNIQUE,\n" +
   "\t\"duration\"\tINTEGER NOT NULL\n" +
   ");";
 

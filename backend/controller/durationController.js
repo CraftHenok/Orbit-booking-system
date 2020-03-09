@@ -1,12 +1,18 @@
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('demo.db');
+const uuidv4 = require('uuid/v4');
 
 exports.saveDuration = async (req, res) => {
-  await db.run("INSERT INTO duration(duration) VALUES(?)", [req.body.duration], function (err) {
+  const newDuration = {
+    id: uuidv4(),
+    duration: req.body.duration
+  };
+
+  await db.run("INSERT INTO duration(id,duration) VALUES(?,?)", [newDuration.id, newDuration.duration], function (err) {
     if (err) {
       return res.status(400).send(err.message);
     } else {
-      return res.json(req.body.duration);
+      return res.json(newDuration);
     }
   });
 };

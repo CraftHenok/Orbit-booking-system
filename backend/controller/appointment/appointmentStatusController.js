@@ -1,5 +1,6 @@
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('demo.db');
+const uuidv4 = require('uuid/v4');
 
 exports.deleteAppointmentStatus = async (req, res) => {
   await db.run("DELETE from AppointmentStatus WHERE id= ?", req.params['id'], function (err) {
@@ -12,11 +13,15 @@ exports.deleteAppointmentStatus = async (req, res) => {
 };
 
 exports.saveAppointmentStatus = async (req, res) => {
-  await db.run("INSERT INTO AppointmentStatus(status) VALUES(?)", [req.body.status], function (err) {
+  const newAppointmentStatus = {
+    id: uuidv4(),
+    status: req.body.status
+  };
+  await db.run("INSERT INTO AppointmentStatus(id,status) VALUES(?,?)", [newAppointmentStatus.id, newAppointmentStatus.status], function (err) {
     if (err) {
       return res.status(400).send(err.message);
     } else {
-      return res.json(req.body.status);
+      return res.json(newAppointmentStatus);
     }
   });
 };
