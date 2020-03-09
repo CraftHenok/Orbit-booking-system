@@ -1,10 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {AppointmentsServices} from '../../../../services/Appointments/appointments-services';
 import {Subscription} from 'rxjs';
 import {GeneralType} from '../../../../models/GeneralType';
 import {AppointmentTypeService} from '../../../../services/Appointments/Type/appointment-type.service';
 import {AddComponent} from '../add/add.component';
 import {MatDialog} from '@angular/material/dialog';
+import {Variables} from '../../../../utility/variables';
 
 @Component({
   selector: 'app-appointment-type',
@@ -25,7 +25,7 @@ export class AppointmentTypeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription.add(this.appointmentTypeService.get().subscribe(
       result => {
-        this.dataSource = result;
+        this.dataSource.push(...result);
       },
       error => {
         console.error(error);
@@ -33,23 +33,87 @@ export class AppointmentTypeComponent implements OnInit, OnDestroy {
     ));
   }
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
-
-  openDialog() {
-
-    const map: Map<string, string> = new Map();
-    map.set('A', 'B');
-
+  openDialogWith(map: Map<string, string>) {
     const dialogRef = this.dialog.open(AddComponent, {
-      width: '400px',
+      width: Variables.dialogSmallWidth,
       data: map
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      const generalType = new GeneralType();
+      generalType.type = result.get('value');
+      generalType.id = result.get('id');
+      switch (result.get('action')) {
+        case 'A':
+          this.add(generalType);
+          break;
+        case 'D':
+          this.delete(generalType);
+          break;
+        case 'U':
+          this.update(generalType);
+          break;
+        default:
+          console.log('unknown value passed');
+      }
     });
   }
 
+  itemClicked(type: GeneralType) {
+    const map: Map<string, string> = new Map();
+    map.set('id', type.id.toString());
+    map.set('dataName', 'Appointment type');
+    map.set('value', type.type);
+    this.openDialogWith(map);
+  }
+
+  addClicked() {
+    const map: Map<string, string> = new Map();
+    map.set('id', '0');
+    map.set('dataName', 'Appointment type');
+    map.set('value', '');
+
+    this.openDialogWith(map);
+  }
+
+  private add(generalType: GeneralType) {
+    this.subscription.add(this.appointmentTypeService.save(generalType).subscribe(
+      result => {
+        this.dataSource.push(result);
+      }, error => {
+        console.error(error);
+      }
+    ));
+  }
+
+  private update(generalType: GeneralType) {
+    this.subscription.add(this.appointmentTypeService.edit(generalType).subscribe(
+      result => {
+        if (result > 0) {
+          const index = this.dataSource.findIndex(it => it.id === generalType.id);
+          this.dataSource[index].type = generalType.type;
+        }
+      }, error => {
+        console.error(error);
+      }
+    ));
+
+  }
+
+  private delete(generalType: GeneralType) {
+    this.subscription.add(this.appointmentTypeService.delete(generalType).subscribe(
+      result => {
+        if (result > 0) {
+          this.dataSource = this.dataSource.filter(it => it.id !== generalType.id);
+        }
+      }, error => {
+        console.error(error);
+      }
+    ));
+
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 }

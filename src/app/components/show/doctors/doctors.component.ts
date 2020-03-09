@@ -8,6 +8,7 @@ import {Doctor} from '../../../models/Doctor';
 import {Router} from '@angular/router';
 import {ConfirmActionDialogComponent} from '../../dialogs/confirm-action-dialog/confirm-action-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
+import {Variables} from '../../../utility/variables';
 
 @Component({
   selector: 'app-doctors',
@@ -85,7 +86,7 @@ export class DoctorsComponent implements OnInit, OnDestroy {
 
   openDialog() {
     return this.dialog.open(ConfirmActionDialogComponent, {
-      width: '400px',
+      width: Variables.dialogSmallWidth,
     });
   }
 

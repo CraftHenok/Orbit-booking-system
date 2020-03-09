@@ -5,11 +5,12 @@
   </mat-card-header>
   <mat-card-content>
     <mat-action-list>
-      <button mat-list-item *ngFor="let type of dataSource"> {{ type.type | titlecase }} </button>
+      <button mat-list-item *ngFor="let type of dataSource"
+              (click)="itemClicked(type)"> {{ type.type | titlecase }} </button>
     </mat-action-list>
   </mat-card-content>
   <mat-card-actions align="end">
-    <button mat-flat-button color="primary" (click)="openDialog()">Add</button>
+    <button mat-flat-button color="primary" (click)="addClicked()">Add</button>
   </mat-card-actions>
 </mat-card>
 

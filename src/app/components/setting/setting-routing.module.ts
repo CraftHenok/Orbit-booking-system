@@ -23,6 +23,10 @@ const routes: Routes = [{
     {
       path: 'patientTitle',
       loadChildren: () => import('./options/patient-title/patient-title.module').then(m => m.PatientTitleModule)
+    },
+    {
+      path: 'duration',
+      loadChildren: () => import('./options/duration/duration.module').then(m => m.DurationModule)
     }
   ]
 }];

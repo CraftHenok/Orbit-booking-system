@@ -8,6 +8,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {AppointmentsServices} from '../../../services/Appointments/appointments-services';
 import {LocalAppointmentsBuilder} from '../../../models/Appointemts/LocalAppointmentsBuilder';
 import {AppointmentWrapper} from '../../../models/Appointemts/AppointmentWrapper';
+import {Variables} from '../../../utility/variables';
 
 
 @Component({
@@ -149,7 +150,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
 
   openDialogWith(appointment: CalendarEvent) {
     return this.dialog.open(AddEditDialogComponent, {
-      width: '500px',
+      width: Variables.dialogBigWidth,
       data: appointment
     });
   }

@@ -7,12 +7,10 @@ import {MatSort} from '@angular/material/sort';
 import {Subscription} from 'rxjs';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {MatDialog} from '@angular/material/dialog';
-import {AddEditDialogComponent} from '../../dialogs/addEditDialog/addEditDialog.component';
 import {PatientsdetaildialogComponent} from '../../dialogs/patientsdetaildialog/patientsdetaildialog.component';
 import {Router} from '@angular/router';
 import {ConfirmActionDialogComponent} from '../../dialogs/confirm-action-dialog/confirm-action-dialog.component';
-import {LocalAppointments} from '../../../models/Appointemts/LocalAppointments';
-import {LocalAppointmentsBuilder} from '../../../models/Appointemts/LocalAppointmentsBuilder';
+import {Variables} from '../../../utility/variables';
 
 @Component({
   selector: 'app-patients',
@@ -72,7 +70,7 @@ export class PatientsComponent implements OnInit, OnDestroy {
   openPatientDetailDialog(code: string, element: Patient) {
     element.code = code;
     return this.dialog.open(PatientsdetaildialogComponent, {
-      width: '400px',
+      width: Variables.dialogSmallWidth,
       data: element
     });
   }

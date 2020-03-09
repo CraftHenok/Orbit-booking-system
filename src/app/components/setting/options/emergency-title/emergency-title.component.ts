@@ -4,6 +4,7 @@ import {GeneralTitle} from '../../../../models/GeneralTitle';
 import {EmergencyTitleService} from '../../../../services/Patients/EmergencyTitle/emergency-title.service';
 import {AddComponent} from '../add/add.component';
 import {MatDialog} from '@angular/material/dialog';
+import {Variables} from '../../../../utility/variables';
 
 @Component({
   selector: 'app-emergency-title',
@@ -23,7 +24,7 @@ export class EmergencyTitleComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription.add(this.emergencyTitleService.get().subscribe(
       result => {
-        this.dataSource = result;
+        this.dataSource.push(...result);
       },
       error => {
         console.error(error);
@@ -31,23 +32,88 @@ export class EmergencyTitleComponent implements OnInit, OnDestroy {
     ));
   }
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+  addClicked() {
+    const map: Map<string, string> = new Map();
+    map.set('id', '0');
+    map.set('dataName', 'Emergency title');
+    map.set('value', '');
+
+    this.openDialogWith(map);
   }
 
-  openDialog() {
-
+  itemClicked(title: GeneralTitle) {
     const map: Map<string, string> = new Map();
-    map.set('A', 'B');
+    map.set('id', title.id.toString());
+    map.set('dataName', 'Emergency title');
+    map.set('value', title.title);
+    this.openDialogWith(map);
+  }
 
+  openDialogWith(title: Map<string, string>) {
     const dialogRef = this.dialog.open(AddComponent, {
-      width: '400px',
-      data: map
+      width: Variables.dialogSmallWidth,
+      data: title
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      const generalTitle = new GeneralTitle();
+      generalTitle.title = result.get('value');
+      generalTitle.id = result.get('id');
+      switch (result.get('action')) {
+        case 'A':
+          this.add(generalTitle);
+          break;
+        case 'D':
+          this.delete(generalTitle);
+          break;
+        case 'U':
+          this.update(generalTitle);
+          break;
+        default:
+          console.log('unknown value passed');
+      }
     });
+  }
+
+  private update(generalTitle: GeneralTitle) {
+    this.subscription.add(this.emergencyTitleService.edit(generalTitle).subscribe(
+      result => {
+        if (result > 0) {
+          const index = this.dataSource.findIndex(it => it.id === generalTitle.id);
+          this.dataSource[index].title = generalTitle.title;
+        }
+      },
+      error => {
+        console.error(error);
+      }
+    ));
+  }
+
+  private delete(generalTitle: GeneralTitle) {
+    this.subscription.add(this.emergencyTitleService.delete(generalTitle).subscribe(
+      result => {
+        if (result > 0) {
+          this.dataSource = this.dataSource.filter(it => it.id !== generalTitle.id);
+        }
+      },
+      error => {
+        console.log(error);
+      }
+    ));
+  }
+
+  private add(generalTitle: GeneralTitle) {
+    this.subscription.add(this.emergencyTitleService.save(generalTitle).subscribe(
+      result => {
+        this.dataSource.push(result);
+      }, error => {
+        console.error(error);
+      }
+    ));
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
 }

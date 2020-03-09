@@ -19,4 +19,20 @@ export class AddComponent implements OnInit {
     this.value = this.data.get('value');
   }
 
+  add() {
+    this.data.set('value', this.value);
+    this.data.set('action', 'A');
+    this.dialogRef.close(this.data);
+  }
+
+  delete() {
+    this.data.set('action', 'D');
+    this.dialogRef.close(this.data);
+  }
+
+  update() {
+    this.data.set('value', this.value);
+    this.data.set('action', 'U');
+    this.dialogRef.close(this.data);
+  }
 }

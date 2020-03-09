@@ -21,6 +21,7 @@ const TREE_DATA: FoodNode[] = [
       {name: 'Appointment status', link: 'appointmentStatus'},
       {name: 'Emergency title', link: 'emergencyTitle'},
       {name: 'Patient title', link: 'patientTitle'},
+      {name: 'Duration', link: 'duration'},
     ]
   },
   {

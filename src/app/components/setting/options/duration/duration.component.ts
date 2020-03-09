@@ -1,28 +1,28 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
-import {GeneralTitle} from '../../../../models/GeneralTitle';
-import {PatientTitleService} from '../../../../services/Patients/PatientTitle/patient-title.service';
 import {MatDialog} from '@angular/material/dialog';
 import {AddComponent} from '../add/add.component';
+import {DurationService} from '../../../../services/Duration/duration.service';
+import {Duration} from '../../../../models/Duration';
 import {Variables} from '../../../../utility/variables';
 
 @Component({
-  selector: 'app-patient-title',
-  templateUrl: './patient-title.component.html',
-  styleUrls: ['./patient-title.component.css']
+  selector: 'app-duration',
+  templateUrl: './duration.component.html',
+  styleUrls: ['../patient-title/patient-title.component.css']
 })
-export class PatientTitleComponent implements OnInit, OnDestroy {
+export class DurationComponent implements OnInit, OnDestroy {
 
-  dataSource: GeneralTitle[] = [];
+  dataSource: Duration[] = [];
 
   private subscription: Subscription = new Subscription();
 
-  constructor(private patientTitleService: PatientTitleService,
+  constructor(private durationService: DurationService,
               public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
-    this.subscription.add(this.patientTitleService.get().subscribe(
+    this.subscription.add(this.durationService.get().subscribe(
       result => {
         this.dataSource.push(...result);
       },
@@ -32,22 +32,20 @@ export class PatientTitleComponent implements OnInit, OnDestroy {
     ));
   }
 
-
   addClicked() {
-
     const map: Map<string, string> = new Map();
     map.set('id', '0');
-    map.set('dataName', 'Patient title');
+    map.set('dataName', 'Duration');
     map.set('value', '');
 
     this.openDialogWith(map);
   }
 
-  itemClicked(title: GeneralTitle) {
+  itemClicked(duration: Duration) {
     const map: Map<string, string> = new Map();
-    map.set('id', title.id.toString());
-    map.set('dataName', 'Patient title');
-    map.set('value', title.title);
+    map.set('id', duration.id.toString());
+    map.set('dataName', 'Duration');
+    map.set('value', duration.duration.toString());
     this.openDialogWith(map);
   }
 
@@ -58,18 +56,18 @@ export class PatientTitleComponent implements OnInit, OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      const generalTitle = new GeneralTitle();
-      generalTitle.title = result.get('value');
-      generalTitle.id = result.get('id');
+      const duration = new Duration();
+      duration.duration = Number(result.get('value'));
+      duration.id = result.get('id');
       switch (result.get('action')) {
         case 'A':
-          this.add(generalTitle);
+          this.add(duration);
           break;
         case 'D':
-          this.delete(generalTitle);
+          this.delete(duration);
           break;
         case 'U':
-          this.update(generalTitle);
+          this.update(duration);
           break;
         default:
           console.log('unknown value passed');
@@ -77,12 +75,12 @@ export class PatientTitleComponent implements OnInit, OnDestroy {
     });
   }
 
-  private update(generalTitle: GeneralTitle) {
-    this.subscription.add(this.patientTitleService.edit(generalTitle).subscribe(
+  private update(duration: Duration) {
+    this.subscription.add(this.durationService.edit(duration).subscribe(
       result => {
         if (result > 0) {
-          const index = this.dataSource.findIndex(it => it.id === generalTitle.id);
-          this.dataSource[index].title = generalTitle.title;
+          const index = this.dataSource.findIndex(it => it.id === duration.id);
+          this.dataSource[index].duration = duration.duration;
         }
       },
       error => {
@@ -91,11 +89,11 @@ export class PatientTitleComponent implements OnInit, OnDestroy {
     ));
   }
 
-  private delete(generalTitle: GeneralTitle) {
-    this.subscription.add(this.patientTitleService.delete(generalTitle).subscribe(
+  private delete(duration: Duration) {
+    this.subscription.add(this.durationService.delete(duration).subscribe(
       result => {
         if (result > 0) {
-          this.dataSource = this.dataSource.filter(it => it.id !== generalTitle.id);
+          this.dataSource = this.dataSource.filter(it => it.id !== duration.id);
         }
       },
       error => {
@@ -104,8 +102,8 @@ export class PatientTitleComponent implements OnInit, OnDestroy {
     ));
   }
 
-  private add(generalTitle: GeneralTitle) {
-    this.subscription.add(this.patientTitleService.save(generalTitle).subscribe(
+  private add(duration: Duration) {
+    this.subscription.add(this.durationService.save(duration).subscribe(
       result => {
         this.dataSource.push(result);
       }, error => {
@@ -117,4 +115,5 @@ export class PatientTitleComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
+
 }
