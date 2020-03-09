@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {UrlManager} from '../../../utility/urlManager';
 import {GeneralTitle} from '../../../models/GeneralTitle';
+import {Observable} from 'rxjs';
+import {shareReplay} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -10,12 +12,19 @@ export class EmergencyTitleService {
 
   private readonly emergencyTitleUrl: string;
 
+  private emergencyTitle$: Observable<GeneralTitle[]>;
+
   constructor(private http: HttpClient) {
     this.emergencyTitleUrl = UrlManager.getSupperUrl() + '/emergencyTitle';
   }
 
   get() {
-    return this.http.get<GeneralTitle[]>(this.emergencyTitleUrl);
+    if (!this.emergencyTitle$) {
+      this.emergencyTitle$ = this.http.get<GeneralTitle[]>(this.emergencyTitleUrl).pipe(
+        shareReplay(1)
+      );
+    }
+    return this.emergencyTitle$;
   }
 
   save(generalTitle: GeneralTitle) {

@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {UrlManager} from '../../../utility/urlManager';
-import {GeneralType} from '../../../models/GeneralType';
 import {GeneralStatus} from '../../../models/GeneralStatus';
+import {Observable} from 'rxjs';
+import {shareReplay} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -11,12 +12,19 @@ export class AppointmentStatusService {
 
   private readonly appointmentStatusUrl: string;
 
+  private appointmentStatus$: Observable<GeneralStatus[]>;
+
   constructor(private http: HttpClient) {
     this.appointmentStatusUrl = UrlManager.getSupperUrl() + '/appointmentStatus';
   }
 
   get() {
-    return this.http.get<GeneralStatus[]>(this.appointmentStatusUrl);
+    if (!this.appointmentStatus$) {
+      this.appointmentStatus$ = this.http.get<GeneralStatus[]>(this.appointmentStatusUrl).pipe(
+        shareReplay(1)
+      );
+    }
+    return this.appointmentStatus$;
   }
 
   save(generalStatus: GeneralStatus) {
