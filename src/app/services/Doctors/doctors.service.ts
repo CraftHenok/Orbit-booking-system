@@ -12,14 +12,15 @@ export class DoctorsService {
 
   private doctors$: Observable<Doctor[]>;
 
+  private readonly doctorsUrl: string;
+
   constructor(private http: HttpClient) {
+    this.doctorsUrl = UrlManager.getSupperUrl() + '/doctor/';
   }
 
   getAllDoctors() {
-
-    const url = UrlManager.getSupperUrl() + '/doctor/';
     if (!this.doctors$) {
-      this.doctors$ = this.http.get<Doctor[]>(url).pipe(
+      this.doctors$ = this.http.get<Doctor[]>(this.doctorsUrl).pipe(
         shareReplay(1)
       );
     }
@@ -28,22 +29,21 @@ export class DoctorsService {
   }
 
   saveDoctor(doctor: Doctor) {
-    const url = UrlManager.getSupperUrl() + '/doctor/';
-    return this.http.post<Doctor>(url, doctor);
+    return this.http.post<Doctor>(this.doctorsUrl, doctor);
   }
 
   getDoctorById(doctorId: number) {
-    const url = UrlManager.getSupperUrl() + '/doctor/byId/' + doctorId;
+    const url = this.doctorsUrl + 'byId/' + doctorId;
     return this.http.get<Doctor>(url);
   }
 
   deleteDoctorById(doctorId: number) {
-    const url = UrlManager.getSupperUrl() + '/doctor/' + doctorId;
+    const url = this.doctorsUrl + doctorId;
     return this.http.delete<number>(url);
   }
 
   updateDoctor(doctor: Doctor) {
-    const url = UrlManager.getSupperUrl() + '/doctor/' + doctor.seq;
+    const url = this.doctorsUrl + doctor.seq;
     return this.http.put<number>(url, doctor);
   }
 }

@@ -1,11 +1,8 @@
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
 import {LocalAppointments} from '../../models/Appointemts/LocalAppointments';
 import {AppointmentWrapper} from '../../models/Appointemts/AppointmentWrapper';
 import {HttpClient} from '@angular/common/http';
 import {RemoteAppointment} from '../../models/Appointemts/RemoteAppointment';
-import {GeneralType} from '../../models/GeneralType';
-import {GeneralStatus} from '../../models/GeneralStatus';
 import {UrlManager} from '../../utility/urlManager';
 
 @Injectable({
@@ -13,8 +10,6 @@ import {UrlManager} from '../../utility/urlManager';
 })
 export class AppointmentsServices {
 
-  private appointmentTypes$: Observable<GeneralType[]>;
-  private appointmentStatus$: Observable<GeneralStatus[]>;
   private readonly appointmentUrl: string;
 
   constructor(private http: HttpClient) {

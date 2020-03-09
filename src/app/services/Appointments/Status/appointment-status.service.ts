@@ -15,7 +15,7 @@ export class AppointmentStatusService {
   private appointmentStatus$: Observable<GeneralStatus[]>;
 
   constructor(private http: HttpClient) {
-    this.appointmentStatusUrl = UrlManager.getSupperUrl() + '/appointmentStatus';
+    this.appointmentStatusUrl = UrlManager.getSupperUrl() + '/appointmentStatus/';
   }
 
   get() {
@@ -32,10 +32,10 @@ export class AppointmentStatusService {
   }
 
   edit(generalStatus: GeneralStatus) {
-    return this.http.put<number>(this.appointmentStatusUrl + `/${generalStatus.id}`, generalStatus);
+    return this.http.put<number>(this.appointmentStatusUrl + generalStatus.id, generalStatus);
   }
 
   delete(generalStatus: GeneralStatus) {
-    return this.http.delete(this.appointmentStatusUrl + `/${generalStatus.id}`);
+    return this.http.delete(this.appointmentStatusUrl + generalStatus.id);
   }
 }

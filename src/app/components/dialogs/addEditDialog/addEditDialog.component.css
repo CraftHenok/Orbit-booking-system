@@ -2,6 +2,24 @@ mat-form-field {
   width: 100%;
 }
 
+/* width */
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #fff;
+  border-radius: 8px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 8px;
+}
+
 h1 {
   margin-bottom: 5px;
 }

@@ -14,54 +14,51 @@ import {UrlManager} from '../../utility/urlManager';
 })
 export class PatientsService {
 
-  private patientTitle$: Observable<GeneralTitle[]>;
-  private emergencyTitle$: Observable<GeneralTitle[]>;
-
+  private readonly patientsUrl: string;
 
   constructor(private http: HttpClient) {
+    this.patientsUrl = UrlManager.getSupperUrl() + '/patient/';
   }
 
 
   getAllPatients() {
-    const url = UrlManager.getSupperUrl() + '/patient/';
-    return this.http.get<Patient[]>(url);
+    return this.http.get<Patient[]>(this.patientsUrl);
   }
 
 
   getContactInfo(contactInfoId: string) {
-    const url = UrlManager.getSupperUrl() + '/patient/contactInfo/' + contactInfoId;
+    const url = this.patientsUrl + 'contactInfo/' + contactInfoId;
     return this.http.get<Contact>(url);
   }
 
 
   getAddress(addressId: string) {
-    const url = UrlManager.getSupperUrl() + '/patient/address/' + addressId;
+    const url = this.patientsUrl + 'address/' + addressId;
     return this.http.get<Address>(url);
   }
 
 
   getEmergencyInfo(emergencyInfoId: string) {
-    const url = UrlManager.getSupperUrl() + '/patient/emergencyInfo/' + emergencyInfoId;
+    const url = this.patientsUrl + 'emergencyInfo/' + emergencyInfoId;
     return this.http.get<EmergencyInfo>(url);
   }
 
   savePatient(patient: Patient) {
-    const url = UrlManager.getSupperUrl() + '/patient/';
-    return this.http.post<Patient>(url, patient);
+    return this.http.post<Patient>(this.patientsUrl, patient);
   }
 
   getPatientByIdFull(id: number) {
-    const url = UrlManager.getSupperUrl() + '/patient/byIdFull/' + id;
+    const url = this.patientsUrl + 'byIdFull/' + id;
     return this.http.get<Patient>(url);
   }
 
   deletePatientById(patient: Patient) {
-    const url = UrlManager.getSupperUrl() + `/patient/${patient.seq}/${patient.addressId}/${patient.contactId}/${patient.emergencyInfoId}`;
+    const url = this.patientsUrl + patient.seq + patient.addressId + patient.contactId + patient.emergencyInfoId;
     return this.http.delete<number>(url);
   }
 
   updatePatient(patient: Patient) {
-    const url = UrlManager.getSupperUrl() + '/patient/' + patient.seq;
+    const url = this.patientsUrl + patient.seq;
     return this.http.put<number>(url, patient);
   }
 }

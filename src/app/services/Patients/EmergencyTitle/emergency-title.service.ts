@@ -15,7 +15,7 @@ export class EmergencyTitleService {
   private emergencyTitle$: Observable<GeneralTitle[]>;
 
   constructor(private http: HttpClient) {
-    this.emergencyTitleUrl = UrlManager.getSupperUrl() + '/emergencyTitle';
+    this.emergencyTitleUrl = UrlManager.getSupperUrl() + '/emergencyTitle/';
   }
 
   get() {
@@ -32,10 +32,10 @@ export class EmergencyTitleService {
   }
 
   edit(generalTitle: GeneralTitle) {
-    return this.http.put<number>(this.emergencyTitleUrl + `/${generalTitle.id}`, generalTitle);
+    return this.http.put<number>(this.emergencyTitleUrl + generalTitle.id, generalTitle);
   }
 
   delete(generalTitle: GeneralTitle) {
-    return this.http.delete(this.emergencyTitleUrl + `/${generalTitle.id}`);
+    return this.http.delete(this.emergencyTitleUrl + generalTitle.id);
   }
 }

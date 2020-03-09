@@ -15,7 +15,7 @@ export class AppointmentTypeService {
   private appointmentType$: Observable<GeneralType[]>;
 
   constructor(private http: HttpClient) {
-    this.appointmentTypeUrl = UrlManager.getSupperUrl() + '/appointmentType';
+    this.appointmentTypeUrl = UrlManager.getSupperUrl() + '/appointmentType/';
   }
 
   get() {
@@ -32,10 +32,10 @@ export class AppointmentTypeService {
   }
 
   edit(generalType: GeneralType) {
-    return this.http.put<number>(this.appointmentTypeUrl + `/${generalType.id}`, generalType);
+    return this.http.put<number>(this.appointmentTypeUrl + generalType.id, generalType);
   }
 
   delete(generalType: GeneralType) {
-    return this.http.delete(this.appointmentTypeUrl + `/${generalType.id}`);
+    return this.http.delete(this.appointmentTypeUrl + generalType.id);
   }
 }

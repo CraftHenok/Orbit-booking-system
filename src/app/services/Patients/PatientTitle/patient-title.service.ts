@@ -16,7 +16,7 @@ export class PatientTitleService {
   private patientTitles$: Observable<GeneralTitle[]>;
 
   constructor(private http: HttpClient) {
-    this.patientTitleUrl = UrlManager.getSupperUrl() + '/patientTitle';
+    this.patientTitleUrl = UrlManager.getSupperUrl() + '/patientTitle/';
   }
 
   get() {
@@ -33,10 +33,10 @@ export class PatientTitleService {
   }
 
   edit(generalTitle: GeneralTitle) {
-    return this.http.put<number>(this.patientTitleUrl + `/${generalTitle.id}`, generalTitle);
+    return this.http.put<number>(this.patientTitleUrl + generalTitle.id, generalTitle);
   }
 
   delete(generalTitle: GeneralTitle) {
-    return this.http.delete(this.patientTitleUrl + `/${generalTitle.id}`);
+    return this.http.delete(this.patientTitleUrl + generalTitle.id);
   }
 }

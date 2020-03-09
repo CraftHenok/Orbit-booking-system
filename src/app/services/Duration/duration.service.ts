@@ -16,7 +16,7 @@ export class DurationService {
   private duration$: Observable<Duration[]>;
 
   constructor(private http: HttpClient) {
-    this.durationUrl = UrlManager.getSupperUrl() + '/duration';
+    this.durationUrl = UrlManager.getSupperUrl() + '/duration/';
   }
 
   get() {
@@ -33,11 +33,11 @@ export class DurationService {
   }
 
   edit(duration: Duration) {
-    return this.http.put<number>(this.durationUrl + `/${duration.id}`, duration);
+    return this.http.put<number>(this.durationUrl + duration.id, duration);
   }
 
   delete(duration: Duration) {
-    return this.http.delete(this.durationUrl + `/${duration.id}`);
+    return this.http.delete(this.durationUrl + duration.id);
   }
 
 
