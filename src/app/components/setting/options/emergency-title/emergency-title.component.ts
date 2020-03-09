@@ -5,6 +5,7 @@ import {EmergencyTitleService} from '../../../../services/Patients/EmergencyTitl
 import {AddComponent} from '../add/add.component';
 import {MatDialog} from '@angular/material/dialog';
 import {Variables} from '../../../../utility/variables';
+import {SettingDialogData} from '../../../../utility/settingDialogData';
 
 @Component({
   selector: 'app-emergency-title',
@@ -33,23 +34,14 @@ export class EmergencyTitleComponent implements OnInit, OnDestroy {
   }
 
   addClicked() {
-    const map: Map<string, string> = new Map();
-    map.set('id', '0');
-    map.set('dataName', 'Emergency title');
-    map.set('value', '');
-
-    this.openDialogWith(map);
+    this.openDialogWith(SettingDialogData.prepareForNew('Emergency title'));
   }
 
   itemClicked(title: GeneralTitle) {
-    const map: Map<string, string> = new Map();
-    map.set('id', title.id.toString());
-    map.set('dataName', 'Emergency title');
-    map.set('value', title.title);
-    this.openDialogWith(map);
+    this.openDialogWith(SettingDialogData.prepareForOld(title.id.toString(), title.title, 'Emergency title'));
   }
 
-  openDialogWith(title: Map<string, string>) {
+  private openDialogWith(title: Map<string, string>) {
     const dialogRef = this.dialog.open(AddComponent, {
       width: Variables.dialogSmallWidth,
       data: title

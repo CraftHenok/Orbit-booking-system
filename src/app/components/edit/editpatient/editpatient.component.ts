@@ -43,7 +43,7 @@ export class EditpatientComponent implements OnInit, OnDestroy {
 
   private snackBarMan: SnackBarManager;
 
-  private subscriptiom: Subscription = new Subscription();
+  private subscription: Subscription = new Subscription();
 
   constructor(private formBuilder: FormBuilder,
               private patientService: PatientsService,
@@ -61,7 +61,7 @@ export class EditpatientComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    this.subscriptiom.add(this.activatedRoute.paramMap.pipe(
+    this.subscription.add(this.activatedRoute.paramMap.pipe(
       switchMap(params => this.patientService.getPatientByIdFull(Number(params.get('patientId'))))
     ).subscribe(result => {
       this.patient = result;
@@ -84,18 +84,18 @@ export class EditpatientComponent implements OnInit, OnDestroy {
         map(country => country ? Country.filter(country) : this.countries.slice())
       );
 
-    this.subscriptiom.add(this.patientTitleService.get().subscribe(
+    this.subscription.add(this.patientTitleService.get().subscribe(
       result => {
-        this.patientsTitles = result;
+        this.patientsTitles.push(...result);
       },
       error => {
         console.error(error);
       }
     ));
 
-    this.subscriptiom.add(this.emergencyTitleService.get().subscribe(
+    this.subscription.add(this.emergencyTitleService.get().subscribe(
       result => {
-        this.emergencyTitle = result;
+        this.emergencyTitle.push(...result);
       },
       error => {
         console.error(error);
@@ -141,7 +141,7 @@ export class EditpatientComponent implements OnInit, OnDestroy {
     this.patient = PatientsFormManager.bindDateToOldPatient(this.primaryInfoForm, this.contactInfoForm,
       this.addressForm, this.emergencyInfoForm, this.patient);
 
-    this.subscriptiom.add(this.patientService.updatePatient(this.patient).subscribe(
+    this.subscription.add(this.patientService.updatePatient(this.patient).subscribe(
       result => {
         if (result > 0) {
           this.snackBarMan.show('Patient updated successfully', 'Ok');
@@ -159,6 +159,6 @@ export class EditpatientComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscriptiom.unsubscribe();
+    this.subscription.unsubscribe();
   }
 }

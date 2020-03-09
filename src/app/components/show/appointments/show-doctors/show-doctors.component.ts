@@ -18,7 +18,7 @@ export class ShowDoctorsComponent implements OnInit, OnDestroy {
 
   currentActive = 0;
 
-  private susbscription: Subscription = new Subscription();
+  private subscription: Subscription = new Subscription();
 
   @Output() doctorSelected = new EventEmitter<number>();
 
@@ -42,7 +42,7 @@ export class ShowDoctorsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.susbscription.add(this.doctorsService.getAllDoctors().subscribe(
+    this.subscription.add(this.doctorsService.getAllDoctors().subscribe(
       result => {
         this.doctors.push(...result);
         this.dataSource = new MatTableDataSource<Doctor>(this.doctors);
@@ -69,6 +69,6 @@ export class ShowDoctorsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.susbscription.unsubscribe();
+    this.subscription.unsubscribe();
   }
 }

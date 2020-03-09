@@ -80,7 +80,7 @@ export class AddpatientComponent implements OnInit, OnDestroy {
 
     this.subscription.add(this.patientTitleService.get().subscribe(
       result => {
-        this.patientsTitles = result;
+        this.patientsTitles.push(...result);
       },
       error => {
         console.error(error);
@@ -89,7 +89,7 @@ export class AddpatientComponent implements OnInit, OnDestroy {
 
     this.subscription.add(this.emergencyTitleService.get().subscribe(
       result => {
-        this.emergencyTitle = result;
+        this.emergencyTitle.push(...result);
       },
       error => {
         console.error(error);

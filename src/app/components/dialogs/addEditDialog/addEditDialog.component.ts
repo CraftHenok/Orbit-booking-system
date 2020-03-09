@@ -11,6 +11,8 @@ import {Subscription} from 'rxjs';
 import {DateManager} from '../../../utility/dateManager';
 import {AppointmentStatusService} from '../../../services/Appointments/Status/appointment-status.service';
 import {AppointmentTypeService} from '../../../services/Appointments/Type/appointment-type.service';
+import {DurationService} from '../../../services/Duration/duration.service';
+import {Duration} from '../../../models/Duration';
 
 
 /** Error when invalid control is dirty, touched, or submitted. */
@@ -43,6 +45,7 @@ export class AddEditDialogComponent implements OnInit, OnDestroy {
 
   public appointmentStatus: GeneralStatus[] = [];
   public appointmentType: GeneralType[] = [];
+  public durationList: Duration[] = [];
 
   private subscription: Subscription = new Subscription();
 
@@ -52,13 +55,14 @@ export class AddEditDialogComponent implements OnInit, OnDestroy {
     private calenderEventService: AppointmentsServices,
     private appointmentStatusService: AppointmentStatusService,
     private appointmentTypeService: AppointmentTypeService,
+    private durationService: DurationService,
     @Inject(MAT_DIALOG_DATA) public data: LocalAppointments) {
   }
 
   ngOnInit(): void {
     this.subscription.add(this.appointmentStatusService.get().subscribe(
       result => {
-        this.appointmentStatus = result;
+        this.appointmentStatus.push(...result);
       },
       error => {
         console.error(error);
@@ -67,9 +71,17 @@ export class AddEditDialogComponent implements OnInit, OnDestroy {
 
     this.subscription.add(this.appointmentTypeService.get().subscribe(
       result => {
-        this.appointmentType = result;
+        this.appointmentType.push(...result);
       },
       error => {
+        console.error(error);
+      }
+    ));
+
+    this.subscription.add(this.durationService.get().subscribe(
+      result => {
+        this.durationList.push(...result);
+      }, error => {
         console.error(error);
       }
     ));
@@ -97,7 +109,6 @@ export class AddEditDialogComponent implements OnInit, OnDestroy {
     this.data.start = this.start.value;
 
     this.data.end = addMinutes(this.data.start, this.duration.value);
-
 
     this.data.isServed = this.IsServed.value !== false;
     this.data.servedBy = this.ServedBy.value;

@@ -5,6 +5,7 @@ import {AppointmentTypeService} from '../../../../services/Appointments/Type/app
 import {AddComponent} from '../add/add.component';
 import {MatDialog} from '@angular/material/dialog';
 import {Variables} from '../../../../utility/variables';
+import {SettingDialogData} from '../../../../utility/settingDialogData';
 
 @Component({
   selector: 'app-appointment-type',
@@ -60,20 +61,11 @@ export class AppointmentTypeComponent implements OnInit, OnDestroy {
   }
 
   itemClicked(type: GeneralType) {
-    const map: Map<string, string> = new Map();
-    map.set('id', type.id.toString());
-    map.set('dataName', 'Appointment type');
-    map.set('value', type.type);
-    this.openDialogWith(map);
+    this.openDialogWith(SettingDialogData.prepareForOld(type.id.toString(), type.type, 'Appointment type'));
   }
 
   addClicked() {
-    const map: Map<string, string> = new Map();
-    map.set('id', '0');
-    map.set('dataName', 'Appointment type');
-    map.set('value', '');
-
-    this.openDialogWith(map);
+    this.openDialogWith(SettingDialogData.prepareForNew('Appointment type'));
   }
 
   private add(generalType: GeneralType) {

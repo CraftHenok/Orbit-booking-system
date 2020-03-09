@@ -9,7 +9,7 @@ export class Doctor {
   isDoctor: boolean;
 
   static getAllDoctorsTemplate() {
-    return new Doctor(0, 'All doctos', 'All doctors', '',
+    return new Doctor(0, 'All doctors', 'All doctors', '',
       0, false, false, true);
   }
 

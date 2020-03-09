@@ -27,14 +27,13 @@ export class AdddoctorComponent implements OnInit, OnDestroy {
   constructor(private formBuilder: FormBuilder,
               private snackBar: MatSnackBar,
               private doctorService: DoctorsService) {
+  }
 
+  ngOnInit(): void {
     this.commonFormBuilder = new DoctorsFormManager(this.formBuilder);
     this.primaryInfo = this.commonFormBuilder.getFormBuilders().primaryInfo;
     this.appointmentRelatedInfo = this.commonFormBuilder.getFormBuilders().appointmentRelatedInfo;
     this.snackBarMan = new SnackBarManager(this.snackBar);
-  }
-
-  ngOnInit(): void {
   }
 
   submit() {
@@ -43,7 +42,6 @@ export class AdddoctorComponent implements OnInit, OnDestroy {
     this.subscription.add(this.doctorService.saveDoctor(newDoctor).subscribe(
       result => {
         this.snackBarMan.show('New Doctor added', 'Ok');
-        console.log(result);
       },
       error => {
         console.error(error);

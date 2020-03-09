@@ -5,7 +5,6 @@ import {Patient} from '../../../models/Patient';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {Subscription} from 'rxjs';
-import {animate, state, style, transition, trigger} from '@angular/animations';
 import {MatDialog} from '@angular/material/dialog';
 import {PatientsdetaildialogComponent} from '../../dialogs/patientsdetaildialog/patientsdetaildialog.component';
 import {Router} from '@angular/router';
@@ -16,13 +15,6 @@ import {Variables} from '../../../utility/variables';
   selector: 'app-patients',
   templateUrl: './patients.component.html',
   styleUrls: ['./patients.component.css'],
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed', style({height: '0px', minHeight: '0'})),
-      state('expanded', style({height: '*'})),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))
-    ]),
-  ],
 })
 export class PatientsComponent implements OnInit, OnDestroy {
 
@@ -46,7 +38,7 @@ export class PatientsComponent implements OnInit, OnDestroy {
 
     this.subscription.add(this.patientService.getAllPatients().subscribe(
       result => {
-        this.patients = result;
+        this.patients.push(...result);
         this.configureDataSource(result);
       },
       error => {
@@ -106,7 +98,7 @@ export class PatientsComponent implements OnInit, OnDestroy {
 
   openDialog() {
     return this.dialog.open(ConfirmActionDialogComponent, {
-      width: '400px',
+      width: Variables.dialogSmallWidth,
     });
   }
 

@@ -5,6 +5,7 @@ import {AddComponent} from '../add/add.component';
 import {DurationService} from '../../../../services/Duration/duration.service';
 import {Duration} from '../../../../models/Duration';
 import {Variables} from '../../../../utility/variables';
+import {SettingDialogData} from '../../../../utility/settingDialogData';
 
 @Component({
   selector: 'app-duration',
@@ -33,23 +34,15 @@ export class DurationComponent implements OnInit, OnDestroy {
   }
 
   addClicked() {
-    const map: Map<string, string> = new Map();
-    map.set('id', '0');
-    map.set('dataName', 'Duration');
-    map.set('value', '');
-
-    this.openDialogWith(map);
+    this.openDialogWith(SettingDialogData.prepareForNew('Duration'));
   }
 
   itemClicked(duration: Duration) {
-    const map: Map<string, string> = new Map();
-    map.set('id', duration.id.toString());
-    map.set('dataName', 'Duration');
-    map.set('value', duration.duration.toString());
-    this.openDialogWith(map);
+    this.openDialogWith(SettingDialogData.prepareForOld(duration.id.toString(),
+      duration.duration.toString(), 'Duration'));
   }
 
-  openDialogWith(title: Map<string, string>) {
+  private openDialogWith(title: Map<string, string>) {
     const dialogRef = this.dialog.open(AddComponent, {
       width: Variables.dialogSmallWidth,
       data: title

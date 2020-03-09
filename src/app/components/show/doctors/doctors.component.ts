@@ -35,7 +35,7 @@ export class DoctorsComponent implements OnInit, OnDestroy {
 
     this.subscription.add(this.doctorsService.getAllDoctors().subscribe(
       result => {
-        this.doctors = result;
+        this.doctors.push(...result);
         this.configureDataSource(result);
       },
       error => {

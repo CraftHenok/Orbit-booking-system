@@ -5,6 +5,7 @@ import {AppointmentStatusService} from '../../../../services/Appointments/Status
 import {AddComponent} from '../add/add.component';
 import {MatDialog} from '@angular/material/dialog';
 import {Variables} from '../../../../utility/variables';
+import {SettingDialogData} from '../../../../utility/settingDialogData';
 
 @Component({
   selector: 'app-appointment-status',
@@ -59,20 +60,11 @@ export class AppointmentStatusComponent implements OnInit, OnDestroy {
   }
 
   itemClicked(generalStatus: GeneralStatus) {
-    const map: Map<string, string> = new Map();
-    map.set('id', generalStatus.id.toString());
-    map.set('dataName', 'Appointment status');
-    map.set('value', generalStatus.status);
-    this.openDialogWith(map);
+    this.openDialogWith(SettingDialogData.prepareForOld(generalStatus.id.toString(), generalStatus.status, 'Appointment status'));
   }
 
   addClicked() {
-    const map: Map<string, string> = new Map();
-    map.set('id', '0');
-    map.set('dataName', 'Appointment status');
-    map.set('value', '');
-
-    this.openDialogWith(map);
+    this.openDialogWith(SettingDialogData.prepareForNew('Appointment status'));
   }
 
   private add(generalStatus: GeneralStatus) {

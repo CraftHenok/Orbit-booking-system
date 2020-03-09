@@ -5,6 +5,7 @@ import {PatientTitleService} from '../../../../services/Patients/PatientTitle/pa
 import {MatDialog} from '@angular/material/dialog';
 import {AddComponent} from '../add/add.component';
 import {Variables} from '../../../../utility/variables';
+import {SettingDialogData} from '../../../../utility/settingDialogData';
 
 @Component({
   selector: 'app-patient-title',
@@ -34,24 +35,14 @@ export class PatientTitleComponent implements OnInit, OnDestroy {
 
 
   addClicked() {
-
-    const map: Map<string, string> = new Map();
-    map.set('id', '0');
-    map.set('dataName', 'Patient title');
-    map.set('value', '');
-
-    this.openDialogWith(map);
+    this.openDialogWith(SettingDialogData.prepareForNew('Patient title'));
   }
 
   itemClicked(title: GeneralTitle) {
-    const map: Map<string, string> = new Map();
-    map.set('id', title.id.toString());
-    map.set('dataName', 'Patient title');
-    map.set('value', title.title);
-    this.openDialogWith(map);
+    this.openDialogWith(SettingDialogData.prepareForOld(title.id.toString(), title.title, 'Patient title'));
   }
 
-  openDialogWith(title: Map<string, string>) {
+  private openDialogWith(title: Map<string, string>) {
     const dialogRef = this.dialog.open(AddComponent, {
       width: Variables.dialogSmallWidth,
       data: title

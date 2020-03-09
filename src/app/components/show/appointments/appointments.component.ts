@@ -74,18 +74,14 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
   handleEvent(action: string, event: CalendarEvent): void {
     const dialogRef = this.openDialogWith(event);
 
-    // re-use code
     this.subscription.add(dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed handle event');
       console.table(result);
       if (result.action === 'D') {
-        // delete happens here
         this.deleteEvent(result);
       } else if (result.action === 'U') {
-        // update Happens here
         this.updateEvent(result);
       }
-
     }));
 
   }
@@ -176,22 +172,30 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
     }
     this.currentSelectedDoctorSeq = seq;
     if (seq === 0) {
-      this.subscription.add(this.calenderEventService.getAllAppointments().subscribe(
-        result => {
-          this.events = AppointmentWrapper.toLocalAppointmentBatch(result);
-        }, error => {
-          console.error(error);
-        }
-      ));
+      this.showAllAppointments();
     } else if (seq > 0) {
-      this.subscription.add(this.calenderEventService.getAppointmentByDoctor(seq).subscribe(
-        result => {
-          this.events = AppointmentWrapper.toLocalAppointmentBatch(result);
-        }, error => {
-          console.error(error);
-        }
-      ));
+      this.showDoctorsAppointment(seq);
     }
+  }
+
+  private showDoctorsAppointment(seq: number) {
+    this.subscription.add(this.calenderEventService.getAppointmentByDoctor(seq).subscribe(
+      result => {
+        this.events = AppointmentWrapper.toLocalAppointmentBatch(result);
+      }, error => {
+        console.error(error);
+      }
+    ));
+  }
+
+  private showAllAppointments() {
+    this.subscription.add(this.calenderEventService.getAllAppointments().subscribe(
+      result => {
+        this.events = AppointmentWrapper.toLocalAppointmentBatch(result);
+      }, error => {
+        console.error(error);
+      }
+    ));
   }
 
   ngOnDestroy(): void {
