@@ -1,12 +1,9 @@
 import {Injectable} from '@angular/core';
 import {Patient} from '../../models/Patient';
-import {Observable} from 'rxjs';
 import {Contact} from '../../models/Contact';
 import {Address} from '../../models/Address';
 import {EmergencyInfo} from '../../models/EmergencyInfo';
 import {HttpClient} from '@angular/common/http';
-import {GeneralTitle} from '../../models/GeneralTitle';
-import {shareReplay} from 'rxjs/operators';
 import {UrlManager} from '../../utility/urlManager';
 
 @Injectable({

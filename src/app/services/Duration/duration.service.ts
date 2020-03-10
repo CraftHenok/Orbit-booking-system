@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Duration} from '../../models/Duration';
 import {UrlManager} from '../../utility/urlManager';
-import {GeneralTitle} from '../../models/GeneralTitle';
 import {Observable} from 'rxjs';
 import {shareReplay} from 'rxjs/operators';
 

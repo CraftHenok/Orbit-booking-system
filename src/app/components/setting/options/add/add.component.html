@@ -1,9 +1,9 @@
-<div *ngIf="data.get('id') === '0'">
+<div *ngIf="data.get('id') === '0' else newResource">
   <h1 mat-dialog-title>Add new {{ data.get('dataName') }}</h1>
 </div>
-<div *ngIf="data.get('id') !== '0'">
+<ng-template #newResource>
   <h1 mat-dialog-title>Edit or delete {{ data.get('dataName') }}</h1>
-</div>
+</ng-template>
 
 <div mat-dialog-content>
   <mat-form-field class="example-full-width" appearance="outline" style="width: 100%">
@@ -12,14 +12,14 @@
   </mat-form-field>
 </div>
 <div mat-dialog-actions align="end">
-  <div *ngIf="data.get('id') === '0'">
+  <div *ngIf="data.get('id') === '0' else oldResource">
     <button mat-flat-button mat-dialog-close>Cancel</button>
     <button mat-flat-button color="primary" (click)="add()">Add</button>
   </div>
-  <div *ngIf="data.get('id') !== '0'">
+  <ng-template #oldResource>
     <button mat-flat-button mat-dialog-close>Cancel</button>
     <button mat-flat-button color="warn" (click)="delete()">Delete</button>
     <button mat-flat-button color="primary" (click)="update()">Update</button>
-  </div>
+  </ng-template>
 </div>
 

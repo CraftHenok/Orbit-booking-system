@@ -1,9 +1,10 @@
-<div *ngIf="data.patientId">
+<div *ngIf="data.patientId else newAppointment">
   <h1 mat-dialog-title align="center" style="color:#00695C">Manage Appointment</h1>
 </div>
-<div *ngIf="!data.patientId">
+<ng-template #newAppointment>
   <h1 mat-dialog-title align="center" style="color:#00695C">New Appointment</h1>
-</div>
+</ng-template>
+
 <hr>
 
 <form [formGroup]="addForm" (ngSubmit)="onSubmit(data.patientId ? 'U' : 'S')">
@@ -74,10 +75,11 @@
     </mat-form-field>
 
     <mat-checkbox formControlName="IsServed">Is served</mat-checkbox>
+
   </mat-dialog-content>
 
 
-  <div *ngIf="data.patientId">
+  <div *ngIf="data.patientId else showSaveButton">
     <mat-dialog-actions align="end">
       <button mat-dialog-close mat-flat-button color="warn" (click)="deleteClicked()" [disabled]="!addForm.valid">
         Delete
@@ -86,12 +88,12 @@
       <button mat-button mat-dialog-close>Cancel</button>
     </mat-dialog-actions>
   </div>
-  <div *ngIf="!data.patientId">
+  <ng-template #showSaveButton>
     <mat-dialog-actions align="end">
       <button mat-flat-button color="primary" type="submit" [disabled]="!addForm.valid">Save</button>
       <button mat-button mat-dialog-close>Cancel</button>
     </mat-dialog-actions>
-  </div>
+  </ng-template>
 
 </form>
 
