@@ -85,6 +85,8 @@ export class AddEditDialogComponent implements OnInit, OnDestroy {
         console.error(error);
       }
     ));
+
+    console.log(this.ServedBy.value);
   }
 
   deleteClicked() {
@@ -145,6 +147,5 @@ export class AddEditDialogComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
-
 
 }

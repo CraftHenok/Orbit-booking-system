@@ -69,12 +69,17 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Served By</mat-label>
-      <input matInput placeholder="Served By" type="number" formControlName="ServedBy">
-    </mat-form-field>
+    <div *ngIf="!ServedBy.value">
+      <mat-form-field appearance="outline">
+        <mat-label>Served By</mat-label>
+        <input matInput placeholder="Served By" type="number" formControlName="ServedBy">
+      </mat-form-field>
+    </div>
 
-    <mat-checkbox formControlName="IsServed">Is served</mat-checkbox>
+    <div *ngIf="data.patientId">
+      <mat-checkbox formControlName="IsServed">Is served</mat-checkbox>
+    </div>
+
 
   </mat-dialog-content>
 

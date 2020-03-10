@@ -153,12 +153,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
 
   openAddDialog(date?: Date) {
     const emptyAppointment = new LocalAppointments();
-    emptyAppointment.start = date ? date : (new Date());
+    emptyAppointment.start = date || (new Date());
     emptyAppointment.servedBy = this.currentSelectedDoctorSeq === 0 ? null : this.currentSelectedDoctorSeq;
     const dialogRef = this.openDialogWith(emptyAppointment);
 
     this.subscription.add(dialogRef.afterClosed().subscribe((result: LocalAppointments) => {
-      if (result.patientId) {
+      if (result !== undefined && result.patientId) {
         const newEvent = new LocalAppointmentsBuilder(0, result.patientId, result.appointmentTypeId,
           result.appointmentStatusId, result.start, result.end, result.isServed, result.servedBy).build();
         this.addEvent(newEvent);
