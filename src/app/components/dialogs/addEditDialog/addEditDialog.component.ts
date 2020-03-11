@@ -15,8 +15,8 @@ import {DurationService} from '../../../services/Duration/duration.service';
 import {Duration} from '../../../models/Duration';
 import {Variables} from '../../../utility/variables';
 import {ForgetIdComponent} from '../forget-id/forget-id.component';
-import {LocalAppointmentsBuilder} from '../../../models/Appointemts/LocalAppointmentsBuilder';
 import {Patient} from '../../../models/Patient';
+import {QuickAddComponent} from '../quick-add/quick-add.component';
 
 
 /** Error when invalid control is dirty, touched, or submitted. */
@@ -155,6 +155,18 @@ export class AddEditDialogComponent implements OnInit, OnDestroy {
 
   openForgetIdDialog() {
     const dialogRef = this.dialog.open(ForgetIdComponent, {
+      width: Variables.dialogBigWidth,
+    });
+
+    dialogRef.afterClosed().subscribe((result: Patient) => {
+      if (result !== undefined && result) {
+        this.PatientId.setValue(result.seq);
+      }
+    });
+  }
+
+  openQuickAddDialog() {
+    const dialogRef = this.dialog.open(QuickAddComponent, {
       width: Variables.dialogBigWidth,
     });
 

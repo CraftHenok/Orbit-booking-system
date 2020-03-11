@@ -25,7 +25,7 @@
 
     <div style="margin-bottom: 19px" *ngIf="!data.patientId">
       <mat-chip-list>
-        <mat-chip>Quick add</mat-chip>
+        <mat-chip (click)="openQuickAddDialog()">Quick add</mat-chip>
         <mat-chip (click)="openForgetIdDialog()">Forget id</mat-chip>
       </mat-chip-list>
     </div>

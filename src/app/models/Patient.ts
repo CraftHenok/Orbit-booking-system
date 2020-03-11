@@ -7,7 +7,7 @@ export class Patient {
   regDate: Date;
 
   // primary info
-  patientTitleId: number;
+  patientTitleId: string;
   firstName: string;
   middleName: string;
   lastName: string;
@@ -31,7 +31,7 @@ export class Patient {
   // used when we click view on the patient table
   code: string;
 
-  constructor(seqNumber: number, regDate: Date, patientTitleId: number, firstName: string, middleName: string,
+  constructor(seqNumber: number, regDate: Date, patientTitleId: string, firstName: string, middleName: string,
               lastName: string, gender: string, dateOfBirth: Date, age: number,
               contactInfo: Contact, address: Address, emergencyInfo: EmergencyInfo, nationality?: string) {
     this.seq = seqNumber;

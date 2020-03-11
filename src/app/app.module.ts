@@ -31,6 +31,8 @@ import {MatRippleModule} from '@angular/material/core';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatChipsModule} from '@angular/material/chips';
 import {ForgetIdComponent} from './components/dialogs/forget-id/forget-id.component';
+import {QuickAddComponent} from './components/dialogs/quick-add/quick-add.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 // ng g module moduleName --flat --routing
 
@@ -41,7 +43,8 @@ import {ForgetIdComponent} from './components/dialogs/forget-id/forget-id.compon
     AppointmentsComponent,
     ShowDoctorsComponent,
     AddEditDialogComponent,
-    ForgetIdComponent
+    ForgetIdComponent,
+    QuickAddComponent
   ],
   imports: [
     BrowserModule,
@@ -60,9 +63,6 @@ import {ForgetIdComponent} from './components/dialogs/forget-id/forget-id.compon
     MatTableModule,
     HttpClientModule,
     MatIconModule,
-    // MatSidenavModule,
-    // MatCardModule,
-    // MatPaginatorModule,
     MatSelectModule,
     MatListModule,
     MatCheckboxModule,
@@ -70,10 +70,12 @@ import {ForgetIdComponent} from './components/dialogs/forget-id/forget-id.compon
     MatTooltipModule,
     FormsModule,
     MatChipsModule,
+    MatProgressSpinnerModule,
   ],
   entryComponents: [
     AddEditDialogComponent,
-    ForgetIdComponent
+    ForgetIdComponent,
+    QuickAddComponent
   ],
   providers: [],
   exports: [],

@@ -9,7 +9,7 @@ exports.saveNewPatient = async (req, res) => {
     middleName: req.body.middleName,
     lastName: req.body.lastName,
     gender: req.body.gender,
-    dateOfBirth: req.body.dateOfBirth,
+    dateOfBirth: req.body.dateOfBirth || '',
     nationality: req.body.nationality,
     contact: req.body.contact,
     address: req.body.address,
@@ -22,32 +22,31 @@ exports.saveNewPatient = async (req, res) => {
   const contactId = uuidv4();
   const addressId = uuidv4();
   const emergencyId = uuidv4();
+  //save to contact
+  db.run("INSERT into contact VALUES (?,?,?,?)", [contactId, patientData.contact.email, patientData.contact.phoneNumber,
+    patientData.contact.alternatePhoneNumber], (err) => {
+    if (err) {
+      console.log(err);
+    }
+  });
+
+  //save to address
+  db.run("INSERT into address VALUES (?,?,?,?,?)", [addressId, patientData.address.line1, patientData.address.line2,
+    patientData.address.city, patientData.address.country], function (err) {
+    if (err) {
+      console.log(err);
+    }
+  });
+
+  // save to contact info
+  db.run("INSERT into EmergencyContact VALUES (?,?,?,?,?)", [emergencyId, patientData.emergencyInfo.emergencyTitleId, patientData.emergencyInfo.name,
+    patientData.emergencyInfo.phoneNumber, patientData.emergencyInfo.alternatePhoneNumber], function (err) {
+    if (err) {
+      console.log(err);
+    }
+  });
 
   db.serialize(function () {
-    //save to contact
-    db.run("INSERT into contact VALUES (?,?,?,?)", [contactId, patientData.contact.email, patientData.contact.phoneNumber,
-      patientData.contact.alternatePhoneNumber], (err) => {
-      if (err) {
-        console.log(err);
-      }
-    });
-
-    //save to address
-    db.run("INSERT into address VALUES (?,?,?,?,?)", [addressId, patientData.address.line1, patientData.address.line2,
-      patientData.address.city, patientData.address.country], function (err) {
-      if (err) {
-        console.log(err);
-      }
-    });
-
-    // save to contact info
-    db.run("INSERT into EmergencyContact VALUES (?,?,?,?,?)", [emergencyId, patientData.emergencyInfo.emergencyTitleId, patientData.emergencyInfo.name,
-      patientData.emergencyInfo.phoneNumber, patientData.emergencyInfo.alternatePhoneNumber], function (err) {
-      if (err) {
-        console.log(err);
-      }
-    });
-
     db.run("INSERT into Patient(patientTitleId,firstName,middleName,lastName," +
       "gender,dateOfBirth,nationality,contactId,addressId,emergencyInfoId,age,active,regDate) " +
       "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
@@ -55,12 +54,19 @@ exports.saveNewPatient = async (req, res) => {
         patientData.lastName, patientData.gender, patientData.dateOfBirth, patientData.nationality,
         contactId, addressId, emergencyId, patientData.age, patientData.active, patientData.regDate], function (err) {
         if (err) {
-          console.log(err);
-          return res.json(err).status(401);
-        } else {
-          return res.json(patientData);
+          console.error(err);
         }
       });
+
+    db.get("SELECT * from sqlite_sequence WHERE name = 'Patient'", function (err, row) {
+      if (err) {
+        console.error(err);
+      } else {
+        patientData.seq = row.seq;
+        res.json(patientData);
+      }
+    })
+
   });
 
 

@@ -3,7 +3,7 @@
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef>Doctors name</th>
     <td mat-cell *matCellDef="let element" matRipple [ngClass]="isActive(element.seq)"
-        (click)="doctorClicked(element.seq)"> {{element.name | titlecase}} </td>
+        (click)="doctorClicked(element.seq)"> {{element.name | titlecase }} | {{ element.seq }} </td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
