@@ -1,8 +1,8 @@
 <h1 mat-dialog-title style="color: #00695C">Add new patient</h1>
-<div class="spinnerContainer">
-  <mat-spinner></mat-spinner>
-</div>
 <div mat-dialog-content>
+  <ngx-spinner [fullScreen]="false">
+    <p style="color: white"> Saving new patient </p>
+  </ngx-spinner>
   <div class="queryArea">
     <form action="" [formGroup]="forgetForm">
       <mat-form-field appearance="outline">

@@ -6,6 +6,7 @@ import {Patient} from '../../../models/Patient';
 import {Address} from '../../../models/Address';
 import {EmergencyInfo} from '../../../models/EmergencyInfo';
 import {Contact} from '../../../models/Contact';
+import {NgxSpinnerService} from 'ngx-spinner';
 
 @Component({
   selector: 'app-quick-add',
@@ -21,10 +22,12 @@ export class QuickAddComponent implements OnInit {
 
   constructor(private dialogRef: MatDialogRef<QuickAddComponent>,
               private fb: FormBuilder,
+              private spinner: NgxSpinnerService,
               private patientService: PatientsService) {
   }
 
   ngOnInit(): void {
+
   }
 
   quickAdd() {
@@ -46,8 +49,10 @@ export class QuickAddComponent implements OnInit {
       address,
       emergencyInfo);
 
+    this.spinner.show();
     this.patientService.savePatient(newPatient).subscribe(
       result => {
+        this.spinner.hide();
         this.dialogRef.close(result);
       }, error => {
         console.log(error);

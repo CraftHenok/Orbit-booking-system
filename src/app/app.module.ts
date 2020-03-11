@@ -19,11 +19,8 @@ import {MatTableModule} from '@angular/material/table';
 import {MatInputModule} from '@angular/material/input';
 import {HttpClientModule} from '@angular/common/http';
 import {MatIconModule} from '@angular/material/icon';
-import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
-import {MatCardModule} from '@angular/material/card';
 import {ShowDoctorsComponent} from './components/show/appointments/show-doctors/show-doctors.component';
-import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSelectModule} from '@angular/material/select';
 import {OwlDateTimeModule, OwlNativeDateTimeModule} from 'ng-pick-datetime';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -33,6 +30,7 @@ import {MatChipsModule} from '@angular/material/chips';
 import {ForgetIdComponent} from './components/dialogs/forget-id/forget-id.component';
 import {QuickAddComponent} from './components/dialogs/quick-add/quick-add.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {NgxSpinnerModule} from 'ngx-spinner';
 
 // ng g module moduleName --flat --routing
 
@@ -71,6 +69,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     FormsModule,
     MatChipsModule,
     MatProgressSpinnerModule,
+    NgxSpinnerModule
   ],
   entryComponents: [
     AddEditDialogComponent,
