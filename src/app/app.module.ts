@@ -29,6 +29,8 @@ import {OwlDateTimeModule, OwlNativeDateTimeModule} from 'ng-pick-datetime';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatRippleModule} from '@angular/material/core';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatChipsModule} from '@angular/material/chips';
+import {ForgetIdComponent} from './components/dialogs/forget-id/forget-id.component';
 
 // ng g module moduleName --flat --routing
 
@@ -39,6 +41,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     AppointmentsComponent,
     ShowDoctorsComponent,
     AddEditDialogComponent,
+    ForgetIdComponent
   ],
   imports: [
     BrowserModule,
@@ -57,17 +60,21 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     MatTableModule,
     HttpClientModule,
     MatIconModule,
-    MatSidenavModule,
-    MatCardModule,
-    MatPaginatorModule,
+    // MatSidenavModule,
+    // MatCardModule,
+    // MatPaginatorModule,
     MatSelectModule,
     MatListModule,
     MatCheckboxModule,
     MatRippleModule,
     MatTooltipModule,
     FormsModule,
+    MatChipsModule,
   ],
-  entryComponents: [AddEditDialogComponent],
+  entryComponents: [
+    AddEditDialogComponent,
+    ForgetIdComponent
+  ],
   providers: [],
   exports: [],
   bootstrap: [AppComponent]

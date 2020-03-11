@@ -1,0 +1,33 @@
+<h1 mat-dialog-title style="color: #00695C">Search to find patients</h1>
+<div mat-dialog-content>
+  <div class="queryArea">
+    <form action="" [formGroup]="forgetForm">
+      <mat-form-field appearance="outline">
+        <mat-label>First name</mat-label>
+        <input matInput placeholder="First name" formControlName="firstName">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Phone number</mat-label>
+        <input matInput placeholder="Phone number" formControlName="phoneNumber">
+      </mat-form-field>
+    </form>
+  </div>
+  <div *ngIf="patientSearchResult.length > 0">
+    <p *ngIf="patientSearchResult.length == 1 else multipleResult">
+      Found 1 search result
+    </p>
+    <ng-template #multipleResult>
+      <p>Found {{ patientSearchResult.length }} results</p>
+    </ng-template>
+  </div>
+  <mat-action-list>
+    <button mat-list-item
+            *ngFor="let p of patientSearchResult" (click)="sendAndClose(p)">
+      {{ (p.firstName + ' ' + p.middleName + ' ' + p.lastName) | uppercase }}
+    </button>
+  </mat-action-list>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-flat-button color="primary" [disabled]="!forgetForm.valid" (click)="search()">Search</button>
+  <button mat-flat-button [mat-dialog-close]>Cancel</button>
+</div>

@@ -22,6 +22,10 @@ export class PatientsService {
     return this.http.get<Patient[]>(this.patientsUrl);
   }
 
+  getPatientForgetId(firstName: string, phoneNumber: string) {
+    return this.http.get<Patient[]>(this.patientsUrl + `forgetId/${firstName}/${phoneNumber}`);
+  }
+
 
   getContactInfo(contactInfoId: string) {
     const url = this.patientsUrl + 'contactInfo/' + contactInfoId;

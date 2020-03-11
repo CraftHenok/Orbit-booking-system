@@ -1,6 +1,6 @@
 import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {LocalAppointments} from '../../../models/Appointemts/LocalAppointments';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {FormBuilder, FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
 import {addMinutes} from 'date-fns';
@@ -13,6 +13,10 @@ import {AppointmentStatusService} from '../../../services/Appointments/Status/ap
 import {AppointmentTypeService} from '../../../services/Appointments/Type/appointment-type.service';
 import {DurationService} from '../../../services/Duration/duration.service';
 import {Duration} from '../../../models/Duration';
+import {Variables} from '../../../utility/variables';
+import {ForgetIdComponent} from '../forget-id/forget-id.component';
+import {LocalAppointmentsBuilder} from '../../../models/Appointemts/LocalAppointmentsBuilder';
+import {Patient} from '../../../models/Patient';
 
 
 /** Error when invalid control is dirty, touched, or submitted. */
@@ -52,6 +56,7 @@ export class AddEditDialogComponent implements OnInit, OnDestroy {
   constructor(
     private dialogRef: MatDialogRef<AddEditDialogComponent>,
     private formBuilder: FormBuilder,
+    private dialog: MatDialog,
     private calenderEventService: AppointmentsServices,
     private appointmentStatusService: AppointmentStatusService,
     private appointmentTypeService: AppointmentTypeService,
@@ -148,4 +153,15 @@ export class AddEditDialogComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
+  openForgetIdDialog() {
+    const dialogRef = this.dialog.open(ForgetIdComponent, {
+      width: Variables.dialogBigWidth,
+    });
+
+    dialogRef.afterClosed().subscribe((result: Patient) => {
+      if (result !== undefined && result) {
+        this.PatientId.setValue(result.seq);
+      }
+    });
+  }
 }

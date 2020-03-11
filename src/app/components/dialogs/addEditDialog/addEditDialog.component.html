@@ -22,6 +22,15 @@
       </mat-error>
 
     </mat-form-field>
+
+    <div style="margin-bottom: 19px" *ngIf="!data.patientId">
+      <mat-chip-list>
+        <mat-chip>Quick add</mat-chip>
+        <mat-chip (click)="openForgetIdDialog()">Forget id</mat-chip>
+      </mat-chip-list>
+    </div>
+
+
     <mat-form-field appearance="outline">
       <mat-label>Appointment Type</mat-label>
 
@@ -54,6 +63,7 @@
     </mat-form-field>
 
     <mat-form-field appearance="outline">
+      <mat-label>Start date</mat-label>
       <input matInput [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" formControlName="start"
              placeholder="Date Time">
       <span [owlDateTimeTrigger]="dt1"><i class="fa fa-calendar"></i></span>
@@ -69,7 +79,7 @@
       </mat-select>
     </mat-form-field>
 
-    <div *ngIf="!ServedBy.value">
+    <div *ngIf="!data.servedBy">
       <mat-form-field appearance="outline">
         <mat-label>Served By</mat-label>
         <input matInput placeholder="Served By" type="number" formControlName="ServedBy">

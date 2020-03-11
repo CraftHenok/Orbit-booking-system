@@ -66,8 +66,8 @@ exports.saveNewPatient = async (req, res) => {
 
 };
 
-exports.getPatientByName = (req, res) => {
-  db.all("SELECT * from patient WHERE firstName like ?", `%${req.params["name"]}%`, (err, row) => {
+exports.getPatientByNameAndPn = (req, res) => {
+  db.all("SELECT * from Patient where firstName like ? or contactId = (select id from Contact where phoneNumber=?);", [`%${req.params["firstName"]}%`, req.params['pn']], (err, row) => {
     if (err) {
       res.json(err).status(400);
     } else {

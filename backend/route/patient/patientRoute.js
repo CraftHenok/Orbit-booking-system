@@ -192,14 +192,19 @@ router.get('/byIdFull/:patientId', patientsController.getPatientByIdFull);
 
 /**
  * @swagger
- * /patient/byName/{name}:
+ * /patient/byName/{firstName}/{phoneNumber}:
  *  get:
- *    description: get patients by name
+ *    description: get patients by first or phone number
  *    tags:
  *      - patient
  *    parameters:
- *      - name: name
- *        description: the name to search with
+ *      - name: firstName
+ *        description: the first name to search with
+ *        required: true
+ *        type: string
+ *        in: path
+ *      - name: pn
+ *        description: patient phone number
  *        required: true
  *        type: string
  *        in: path
@@ -207,9 +212,9 @@ router.get('/byIdFull/:patientId', patientsController.getPatientByIdFull);
  *      -application/json
  *    responses:
  *      200:
- *        description: patients with name starting or ending with passed name param
+ *        description: list patients matching first name and phone number
  */
-router.get('/byName/:name', patientsController.getPatientByName);
+router.get('/forgetId/:firstName/:pn', patientsController.getPatientByNameAndPn);
 
 /**
  * @swagger
