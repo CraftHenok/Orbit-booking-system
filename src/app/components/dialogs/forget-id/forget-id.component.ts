@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MatDialogRef} from '@angular/material/dialog';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, Validators} from '@angular/forms';
 import {Patient} from '../../../models/Patient';
 import {PatientsService} from '../../../services/Patients/patients.service';
 
@@ -16,7 +16,7 @@ export class ForgetIdComponent implements OnInit {
     phoneNumber: ['', Validators.required],
   });
 
-
+  searchResultCount: number;
   patientSearchResult: Patient[] = [];
 
   constructor(
@@ -36,7 +36,8 @@ export class ForgetIdComponent implements OnInit {
 
     this.patientService.getPatientForgetId(firstName, pn).subscribe(
       result => {
-        this.patientSearchResult.push(...result);
+        this.searchResultCount = result.length;
+        this.patientSearchResult = result;
       },
       error => {
         console.error(error);

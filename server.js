@@ -54,7 +54,7 @@ app.use('/duration', require('./backend/route/durationRoute'));
  *
  */
 app.get("/doManualMigration/OrbitHealth", () => {
-  migrationManager.doMigrationThenSeeding();
+  migrationManager.doMigration();
   stateManager.createFile();
 });
 

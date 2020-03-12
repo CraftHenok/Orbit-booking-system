@@ -12,14 +12,14 @@
       </mat-form-field>
     </form>
   </div>
-  <div *ngIf="patientSearchResult.length > 0">
-    <p *ngIf="patientSearchResult.length == 1 else multipleResult">
-      Found 1 search result
-    </p>
-    <ng-template #multipleResult>
-      <p>Found {{ patientSearchResult.length }} results</p>
-    </ng-template>
+
+  <div *ngIf="searchResultCount <= 1 else multipleResult">
+    Found {{ searchResultCount }} search result.
   </div>
+  <ng-template #multipleResult>
+    <p *ngIf="searchResultCount" style="color: #00695C">Found {{ searchResultCount }} results.</p>
+  </ng-template>
+
   <mat-action-list>
     <button mat-list-item
             *ngFor="let p of patientSearchResult" (click)="sendAndClose(p)">
