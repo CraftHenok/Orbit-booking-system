@@ -12,6 +12,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {OwlDateTimeModule} from 'ng-pick-datetime';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {NgxSpinnerModule} from 'ngx-spinner';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     MatSelectModule,
     MatAutocompleteModule,
     OwlDateTimeModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    NgxSpinnerModule
   ]
 })
 export class AddpatientModule {

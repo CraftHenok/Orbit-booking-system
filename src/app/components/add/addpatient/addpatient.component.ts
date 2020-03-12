@@ -11,6 +11,7 @@ import {SnackBarManager} from '../../../utility/snackBarManager';
 import {DateManager} from '../../../utility/dateManager';
 import {PatientTitleService} from '../../../services/Patients/PatientTitle/patient-title.service';
 import {EmergencyTitleService} from '../../../services/Patients/EmergencyTitle/emergency-title.service';
+import {NgxSpinnerService} from 'ngx-spinner';
 
 export const filter = (opt: string[], value: string): string[] => {
   const filterValue = value.toLowerCase();
@@ -52,6 +53,7 @@ export class AddpatientComponent implements OnInit, OnDestroy {
               private patientService: PatientsService,
               private patientTitleService: PatientTitleService,
               private emergencyTitleService: EmergencyTitleService,
+              private spinner: NgxSpinnerService,
               private snackBar: MatSnackBar) {
     this.patientsFormManager = new PatientsFormManager(formBuilder);
     this.primaryInfoForm = this.patientsFormManager.getFormBuilder().primaryInfoForm;
@@ -101,14 +103,17 @@ export class AddpatientComponent implements OnInit, OnDestroy {
 
   submit() {
 
+    this.spinner.show();
     const newPatient = PatientsFormManager.bindDateToNewPatient(this.primaryInfoForm, this.contactInfoForm,
       this.addressForm, this.emergencyInfoForm);
 
     this.subscription.add(this.patientService.savePatient(newPatient).subscribe(
       result => {
+        this.spinner.hide();
         this.snackBarMan.show('New patient added', 'Ok');
       },
       error => {
+        this.spinner.hide();
         console.error(error);
       }
     ));

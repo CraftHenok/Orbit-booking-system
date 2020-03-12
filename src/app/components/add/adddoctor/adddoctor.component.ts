@@ -1,11 +1,11 @@
 import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Doctor} from '../../../models/Doctor';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {DoctorsService} from '../../../services/Doctors/doctors.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {Observable, Subscription} from 'rxjs';
+import {Subscription} from 'rxjs';
 import {DoctorsFormManager} from '../../../utility/doctorsFormManager';
 import {SnackBarManager} from '../../../utility/snackBarManager';
+import {NgxSpinnerService} from 'ngx-spinner';
 
 @Component({
   selector: 'app-adddoctor',
@@ -26,6 +26,7 @@ export class AdddoctorComponent implements OnInit, OnDestroy {
 
   constructor(private formBuilder: FormBuilder,
               private snackBar: MatSnackBar,
+              private spinner: NgxSpinnerService,
               private doctorService: DoctorsService) {
   }
 
@@ -37,13 +38,16 @@ export class AdddoctorComponent implements OnInit, OnDestroy {
   }
 
   submit() {
+    this.spinner.show();
     const newDoctor = DoctorsFormManager.bindDataToNewDoctor(0, this.primaryInfo, this.appointmentRelatedInfo);
 
     this.subscription.add(this.doctorService.saveDoctor(newDoctor).subscribe(
       result => {
+        this.spinner.hide();
         this.snackBarMan.show('New Doctor added', 'Ok');
       },
       error => {
+        this.spinner.hide();
         console.error(error);
       }
     ));

@@ -8,6 +8,7 @@ import {Doctor} from '../../../models/Doctor';
 import {DoctorsFormManager} from '../../../utility/doctorsFormManager';
 import {SnackBarManager} from '../../../utility/snackBarManager';
 import {Subscription} from 'rxjs';
+import {NgxSpinnerService} from 'ngx-spinner';
 
 @Component({
   selector: 'app-editdoctor',
@@ -30,6 +31,7 @@ export class EditdoctorComponent implements OnInit, OnDestroy {
   constructor(private formBuilder: FormBuilder,
               private snackBar: MatSnackBar,
               private activatedRoute: ActivatedRoute,
+              private spinner: NgxSpinnerService,
               private doctorService: DoctorsService) {
     this.commonFormBuilder = new DoctorsFormManager(this.formBuilder);
     this.primaryInfo = this.commonFormBuilder.getFormBuilders().primaryInfo;
@@ -62,14 +64,17 @@ export class EditdoctorComponent implements OnInit, OnDestroy {
   }
 
   submit() {
+    this.spinner.show();
     const updatedDoctor = DoctorsFormManager.bindDataToNewDoctor(this.doctor.seq, this.primaryInfo, this.appointmentRelatedInfo);
 
     this.subscription.add(this.doctorService.updateDoctor(updatedDoctor).subscribe(
       result => {
+        this.spinner.hide();
         if (result > 0) {
           this.snackBarMan.show('Doctor updated successfully', 'Ok');
         }
       }, error => {
+        this.spinner.hide();
         console.error(error);
       }
     ));

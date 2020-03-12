@@ -13,6 +13,7 @@ import {SnackBarManager} from '../../../utility/snackBarManager';
 import {DateManager} from '../../../utility/dateManager';
 import {PatientTitleService} from '../../../services/Patients/PatientTitle/patient-title.service';
 import {EmergencyTitleService} from '../../../services/Patients/EmergencyTitle/emergency-title.service';
+import {NgxSpinnerService} from 'ngx-spinner';
 
 @Component({
   selector: 'app-editpatient',
@@ -49,6 +50,7 @@ export class EditpatientComponent implements OnInit, OnDestroy {
               private patientService: PatientsService,
               private activatedRoute: ActivatedRoute,
               private patientTitleService: PatientTitleService,
+              private spinner: NgxSpinnerService,
               private emergencyTitleService: EmergencyTitleService,
               private snackBar: MatSnackBar) {
     this.patientsFormManager = new PatientsFormManager(formBuilder);
@@ -138,16 +140,20 @@ export class EditpatientComponent implements OnInit, OnDestroy {
 
   submit() {
 
+    this.spinner.show();
+
     this.patient = PatientsFormManager.bindDateToOldPatient(this.primaryInfoForm, this.contactInfoForm,
       this.addressForm, this.emergencyInfoForm, this.patient);
 
     this.subscription.add(this.patientService.updatePatient(this.patient).subscribe(
       result => {
+        this.spinner.hide();
         if (result > 0) {
           this.snackBarMan.show('Patient updated successfully', 'Ok');
         }
       },
       error => {
+        this.spinner.hide();
         console.error(error);
       }
     ));
