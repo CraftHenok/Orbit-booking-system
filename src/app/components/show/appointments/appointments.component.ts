@@ -1,5 +1,5 @@
-import {Component, ElementRef, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
-import {CalendarEvent, CalendarEventTimesChangedEvent, CalendarView} from 'angular-calendar';
+import {Component, ElementRef, OnDestroy, OnInit, TemplateRef, ViewChild, ViewEncapsulation} from '@angular/core';
+import {CalendarEvent, CalendarEventTimesChangedEvent, CalendarView, CalendarWeekViewBeforeRenderEvent} from 'angular-calendar';
 import {Subject, Subscription} from 'rxjs';
 import {isSameDay, isSameMonth} from 'date-fns';
 import {AddEditDialogComponent} from '../../dialogs/addEditDialog/addEditDialog.component';
@@ -10,11 +10,10 @@ import {LocalAppointmentsBuilder} from '../../../models/Appointemts/LocalAppoint
 import {AppointmentWrapper} from '../../../models/Appointemts/AppointmentWrapper';
 import {Variables} from '../../../utility/variables';
 
-
 @Component({
   selector: 'app-appointments',
   templateUrl: './appointments.component.html',
-  styleUrls: ['./appointments.component.css']
+  styleUrls: ['./appointments.component.css'],
 })
 export class AppointmentsComponent implements OnInit, OnDestroy {
 
@@ -44,15 +43,14 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.subscription.add(this.calenderEventService.getAllAppointments().subscribe(
-      result => {
-        this.events = AppointmentWrapper.toLocalAppointmentBatch(result);
-      },
-      error => {
-        console.error(error + 'On appointment getAllEvents ngOnInit');
-      }
-    ));
-
+    // this.subscription.add(this.calenderEventService.getAllAppointments().subscribe(
+    //   result => {
+    //     this.events = AppointmentWrapper.toLocalAppointmentBatch(result);
+    //   },
+    //   error => {
+    //     console.error(error + 'On appointment getAllEvents ngOnInit');
+    //   }
+    // ));
   }
 
   dayClicked({date, events}: { date: Date; events: CalendarEvent[] }): void {
@@ -171,11 +169,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
       return;
     }
     this.currentSelectedDoctorSeq = seq;
-    if (seq === 0) {
-      this.showAllAppointments();
-    } else if (seq > 0) {
-      this.showDoctorsAppointment(seq);
-    }
+    this.showDoctorsAppointment(seq);
   }
 
   private showDoctorsAppointment(seq: number) {
@@ -188,14 +182,20 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
     ));
   }
 
-  private showAllAppointments() {
-    this.subscription.add(this.calenderEventService.getAllAppointments().subscribe(
-      result => {
-        this.events = AppointmentWrapper.toLocalAppointmentBatch(result);
-      }, error => {
-        console.error(error);
-      }
-    ));
+  beforeWeekViewRender(renderEvent: CalendarWeekViewBeforeRenderEvent) {
+    renderEvent.hourColumns.forEach(hourColumn => {
+      hourColumn.hours.forEach(hour => {
+        hour.segments.forEach(segment => {
+          if (
+            segment.date.getHours() >= 2 &&
+            segment.date.getHours() <= 5 &&
+            segment.date.getDay() === 5
+          ) {
+            segment.cssClass = 'bg-pink';
+          }
+        });
+      });
+    });
   }
 
   ngOnDestroy(): void {

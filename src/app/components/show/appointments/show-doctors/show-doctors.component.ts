@@ -38,7 +38,6 @@ export class ShowDoctorsComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   constructor(private doctorsService: DoctorsService) {
-    this.doctors.push(Doctor.getAllDoctorsTemplate());
   }
 
   ngOnInit(): void {

@@ -42,6 +42,7 @@ app.use('/appointmentStatus', require('./backend/route/appointment/appointmentSt
 app.use('/emergencyTitle', require('./backend/route/emerergencyTitleRoute'));
 app.use('/patientTitle', require('./backend/route/patient/patientTitleRoute'));
 app.use('/duration', require('./backend/route/durationRoute'));
+app.use('/account', require('./backend/route/accountRoute'));
 
 
 // In case there comes a need to migrate data without file use
