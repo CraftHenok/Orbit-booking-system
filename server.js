@@ -6,9 +6,10 @@ const swaggerUi = require('swagger-ui-express');
 const migrationManager = require('./backend/utitlity/migrationManager');
 const stateManager = require("./backend/utitlity/stateManager");
 const swaggerConfig = require('./backend/utitlity/swaggerConfiguration.js');
+const tokenVerifier = require('./backend/utitlity/verifyToken');
 const app = express();
 
-
+// route to access api documentation
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerConfig.swaggerSpec));
 
 
@@ -23,8 +24,8 @@ app.use(cors());
 // });
 
 
-//---------For node api--------
-// migration and seeding
+// check if the app's table schema is created
+// if not create
 if (stateManager.createTables()) {
   //create tables
   console.log("No state found Need to create tables");
@@ -32,8 +33,13 @@ if (stateManager.createTables()) {
   stateManager.createFile();
 }
 
+// api that doesn't need authentication
+app.use('/account', require('./backend/route/accountRoute'));
 
-// apis
+// all apis below this => require user authentication
+app.use(tokenVerifier);
+
+// apis that require user authentication
 app.use('/appointment', require('./backend/route/appointment/appointmetsRoute'));
 app.use('/doctor', require('./backend/route/doctorRoute'));
 app.use('/patient', require('./backend/route/patient/patientRoute'));
@@ -42,11 +48,8 @@ app.use('/appointmentStatus', require('./backend/route/appointment/appointmentSt
 app.use('/emergencyTitle', require('./backend/route/emerergencyTitleRoute'));
 app.use('/patientTitle', require('./backend/route/patient/patientTitleRoute'));
 app.use('/duration', require('./backend/route/durationRoute'));
-app.use('/account', require('./backend/route/accountRoute'));
 
 
-// In case there comes a need to migrate data without file use
-// don't run this if there are already table or don't know what you are doing
 /**
  * @swagger
  * /doManualMigration/OrbitHealth:
@@ -60,6 +63,5 @@ app.get("/doManualMigration/OrbitHealth", () => {
 });
 
 
-//check if we need to create
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
