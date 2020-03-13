@@ -5,6 +5,7 @@ const roles = (function () {
   ac.grant("R")
     .createAny("appointment")
     .readAny("appointment")
+    .readAny("doctor")
     .updateAny("appointment")
     .deleteAny("appointment")
     .grant("D")

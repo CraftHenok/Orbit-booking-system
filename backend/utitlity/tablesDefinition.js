@@ -1,5 +1,4 @@
 const appointmentTable = "CREATE TABLE \"Appointment\" (\n" +
-  "\t\"id\"\tINTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n" +
   "\t\"patientId\"\tINTEGER NOT NULL,\n" +
   "\t\"appointmentTypeId\"\tINTEGER NOT NULL,\n" +
   "\t\"appointmentStatusId\"\tINTEGER NOT NULL,\n" +
@@ -10,17 +9,14 @@ const appointmentTable = "CREATE TABLE \"Appointment\" (\n" +
   ");";
 
 const appointmentType = "CREATE TABLE \"appointmentType\" (\n" +
-  "\t\"id\"\tTEXT NOT NULL UNIQUE,\n" +
   "\t\"type\"\tTEXT NOT NULL\n" +
   ");";
 
 const appointmentStatus = "CREATE TABLE \"appointmentStatus\" (\n" +
-  "\t\"id\"\tTEXT NOT NULL UNIQUE,\n" +
   "\t\"status\"\tTEXT NOT NULL\n" +
   ");";
 
 const patient = "CREATE TABLE \"Patient\" (\n" +
-  "\t\"seq\"\tINTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n" +
   "\t\"patientTitleId\"\tINTEGER NOT NULL,\n" +
   "\t\"firstName\"\tTEXT NOT NULL,\n" +
   "\t\"middleName\"\tTEXT NOT NULL,\n" +
@@ -37,19 +33,16 @@ const patient = "CREATE TABLE \"Patient\" (\n" +
   ");";
 
 const patientTitle = "CREATE TABLE \"PatientTitle\" (\n" +
-  "\t\"id\"\tTEXT NOT NULL UNIQUE,\n" +
   "\t\"title\"\tTEXT NOT NULL\n" +
   ");";
 
 const contact = "CREATE TABLE \"Contact\" (\n" +
-  "\t\"id\"\tTEXT NOT NULL UNIQUE,\n" +
   "\t\"email\"\tTEXT,\n" +
   "\t\"phoneNumber\"\tTEXT,\n" +
   "\t\"alternatePhoneNumber\"\tTEXT\n" +
   ");";
 
 const address = "CREATE TABLE \"Address\" (\n" +
-  "\t\"id\"\tTEXT NOT NULL UNIQUE,\n" +
   "\t\"line1\"\tTEXT,\n" +
   "\t\"line2\"\tTEXT,\n" +
   "\t\"city\"\tTEXT,\n" +
@@ -57,7 +50,6 @@ const address = "CREATE TABLE \"Address\" (\n" +
   ");";
 
 const emergencyContact = "CREATE TABLE \"EmergencyContact\" (\n" +
-  "\t\"id\"\tTEXT NOT NULL UNIQUE,\n" +
   "\t\"emergencyTitleId\"\tINTEGER,\n" +
   "\t\"name\"\tTEXT,\n" +
   "\t\"phoneNumber\"\tTEXT,\n" +
@@ -65,15 +57,12 @@ const emergencyContact = "CREATE TABLE \"EmergencyContact\" (\n" +
   ");";
 
 const emergencyTitle = "CREATE TABLE \"emergencyTitle\" (\n" +
-  "\t\"id\"\tTEXT NOT NULL UNIQUE,\n" +
   "\t\"title\"\tTEXT NOT NULL\n" +
   ");";
 
 const doctor = "CREATE TABLE \"Doctor\" (\n" +
-  "\t\"seq\"\tINTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n" +
+  "\t\"userId\"\tINTEGER NOT NULL,\n" +
   "\t\"name\"\tTEXT NOT NULL,\n" +
-  "\t\"username\"\tTEXT NOT NULL UNIQUE,\n" +
-  "\t\"password\"\tTEXT NOT NULL,\n" +
   "\t\"displayOrder\"\tINTEGER,\n" +
   "\t\"manageBlocks\"\tINTEGER NOT NULL,\n" +
   "\t\"manageBooking\"\tINTEGER NOT NULL,\n" +
@@ -81,8 +70,13 @@ const doctor = "CREATE TABLE \"Doctor\" (\n" +
   ");";
 
 const duration = "CREATE TABLE \"duration\" (\n" +
-  "\t\"id\"\tTEXT NOT NULL UNIQUE,\n" +
   "\t\"duration\"\tINTEGER NOT NULL\n" +
+  ");";
+
+const user = "CREATE TABLE \"User\" (\n" +
+  "\t\"email\"\tTEXT NOT NULL UNIQUE,\n" +
+  "\t\"password\"\tTEXT NOT NULL,\n" +
+  "\t\"role\"\tTEXT NOT NULL\n" +
   ");";
 
 module.exports = {
@@ -96,5 +90,6 @@ module.exports = {
   "emergencyContact": emergencyContact,
   "emergencyTitle": emergencyTitle,
   "doctor": doctor,
-  "duration": duration
+  "duration": duration,
+  "user": user
 };

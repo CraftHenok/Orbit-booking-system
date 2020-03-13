@@ -46,6 +46,9 @@ exports.doMigration = () => {
     db.run(tablesCollection.duration);
     console.log("duration table created");
 
+    db.run(tablesCollection.user);
+    console.log("User table created");
+
   });
 
   console.log("All tables are created");

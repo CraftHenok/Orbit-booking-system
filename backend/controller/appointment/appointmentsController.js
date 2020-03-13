@@ -23,10 +23,11 @@ exports.saveNewAppointment = async (req, res) => {
     "startDateTime,endDateTime,isServed,servedBy)\n" +
     "VALUES (?,?,?,?,?,?,?)", [appointmentData.patientId, appointmentData.appointmentTypeId, appointmentData.appointmentStatusId,
     appointmentData.startDateTime, appointmentData.endDateTime, appointmentData.isServed,
-    appointmentData.servedBy], (err) => {
+    appointmentData.servedBy], function (err) {
     if (err) {
       res.status(400).send(err.message);
     } else {
+      appointmentData.id = this.lastID;
       res.json(appointmentData);
     }
   });
@@ -51,7 +52,7 @@ exports.updateAppointment = async (req, res) => {
   };
 
   await db.run("update Appointment set patientId =?,appointmentTypeId=?,appointmentStatusId=?," +
-    "startDateTime=?,endDateTime=?,isServed=?,servedBy=? where id = ?",
+    "startDateTime=?,endDateTime=?,isServed=?,servedBy=? where rowid = ?",
     [appointmentData.patientId, appointmentData.appointmentTypeId, appointmentData.appointmentStatusId,
       appointmentData.startDateTime, appointmentData.endDateTime, appointmentData.isServed,
       appointmentData.servedBy, req.params['appointmentId']], function (err) {
@@ -70,7 +71,7 @@ exports.deleteAppointmentById = async (req, res) => {
   }
 
 
-  await db.run("DELETE from Appointment WHERE id= ?", req.params['appointmentId'], function (err) {
+  await db.run("DELETE from Appointment WHERE rowid= ?", req.params['appointmentId'], function (err) {
     if (err) {
       res.json(err.message).status(404);
     } else {
@@ -79,13 +80,13 @@ exports.deleteAppointmentById = async (req, res) => {
   });
 };
 
-function hasReadAnyAccess() {
-  return getGrants.can(req.user.role).readAny("appointment");
+function hasReadAnyAccess(role) {
+  return getGrants.can(role).readAny("appointment");
 }
 
 
 exports.getPatientAppointment = async (req, res) => {
-  if (!hasReadAnyAccess()) {
+  if (!hasReadAnyAccess(req.user.role)) {
     return res.status(403).json("Access forbidden");
   }
 
@@ -102,7 +103,7 @@ exports.getDoctorAppointments = async (req, res) => {
 };
 
 exports.getAllAppointments = async (req, res) => {
-  if (!hasReadAnyAccess()) {
+  if (!hasReadAnyAccess(req.user.role)) {
     return res.status(403).json("Access forbidden");
   }
 

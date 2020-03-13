@@ -1,7 +1,6 @@
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('demo.db');
-const jwt = require('jsonwebtoken');
-require('dotenv').config();
+const jwtHash = require("../utitlity/hashToken");
 
 exports.login = async (req, res) => {
   const user = {
@@ -10,15 +9,39 @@ exports.login = async (req, res) => {
   };
 
   await db.get("select * from user where email = ?", [user.email], (err, row) => {
-    if (row.password === user.password) {
-      user.token = jwt.sign({role: row.role, id: row.id}, process.env.TOKEN_KEY);
-      res.json(user);
+    if (err) {
+      return res.json(err);
     } else {
-      res.json("Password don't match")
+      if (row === undefined) {
+        return res.json("User doesn't exist")
+      } else {
+        if (row.password === user.password) {
+          user.token = jwtHash({role: row.role, id: row.id});
+          res.json(user);
+        } else {
+          res.json("Password don't match")
+        }
+      }
     }
   })
-
 };
+
+
+const localRegisterToDb = async function (userData, callBack) {
+  await db.run("INSERT into User(email,password,role)VALUES (?,?,?)",
+    [userData.email, userData.password, userData.role], function (err) {
+      if (err) {
+        callBack({suc: false, msg: err});
+      } else {
+        callBack({suc: true, msg: this.lastID});
+      }
+    });
+};
+
+
+exports.registerToDB = (function () {
+  return localRegisterToDb;
+})();
 
 
 exports.register = async (req, res) => {
@@ -28,22 +51,14 @@ exports.register = async (req, res) => {
     role: req.body.role
   };
 
-  db.serialize(function () {
-    db.run("INSERT into User(email,password,role)\n" +
-      "VALUES (?,?,?)", [newUser.email, newUser.password, newUser.role], (err) => {
-      if (err) {
-        return console.error(err);
-      }
-    });
-
-    db.get("SELECT * from sqlite_sequence WHERE name = 'User'", function (err, row) {
-      if (err) {
-        console.error(err);
-      } else {
-        newUser.token = jwt.sign({role: newUser.role, id: row.seq}, process.env.TOKEN_KEY);
-        return res.json(newUser);
-      }
-    })
+  await localRegisterToDb(newUser, function (response) {
+    if (response.suc) {
+      newUser.id = response.msg;
+      newUser.token = jwtHash({role: newUser.role, id: newUser.id});
+      return res.json(newUser);
+    } else {
+      return res.json(response.msg);
+    }
   });
 
 
