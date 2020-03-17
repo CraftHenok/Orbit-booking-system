@@ -6,6 +6,7 @@ const appointmentTable = "CREATE TABLE \"Appointment\" (\n" +
   "\t\"endDateTime\"\tTEXT NOT NULL,\n" +
   "\t\"isServed\"\tINTEGER,\n" +
   "\t\"servedBy\"\tINTEGER\n" +
+  "\t\"userId\"\tINTEGER NOT NULL,\n" +
   ");";
 
 const appointmentType = "CREATE TABLE \"appointmentType\" (\n" +

@@ -358,7 +358,7 @@ router.get('/address/:addressId', patientsController.getAddressById);
  * @swagger
  * /patient/emergencyInfo/{emergencyInfoId}:
  *  get:
- *    description: get full emergency info with emergency id
+ *    description: get patient's emergency info with emergency id
  *    tags:
  *      - patient
  *    parameters:

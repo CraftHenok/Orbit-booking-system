@@ -1,8 +1,14 @@
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('demo.db');
-const uuidv4 = require('uuid/v4');
+const {getGrants} = require('../../utitlity/roleManager');
 
 exports.saveNewPatient = async (req, res) => {
+
+  const permission = getGrants.can(req.user.role).createAny("patient");
+  if (!permission.granted) {
+    return res.status(403).json("Access forbidden " + req.user.role);
+  }
+
   const patientData = {
     patientTitleId: req.body.patientTitleId,
     firstName: req.body.firstName,
@@ -18,12 +24,8 @@ exports.saveNewPatient = async (req, res) => {
     active: 0,
     regDate: new Date()
   };
-
-  const contactId = uuidv4();
-  const addressId = uuidv4();
-  const emergencyId = uuidv4();
   //save to contact
-  db.run("INSERT into contact VALUES (?,?,?,?)", [contactId, patientData.contact.email, patientData.contact.phoneNumber,
+  db.run("INSERT into contact(email,phoneNumber,alternatePhoneNumber) VALUES (?,?,?)", [patientData.contact.email, patientData.contact.phoneNumber,
     patientData.contact.alternatePhoneNumber], (err) => {
     if (err) {
       console.log(err);
@@ -31,7 +33,7 @@ exports.saveNewPatient = async (req, res) => {
   });
 
   //save to address
-  db.run("INSERT into address VALUES (?,?,?,?,?)", [addressId, patientData.address.line1, patientData.address.line2,
+  db.run("INSERT into address(line1,line2,city,country) VALUES (?,?,?,?)", [patientData.address.line1, patientData.address.line2,
     patientData.address.city, patientData.address.country], function (err) {
     if (err) {
       console.log(err);
@@ -39,40 +41,39 @@ exports.saveNewPatient = async (req, res) => {
   });
 
   // save to contact info
-  db.run("INSERT into EmergencyContact VALUES (?,?,?,?,?)", [emergencyId, patientData.emergencyInfo.emergencyTitleId, patientData.emergencyInfo.name,
+  db.run("INSERT into EmergencyContact(emergencyTitleId,name,phoneNumber,alternatePhoneNumber) VALUES (?,?,?,?)", [patientData.emergencyInfo.emergencyTitleId, patientData.emergencyInfo.name,
     patientData.emergencyInfo.phoneNumber, patientData.emergencyInfo.alternatePhoneNumber], function (err) {
     if (err) {
       console.log(err);
     }
   });
 
-  db.serialize(function () {
-    db.run("INSERT into Patient(patientTitleId,firstName,middleName,lastName," +
-      "gender,dateOfBirth,nationality,contactId,addressId,emergencyInfoId,age,active,regDate) " +
-      "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
-      [patientData.patientTitleId, patientData.firstName, patientData.middleName,
-        patientData.lastName, patientData.gender, patientData.dateOfBirth, patientData.nationality,
-        contactId, addressId, emergencyId, patientData.age, patientData.active, patientData.regDate], function (err) {
-        if (err) {
-          console.error(err);
-        }
-      });
-
-    db.get("SELECT * from sqlite_sequence WHERE name = 'Patient'", function (err, row) {
+  db.run("INSERT into Patient(patientTitleId,firstName,middleName,lastName," +
+    "gender,dateOfBirth,nationality,contactId,addressId,emergencyInfoId,age,active,regDate) " +
+    "VALUES (?,?,?,?,?,?,?," +
+    "(select seq from sqlite_sequence where name='Contact')," +
+    "(select seq from sqlite_sequence where name='Address')," +
+    "(select seq from sqlite_sequence where name='EmergencyContact'),?,?,?)",
+    [patientData.patientTitleId, patientData.firstName, patientData.middleName,
+      patientData.lastName, patientData.gender, patientData.dateOfBirth, patientData.nationality,
+      patientData.age, patientData.active, patientData.regDate], function (err) {
       if (err) {
         console.error(err);
       } else {
-        patientData.seq = row.seq;
         res.json(patientData);
       }
-    })
-
-  });
+    });
 
 
 };
 
 exports.getPatientByNameAndPn = (req, res) => {
+
+  const permission = getGrants.can(req.user.role).readAny("patient");
+  if (!permission.granted) {
+    return res.status(403).json("Access forbidden " + req.user.role);
+  }
+
   db.all("SELECT * from Patient where firstName like ? or contactId = (select id from Contact where phoneNumber=?);", [`%${req.params["firstName"]}%`, req.params['pn']], (err, row) => {
     if (err) {
       res.json(err).status(400);
@@ -83,7 +84,12 @@ exports.getPatientByNameAndPn = (req, res) => {
 };
 
 exports.getPatientByIdPartial = (req, res) => {
-  db.get("Select * from patient where seq = ?", req.params["patientId"], (err, row) => {
+  const permission = getGrants.can(req.user.role).readAny("patient");
+  if (!permission.granted) {
+    return res.status(403).json("Access forbidden " + req.user.role);
+  }
+
+  db.get("Select * from patient where id = ?", req.params["patientId"], (err, row) => {
     if (err) {
       res.json(err).status(400);
     } else {
@@ -92,13 +98,18 @@ exports.getPatientByIdPartial = (req, res) => {
   })
 };
 
-// here
 exports.getPatientByIdFull = async (req, res) => {
+
+  const permission = getGrants.can(req.user.role).readAny("patient");
+  if (!permission.granted) {
+    return res.status(403).json("Access forbidden " + req.user.role);
+  }
+
   // get patient
   db.get("SELECT p.*,c.email as ce,c.phoneNumber as cp,c.alternatePhoneNumber as cap,e.*,a.* from Patient p\n" +
     "INNER JOIN Address a on p.addressId = a.id\n" +
     "INNER join Contact c  on p.contactId = c.id \n" +
-    "INNER join EmergencyContact e on p.emergencyInfoId = e.id where p.seq = ?;",
+    "INNER join EmergencyContact e on p.emergencyInfoId = e.id where p.id = ?;",
     [req.params["patientId"]], (err, row) => {
       if (err) {
         console.log(err)
@@ -147,6 +158,11 @@ exports.getPatientByIdFull = async (req, res) => {
 };
 
 exports.getAllPatients = async (req, res) => {
+  const permission = getGrants.can(req.user.role).readAny("patient");
+  if (!permission.granted) {
+    return res.status(403).json("Access forbidden " + req.user.role);
+  }
+
   await db.all("SELECT * from Patient ORDER by regDate DESC", function (err, rows) {
     return res.json(rows);
   });
@@ -154,6 +170,12 @@ exports.getAllPatients = async (req, res) => {
 
 
 exports.updatePatientById = async (req, res) => {
+
+  const permission = getGrants.can(req.user.role).updateAny("patient");
+  if (!permission.granted) {
+    return res.status(403).json("Access forbidden " + req.user.role);
+  }
+
   const updatePatientData = {
     patientTitleId: req.body.patientTitleId,
     firstName: req.body.firstName,
@@ -169,6 +191,7 @@ exports.updatePatientById = async (req, res) => {
     active: 0
   };
 
+  //update contact
   db.run("update contact set email=?,phoneNumber=?,alternatePhoneNumber=? where id=?", [updatePatientData.contact.email, updatePatientData.contact.phoneNumber,
     updatePatientData.contact.alternatePhoneNumber, updatePatientData.contact.id], (err) => {
     if (err) {
@@ -184,7 +207,7 @@ exports.updatePatientById = async (req, res) => {
     }
   });
 
-  // update contact info
+  // update contact-info
   db.run("update EmergencyContact set emergencyTitleId=?,name=?,phoneNumber=?,alternatePhoneNumber=? where id=?", [updatePatientData.emergencyInfo.emergencyTitleId, updatePatientData.emergencyInfo.name,
     updatePatientData.emergencyInfo.phoneNumber, updatePatientData.emergencyInfo.alternatePhoneNumber, updatePatientData.emergencyInfo.id], function (err) {
     if (err) {
@@ -195,7 +218,7 @@ exports.updatePatientById = async (req, res) => {
 
   //update patient
   await db.run("update Patient set patientTitleId=?,firstName=?,middleName=?,lastName=?," +
-    "gender=?,dateOfBirth=?,nationality=?,age=?,active=? where seq = ?",
+    "gender=?,dateOfBirth=?,nationality=?,age=?,active=? where id = ?",
     [updatePatientData.patientTitleId, updatePatientData.firstName, updatePatientData.middleName,
       updatePatientData.lastName, updatePatientData.gender, updatePatientData.dateOfBirth, updatePatientData.nationality,
       updatePatientData.age, updatePatientData.active, req.params['patientId']], function (err) {
@@ -212,6 +235,11 @@ exports.updatePatientById = async (req, res) => {
 
 exports.deleteByPatientId = async (req, res) => {
 
+  const permission = getGrants.can(req.user.role).deleteAny("patient");
+  if (!permission.granted) {
+    return res.status(403).json("Access forbidden " + req.user.role);
+  }
+
   db.run("DELETE from address WHERE id= ?", req.params['addressId'], (err) => {
     if (err) console.log(err);
   });
@@ -222,9 +250,9 @@ exports.deleteByPatientId = async (req, res) => {
     if (err) console.log(err);
   });
 
-  await db.run("DELETE from patient WHERE seq= ?", req.params['patientId'], function (err) {
+  await db.run("DELETE from patient WHERE id= ?", req.params['patientId'], function (err) {
     if (err) {
-      res.json(err.message).status(404);
+      res.json(err).status(404);
     } else {
       res.json(this.changes);
     }
@@ -262,25 +290,5 @@ exports.getEmergencyInfoById = async (req, res) => {
       console.log(row);
       res.json(row);
     }
-  })
-};
-
-exports.getPatientsTitle = async (req, res) => {
-  await db.all("select * from PatientTitle", (err, row) => {
-    if (err) {
-      console.log(err);
-      return;
-    }
-    return res.json(row);
-  })
-};
-
-exports.getEmergencyTitle = async (req, res) => {
-  await db.all("SELECT * from emergencyTitle", (err, row) => {
-    if (err) {
-      console.log(err);
-      return;
-    }
-    return res.json(row);
   })
 };
