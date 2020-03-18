@@ -1,6 +1,5 @@
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('demo.db');
-const jwtHash = require("../utitlity/hashToken");
 const {registerToDB} = require('./accountController');
 const {getGrants} = require('../utitlity/roleManager');
 
@@ -16,12 +15,13 @@ exports.update = async (req, res) => {
     displayOrder: req.body.displayOrder,
     manageBlocks: req.body.manageBlocks,
     manageBooking: req.body.manageBooking,
-    isDoctor: req.body.isDoctor
+    isDoctor: req.body.isDoctor,
+    id: req.params['seq'],
   };
 
   await db.run("update doctor set name=?,displayOrder=?,manageBlocks=?,manageBooking=?,isDoctor=? where id=?",
     [doctorData.name, doctorData.displayOrder, doctorData.manageBlocks, doctorData.manageBooking,
-      doctorData.isDoctor, req.params['seq']], function (err) {
+      doctorData.isDoctor, doctorData.id], function (err) {
       if (err) {
         console.log(err);
         res.json(err).status(404);
@@ -38,7 +38,7 @@ exports.deleteDoctorById = async (req, res) => {
     return res.status(403).json("Access forbidden " + req.user.role);
   }
 
-  await db.run("DELETE from Doctor WHERE rowId= ?", req.params['seq'], function (err) {
+  await db.run("DELETE from Doctor WHERE id = ?", req.params['seq'], function (err) {
     if (err) {
       res.json(err.message).status(404);
     } else {
@@ -64,6 +64,7 @@ exports.saveNewDoctor = async (req, res) => {
     isDoctor: req.body.isDoctor
   };
 
+  // first save to the general user table
   await registerToDB(newUser, insertIntoDoctorTable);
 
   function insertIntoDoctorTable(response) {
@@ -110,7 +111,7 @@ exports.getDoctorById = (req, res) => {
   }
 
 
-  db.get("Select * from doctor where rowId = ?", req.params["seq"], (err, row) => {
+  db.get("Select * from doctor where id = ?", req.params["seq"], (err, row) => {
     if (err) {
       res.json(err).status(400);
     } else {
