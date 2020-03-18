@@ -58,7 +58,12 @@ exports.updateEmergencyTitle = async (req, res) => {
     return res.status(403).json("Access forbidden " + req.user.role);
   }
 
-  await db.run("Update EmergencyTitle set title=? where id=?", [req.body.title, req.params["id"]], function (err) {
+  const emergencyTitle = {
+    title: req.body.title,
+    id: req.params["id"]
+  };
+
+  await db.run("Update EmergencyTitle set title=? where id=?", [emergencyTitle.title, emergencyTitle.id], function (err) {
     if (err) {
       return res.status(400).send(err.message);
     } else {

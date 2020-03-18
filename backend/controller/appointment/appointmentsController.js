@@ -47,14 +47,15 @@ exports.updateAppointment = async (req, res) => {
     startDateTime: req.body.startDateTime,
     endDateTime: req.body.endDateTime,
     isServed: req.body.isServed,
-    servedBy: req.body.servedBy
+    servedBy: req.body.servedBy,
+    id: req.params['appointmentId'],
   };
 
   await db.run("update Appointment set patientId =?,appointmentTypeId=?,appointmentStatusId=?," +
     "startDateTime=?,endDateTime=?,isServed=?,servedBy=? where id = ?",
     [appointmentData.patientId, appointmentData.appointmentTypeId, appointmentData.appointmentStatusId,
       appointmentData.startDateTime, appointmentData.endDateTime, appointmentData.isServed,
-      appointmentData.servedBy, req.params['appointmentId']], function (err) {
+      appointmentData.servedBy, appointmentData.id], function (err) {
       if (err) {
         res.status(400).send(err.message);
       } else {

@@ -27,7 +27,7 @@ exports.saveAppointmentType = async (req, res) => {
     type: req.body.type
   };
 
-  await db.run("INSERT INTO AppointmentType(id,type) VALUES(?,?)", [newAppointmentType.id, newAppointmentType.type],
+  await db.run("INSERT INTO AppointmentType(type) VALUES(?)", [newAppointmentType.type],
     function (err) {
       if (err) {
         return res.status(400).send(err.message);
@@ -54,7 +54,12 @@ exports.updateAppointmentType = async (req, res) => {
     return res.status(403).json("Access forbidden for " + req.user.role);
   }
 
-  await db.run("update AppointmentType set type=? where id=?", [req.body.type, req.params["id"]], function (err) {
+  const appointmentType = {
+    type: req.body.type,
+    id: req.params['id']
+  };
+
+  await db.run("update AppointmentType set type=? where id=?", [appointmentType.type, appointmentType.id], function (err) {
     if (err) {
       return res.status(400).send(err.message);
     } else {

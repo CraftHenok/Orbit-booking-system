@@ -11,6 +11,7 @@ const db = new sqlite3.Database('demo.db', (err) => {
 
 exports.doMigration = () => {
 
+
   db.serialize(function () {
 
     db.run(tablesCollection.appointmentTable);

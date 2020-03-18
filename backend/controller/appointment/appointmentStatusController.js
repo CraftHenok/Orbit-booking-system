@@ -3,6 +3,7 @@ const db = new sqlite3.Database('demo.db');
 const {getGrants} = require('../../utitlity/roleManager');
 
 exports.deleteAppointmentStatus = async (req, res) => {
+
   const permission1 = getGrants.can(req.user.role).deleteAny("appointmentStatus");
   if (!permission1.granted) {
     return res.status(403).json("Access forbidden for " + req.user.role);

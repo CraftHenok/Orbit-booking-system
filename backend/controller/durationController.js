@@ -30,7 +30,12 @@ exports.editDuration = async (req, res) => {
     return res.status(403).json("Access forbidden " + req.user.role);
   }
 
-  await db.run("update duration set duration=? where id=?", [req.body.duration, req.params["id"]], function (err) {
+  const durationToEdit = {
+    duration: req.body.duration,
+    id: req.params["id"]
+  };
+
+  await db.run("update duration set duration=? where id=?", [durationToEdit.duration, durationToEdit.id], function (err) {
     if (err) {
       return res.status(400).send(err.message);
     } else {
