@@ -2,6 +2,8 @@ const AccessControl = require('accesscontrol');
 
 const roles = (function () {
 
+  //R is reception
+  //D is doctor
   const grantList = [
     {role: 'R', resource: 'appointment', action: 'create:any'},
     {role: 'R', resource: 'appointment', action: 'read:any'},
@@ -39,6 +41,8 @@ const roles = (function () {
     {role: 'D', resource: 'appointment', action: 'delete:own'},
     {role: 'D', resource: 'appointmentStatus', action: 'read:any'},
     {role: 'D', resource: 'appointmentType', action: 'read:any'},
+    {role: 'D', resource: 'patient', action: 'read:any'},
+    {role: 'D', resource: 'duration', action: 'read:any'},
     {role: 'D', resource: 'doctor', action: 'read:own'},
     {role: 'D', resource: 'doctor', action: 'delete:own'},
     {role: 'D', resource: 'doctor', action: 'update:own'},
