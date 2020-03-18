@@ -1,6 +1,7 @@
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('demo.db');
 const jwtHash = require("../utitlity/hashToken");
+const {statusCode} = require("../utitlity/statusCodes");
 
 exports.login = async (req, res) => {
   const user = {
@@ -10,16 +11,16 @@ exports.login = async (req, res) => {
 
   await db.get("select * from user where email = ?", [user.email], function (err, userFromDb) {
     if (err) {
-      return res.json(err);
+      return res.status(statusCode.errorInData).json(err);
     } else {
       if (userFromDb === undefined) {
-        return res.status(404).json("User doesn't exist")
+        return res.status(statusCode.notFound).json("User doesn't exist")
       } else {
         if (userFromDb.password === user.password) {
           userFromDb.token = jwtHash({role: userFromDb.role, id: userFromDb.id});
-          res.json(userFromDb);
+          res.status(statusCode.getOk).json(userFromDb);
         } else {
-          res.json("Password don't match")
+          res.status(statusCode.errorInData).json("Password don't match")
         }
       }
     }
@@ -55,9 +56,9 @@ exports.register = async (req, res) => {
   };
   await localRegisterToDb(newUser, function (response) {
     if (response.suc) {
-      return res.json(response.msg);
+      return res.status(statusCode.saveOk).json(response.msg);
     } else {
-      return res.json(response.msg);
+      return res.status(statusCode.errorInData).json(response.msg);
     }
   });
 

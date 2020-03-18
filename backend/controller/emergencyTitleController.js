@@ -1,19 +1,20 @@
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('demo.db');
 const {getGrants} = require('../utitlity/roleManager');
+const {statusCode} = require('../utitlity/statusCodes');
 
 exports.deleteEmergencyTitle = async (req, res) => {
 
   const permission = getGrants.can(req.user.role).deleteAny("emergencyTitle");
   if (!permission.granted) {
-    return res.status(403).json("Access forbidden " + req.user.role);
+    return res.status(statusCode.forbidden).json("Access forbidden " + req.user.role);
   }
 
   await db.run("DELETE from EmergencyTitle WHERE id= ?", req.params['id'], function (err) {
     if (err) {
-      res.json(err.message).status(404);
+      res.json(err.message).status(statusCode.errorInData);
     } else {
-      res.json(this.changes);
+      res.status(statusCode.deleteOk).json(this.changes);
     }
   });
 };
@@ -22,7 +23,7 @@ exports.saveEmergencyTitle = async (req, res) => {
 
   const permission = getGrants.can(req.user.role).createAny("emergencyTitle");
   if (!permission.granted) {
-    return res.status(403).json("Access forbidden " + req.user.role);
+    return res.status(statusCode.forbidden).json("Access forbidden " + req.user.role);
   }
 
   const newEmergencyTitle = {
@@ -32,9 +33,9 @@ exports.saveEmergencyTitle = async (req, res) => {
   await db.run("INSERT INTO EmergencyTitle(title) VALUES(?)", [newEmergencyTitle.title],
     function (err) {
       if (err) {
-        return res.status(400).send(err.message);
+        return res.status(statusCode.errorInData).send(err.message);
       } else {
-        return res.json(newEmergencyTitle);
+        return res.status(statusCode.saveOk).json(newEmergencyTitle);
       }
     });
 };
@@ -43,11 +44,11 @@ exports.getAllEmergencyTitle = async (req, res) => {
 
   const permission = getGrants.can(req.user.role).readAny("emergencyTitle");
   if (!permission.granted) {
-    return res.status(403).json("Access forbidden " + req.user.role);
+    return res.status(statusCode.forbidden).json("Access forbidden " + req.user.role);
   }
 
   await db.all("SELECT * FROM EmergencyTitle", function (err, rows) {
-    return res.json(rows);
+    return res.status(statusCode.getOk).json(rows);
   });
 };
 
@@ -55,7 +56,7 @@ exports.updateEmergencyTitle = async (req, res) => {
 
   const permission = getGrants.can(req.user.role).updateAny("emergencyTitle");
   if (!permission.granted) {
-    return res.status(403).json("Access forbidden " + req.user.role);
+    return res.status(statusCode.forbidden).json("Access forbidden " + req.user.role);
   }
 
   const emergencyTitle = {
@@ -65,9 +66,9 @@ exports.updateEmergencyTitle = async (req, res) => {
 
   await db.run("Update EmergencyTitle set title=? where id=?", [emergencyTitle.title, emergencyTitle.id], function (err) {
     if (err) {
-      return res.status(400).send(err.message);
+      return res.status(statusCode.errorInData).send(err.message);
     } else {
-      return res.json(this.changes);
+      return res.status(statusCode.updateOKNoData).json(this.changes);
     }
   });
 };

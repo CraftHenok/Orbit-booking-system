@@ -1,12 +1,13 @@
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('demo.db');
 const {getGrants} = require('../../utitlity/roleManager');
+const {statusCode} = require("../../utitlity/statusCodes");
 
 exports.saveNewPatient = async (req, res) => {
 
   const permission = getGrants.can(req.user.role).createAny("patient");
   if (!permission.granted) {
-    return res.status(403).json("Access forbidden " + req.user.role);
+    return res.status(statusCode.forbidden).json("Access forbidden " + req.user.role);
   }
 
   const patientData = {
@@ -29,7 +30,7 @@ exports.saveNewPatient = async (req, res) => {
     [patientData.contact.email, patientData.contact.phoneNumber,
       patientData.contact.alternatePhoneNumber], (err) => {
       if (err) {
-        console.log(err);
+        console.error(err);
       }
     });
 
@@ -38,7 +39,7 @@ exports.saveNewPatient = async (req, res) => {
     [patientData.address.line1, patientData.address.line2,
       patientData.address.city, patientData.address.country], function (err) {
       if (err) {
-        console.log(err);
+        console.error(err);
       }
     });
 
@@ -47,7 +48,7 @@ exports.saveNewPatient = async (req, res) => {
     [patientData.emergencyInfo.emergencyTitleId, patientData.emergencyInfo.name,
       patientData.emergencyInfo.phoneNumber, patientData.emergencyInfo.alternatePhoneNumber], function (err) {
       if (err) {
-        console.log(err);
+        console.error(err);
       }
     });
 
@@ -62,8 +63,9 @@ exports.saveNewPatient = async (req, res) => {
       patientData.age, patientData.active, patientData.regDate], function (err) {
       if (err) {
         console.error(err);
+        res.status(statusCode.errorInData).json(err);
       } else {
-        res.json(patientData);
+        res.status(statusCode.saveOk).json(patientData);
       }
     });
 
@@ -74,7 +76,7 @@ exports.getPatientByNameAndPn = (req, res) => {
 
   const permission = getGrants.can(req.user.role).readAny("patient");
   if (!permission.granted) {
-    return res.status(403).json("Access forbidden " + req.user.role);
+    return res.status(statusCode.forbidden).json("Access forbidden " + req.user.role);
   }
 
   const quickPatientData = {
@@ -86,9 +88,9 @@ exports.getPatientByNameAndPn = (req, res) => {
   db.all("SELECT * from Patient where firstName like ? or contactId = (select id from Contact where phoneNumber=?);",
     [`%${quickPatientData.firstName}%`, quickPatientData.phoneNumber], (err, row) => {
       if (err) {
-        res.json(err).status(400);
+        res.json(err).status(statusCode.errorInData);
       } else {
-        res.json(row);
+        res.status(statusCode.saveOk).json(row);
       }
     })
 };
@@ -96,14 +98,14 @@ exports.getPatientByNameAndPn = (req, res) => {
 exports.getPatientByIdPartial = (req, res) => {
   const permission = getGrants.can(req.user.role).readAny("patient");
   if (!permission.granted) {
-    return res.status(403).json("Access forbidden " + req.user.role);
+    return res.status(statusCode.forbidden).json("Access forbidden " + req.user.role);
   }
 
   db.get("Select * from patient where id = ?", req.params["patientId"], (err, row) => {
     if (err) {
-      res.json(err).status(400);
+      res.json(err).status(statusCode.errorInData);
     } else {
-      res.json(row);
+      res.status(statusCode.getOk).json(row);
     }
   })
 };
@@ -112,7 +114,7 @@ exports.getPatientByIdFull = async (req, res) => {
 
   const permission = getGrants.can(req.user.role).readAny("patient");
   if (!permission.granted) {
-    return res.status(403).json("Access forbidden " + req.user.role);
+    return res.status(statusCode.forbidden).json("Access forbidden " + req.user.role);
   }
 
   // get patient
@@ -122,10 +124,10 @@ exports.getPatientByIdFull = async (req, res) => {
     "INNER join EmergencyContact e on p.emergencyInfoId = e.id where p.id = ?;",
     [req.params["patientId"]], (err, row) => {
       if (err) {
-        console.log(err)
+        console.error(err)
       } else {
         if (row === undefined) {
-          return res.status(404).json("resource doesn't exist")
+          return res.status(statusCode.notFound).json("resource doesn't exist")
         } else {
           const result = {
             "id": row.id,
@@ -161,7 +163,7 @@ exports.getPatientByIdFull = async (req, res) => {
             },
           };
 
-          return res.json(result);
+          return res.status(statusCode.saveOk).json(result);
         }
       }
     })
@@ -170,11 +172,11 @@ exports.getPatientByIdFull = async (req, res) => {
 exports.getAllPatients = async (req, res) => {
   const permission = getGrants.can(req.user.role).readAny("patient");
   if (!permission.granted) {
-    return res.status(403).json("Access forbidden " + req.user.role);
+    return res.status(statusCode.forbidden).json("Access forbidden " + req.user.role);
   }
 
   await db.all("SELECT * from Patient ORDER by regDate DESC", function (err, rows) {
-    return res.json(rows);
+    return res.status(statusCode.getOk).json(rows);
   });
 };
 
@@ -183,7 +185,7 @@ exports.updatePatientById = async (req, res) => {
 
   const permission = getGrants.can(req.user.role).updateAny("patient");
   if (!permission.granted) {
-    return res.status(403).json("Access forbidden " + req.user.role);
+    return res.status(statusCode.forbidden).json("Access forbidden " + req.user.role);
   }
 
   const updatePatientData = {
@@ -207,7 +209,7 @@ exports.updatePatientById = async (req, res) => {
     [updatePatientData.contact.email, updatePatientData.contact.phoneNumber,
       updatePatientData.contact.alternatePhoneNumber, updatePatientData.contact.id], (err) => {
       if (err) {
-        console.log(err);
+        console.error(err);
       }
     });
 
@@ -216,7 +218,7 @@ exports.updatePatientById = async (req, res) => {
     [updatePatientData.address.line1, updatePatientData.address.line2,
       updatePatientData.address.city, updatePatientData.address.country, updatePatientData.address.id], function (err) {
       if (err) {
-        console.log(err);
+        console.error(err);
       }
     });
 
@@ -225,7 +227,7 @@ exports.updatePatientById = async (req, res) => {
     [updatePatientData.emergencyInfo.emergencyTitleId, updatePatientData.emergencyInfo.name,
       updatePatientData.emergencyInfo.phoneNumber, updatePatientData.emergencyInfo.alternatePhoneNumber, updatePatientData.emergencyInfo.id], function (err) {
       if (err) {
-        console.log(err);
+        console.error(err);
       }
     });
 
@@ -237,10 +239,10 @@ exports.updatePatientById = async (req, res) => {
       updatePatientData.lastName, updatePatientData.gender, updatePatientData.dateOfBirth, updatePatientData.nationality,
       updatePatientData.age, updatePatientData.active, updatePatientData.id], function (err) {
       if (err) {
-        console.log(err);
-        return res.json(err).status(401);
+        console.error(err);
+        return res.json(err).status(statusCode.errorInData);
       } else {
-        return res.json(this.changes);
+        return res.status(statusCode.updateOKNoData).json(this.changes);
       }
     });
 
@@ -251,24 +253,24 @@ exports.deleteByPatientId = async (req, res) => {
 
   const permission = getGrants.can(req.user.role).deleteAny("patient");
   if (!permission.granted) {
-    return res.status(403).json("Access forbidden " + req.user.role);
+    return res.status(statusCode.forbidden).json("Access forbidden " + req.user.role);
   }
 
   db.run("DELETE from address WHERE id= ?", req.params['addressId'], (err) => {
-    if (err) console.log(err);
+    if (err) console.error(err);
   });
   db.run("DELETE from contact WHERE id= ?", req.params['contactId'], (err) => {
-    if (err) console.log(err);
+    if (err) console.error(err);
   });
   db.run("DELETE from EmergencyContact WHERE id= ?", req.params['emergencyInfoId'], (err) => {
-    if (err) console.log(err);
+    if (err) console.error(err);
   });
 
   await db.run("DELETE from patient WHERE id= ?", req.params['patientId'], function (err) {
     if (err) {
-      res.json(err).status(404);
+      res.json(err).status(statusCode.notFound);
     } else {
-      res.json(this.changes);
+      res.status(statusCode.deleteOk).json(this.changes);
     }
   });
 
@@ -278,9 +280,9 @@ exports.deleteByPatientId = async (req, res) => {
 exports.getContactById = async (req, res) => {
   await db.get("Select * from Contact where id = ?", req.params["contactId"], (err, row) => {
     if (err) {
-      console.log(err);
+      console.error(err);
     } else {
-      res.json(row);
+      res.status(statusCode.getOk).json(row);
     }
   });
 
@@ -289,9 +291,9 @@ exports.getContactById = async (req, res) => {
 exports.getAddressById = async (req, res) => {
   await db.get("select * from address WHERE id = ?", req.params['addressId'], (err, row) => {
     if (err) {
-      console.log(err);
+      console.error(err);
     } else {
-      res.json(row);
+      res.status(statusCode.getOk).json(row);
     }
   })
 };
@@ -299,10 +301,9 @@ exports.getAddressById = async (req, res) => {
 exports.getEmergencyInfoById = async (req, res) => {
   await db.get("select * from EmergencyContact WHERE id = ?", req.params['emergencyInfoId'], (err, row) => {
     if (err) {
-      console.log(err);
+      console.error(err);
     } else {
-      console.log(row);
-      res.json(row);
+      res.status(statusCode.getOk).json(row);
     }
   })
 };

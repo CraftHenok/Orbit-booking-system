@@ -1,12 +1,13 @@
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('demo.db');
 const {getGrants} = require('../../utitlity/roleManager');
+const {statusCode} = require('../../utitlity/statusCodes');
 
 exports.saveNewAppointment = async (req, res) => {
 
   const permission = getGrants.can(req.user.role).createAny("appointment");
   if (!permission.granted) {
-    return res.status(403).json("Access forbidden " + req.user.role);
+    return res.status(statusCode.forbidden).json("Access forbidden " + req.user.role);
   }
 
   const appointmentData = {
@@ -26,9 +27,9 @@ exports.saveNewAppointment = async (req, res) => {
     appointmentData.startDateTime, appointmentData.endDateTime, appointmentData.isServed,
     appointmentData.servedBy, appointmentData.userId], function (err) {
     if (err) {
-      res.status(400).send(err.message);
+      res.status(statusCode.errorInData).send(err.message);
     } else {
-      res.json(appointmentData);
+      res.status(statusCode.saveOk).json(appointmentData);
     }
   });
 
@@ -37,7 +38,7 @@ exports.saveNewAppointment = async (req, res) => {
 exports.updateAppointment = async (req, res) => {
   const permission = getGrants.can(req.user.role).updateAny("appointment");
   if (!permission.granted) {
-    return res.status(403).json("Access forbidden for " + req.user.role);
+    return res.status(statusCode.forbidden).json("Access forbidden for " + req.user.role);
   }
 
   const appointmentData = {
@@ -57,9 +58,9 @@ exports.updateAppointment = async (req, res) => {
       appointmentData.startDateTime, appointmentData.endDateTime, appointmentData.isServed,
       appointmentData.servedBy, appointmentData.id], function (err) {
       if (err) {
-        res.status(400).send(err.message);
+        res.status(statusCode.errorInData).send(err.message);
       } else {
-        res.json(this.changes);
+        res.status(statusCode.updateOKNoData).json(this.changes);
       }
     });
 };
@@ -67,14 +68,14 @@ exports.updateAppointment = async (req, res) => {
 exports.deleteAppointmentById = async (req, res) => {
   const permission = getGrants.can(req.user.role).deleteAny("appointment");
   if (!permission.granted) {
-    return res.status(403).json("Access forbidden for " + req.user.role);
+    return res.status(statusCode.forbidden).json("Access forbidden for " + req.user.role);
   }
 
   await db.run("DELETE from Appointment WHERE id= ?", req.params['appointmentId'], function (err) {
     if (err) {
-      res.json(err.message).status(404);
+      res.json(err.message).status(statusCode.notFound);
     } else {
-      res.json(this.changes);
+      res.status(statusCode.deleteOk).json(this.changes);
     }
   });
 };
@@ -86,11 +87,11 @@ function hasReadAnyAccess(role) {
 
 exports.getPatientAppointment = async (req, res) => {
   if (!hasReadAnyAccess(req.user.role)) {
-    return res.status(403).json("Access forbidden for " + req.user.role);
+    return res.status(statusCode.forbidden).json("Access forbidden for " + req.user.role);
   }
 
   await db.all("select * from appointment where patientId = ?", [req.params['patientId']], function (err, rows) {
-    return res.json(rows);
+    return res.status(statusCode.getOk).json(rows);
   });
 };
 
@@ -99,21 +100,21 @@ exports.getDoctorAppointments = async (req, res) => {
   const permission2 = getGrants.can(req.user.role).readOwn("appointment");
 
   if (!permission1.granted && !permission2.granted) {
-    return res.status(403).json("Access forbidden for " + req.user.role);
+    return res.status(statusCode.forbidden).json("Access forbidden for " + req.user.role);
   }
 
   await db.all("select * from appointment where servedBy = ?", [req.params['doctorId']], function (err, rows) {
-    return res.json(rows);
+    return res.status(statusCode.getOk).json(rows);
   });
 };
 
 exports.getAllAppointments = async (req, res) => {
 
   if (!hasReadAnyAccess(req.user.role)) {
-    return res.status(403).json("Access forbidden for " + req.user.role);
+    return res.status(statusCode.forbidden).json("Access forbidden for " + req.user.role);
   }
 
   await db.all("SELECT * FROM appointment", function (err, rows) {
-    return res.json(rows);
+    return res.status(statusCode.getOk).json(rows);
   });
 };
