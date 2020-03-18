@@ -13,7 +13,7 @@ exports.login = async (req, res) => {
       return res.json(err);
     } else {
       if (userFromDb === undefined) {
-        return res.json("User doesn't exist")
+        return res.status(404).json("User doesn't exist")
       } else {
         if (userFromDb.password === user.password) {
           userFromDb.token = jwtHash({role: userFromDb.role, id: userFromDb.id});
