@@ -16,7 +16,7 @@ exports.update = async (req, res) => {
     manageBlocks: req.body.manageBlocks,
     manageBooking: req.body.manageBooking,
     isDoctor: req.body.isDoctor,
-    id: req.params['seq'],
+    id: req.params['id'],
   };
 
   await db.run("update doctor set name=?,displayOrder=?,manageBlocks=?,manageBooking=?,isDoctor=? where id=?",
@@ -38,7 +38,7 @@ exports.deleteDoctorById = async (req, res) => {
     return res.status(403).json("Access forbidden " + req.user.role);
   }
 
-  await db.run("DELETE from Doctor WHERE id = ?", req.params['seq'], function (err) {
+  await db.run("DELETE from Doctor WHERE id = ?", req.params['id'], function (err) {
     if (err) {
       res.json(err.message).status(404);
     } else {
@@ -111,7 +111,7 @@ exports.getDoctorById = (req, res) => {
   }
 
 
-  db.get("Select * from doctor where id = ?", req.params["seq"], (err, row) => {
+  db.get("Select * from doctor where id = ?", req.params["id"], (err, row) => {
     if (err) {
       res.json(err).status(400);
     } else {

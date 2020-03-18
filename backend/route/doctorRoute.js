@@ -59,14 +59,14 @@ router.get('/', doctorsController.getAllDoctors);
 
 /**
  * @swagger
- * /doctor/byId/{seq}:
+ * /doctor/byId/{id}:
  *  get:
  *    description: get doctor by it's id
  *    tags:
  *      - doctor
  *    parameters:
- *      - name: seq
- *        description: the id(seq) of the doctor
+ *      - name: id
+ *        description: the id of the doctor
  *        required: true
  *        in: path
  *        type: integer
@@ -78,7 +78,7 @@ router.get('/', doctorsController.getAllDoctors);
  *      200:
  *        description: return a doctor matching the id
  */
-router.get('/byId/:seq', doctorsController.getDoctorById);
+router.get('/byId/:id', doctorsController.getDoctorById);
 
 
 /**
@@ -126,14 +126,14 @@ router.post('/', doctorsController.saveNewDoctor);
 
 /**
  * @swagger
- * /doctor/{seq}:
+ * /doctor/{id}:
  *  put:
  *    description: update doctor
  *    tags:
  *      - doctor
  *    parameters:
- *      - name: seq
- *        description: the id(seq) of the doctor
+ *      - name: id
+ *        description: the id of the doctor
  *        required: true
  *        in: path
  *        type: integer
@@ -149,18 +149,18 @@ router.post('/', doctorsController.saveNewDoctor);
  *      200:
  *        description: doctor is updated
  */
-router.put('/:seq', doctorsController.update);
+router.put('/:id', doctorsController.update);
 
 /**
  * @swagger
- * /doctor/{seq}:
+ * /doctor/{id}:
  *  delete:
  *    description: get doctors by name
  *    tags:
  *      - doctor
  *    parameters:
- *      - name: seq
- *        description: the doctor's id(seq) to delete
+ *      - name: id
+ *        description: the doctor's id to delete
  *        required: true
  *        in: path
  *        type: integer
@@ -172,6 +172,6 @@ router.put('/:seq', doctorsController.update);
  *      404:
  *        description: the doctor trying to delete doesn't exist
  */
-router.delete('/:seq', doctorsController.deleteDoctorById);
+router.delete('/:id', doctorsController.deleteDoctorById);
 
 module.exports = router;
