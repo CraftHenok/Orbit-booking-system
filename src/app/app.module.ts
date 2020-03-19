@@ -4,7 +4,6 @@ import {NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {AppointmentsComponent} from './components/show/appointments/appointments.component';
 import {CalendarModule, DateAdapter} from 'angular-calendar';
 import {adapterFactory} from 'angular-calendar/date-adapters/date-fns';
 import {AddEditDialogComponent} from './components/dialogs/addEditDialog/addEditDialog.component';
@@ -20,7 +19,6 @@ import {MatInputModule} from '@angular/material/input';
 import {HttpClientModule} from '@angular/common/http';
 import {MatIconModule} from '@angular/material/icon';
 import {MatListModule} from '@angular/material/list';
-import {ShowDoctorsComponent} from './components/show/appointments/show-doctors/show-doctors.component';
 import {MatSelectModule} from '@angular/material/select';
 import {OwlDateTimeModule, OwlNativeDateTimeModule} from 'ng-pick-datetime';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -31,6 +29,12 @@ import {ForgetIdComponent} from './components/dialogs/forget-id/forget-id.compon
 import {QuickAddComponent} from './components/dialogs/quick-add/quick-add.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {NgxSpinnerModule} from 'ngx-spinner';
+import {HomepageComponent} from './components/homepage/homepage.component';
+import {AppointmentsComponent} from './components/show/appointments/appointments.component';
+import {ShowDoctorsComponent} from './components/show/appointments/show-doctors/show-doctors.component';
+import { LoginComponent } from './components/login/login.component';
+import {MatCardModule} from '@angular/material/card';
+import { RegistrationComponent } from './components/registration/registration.component';
 
 // ng g module moduleName --flat --routing
 
@@ -42,7 +46,10 @@ import {NgxSpinnerModule} from 'ngx-spinner';
     ShowDoctorsComponent,
     AddEditDialogComponent,
     ForgetIdComponent,
-    QuickAddComponent
+    QuickAddComponent,
+    HomepageComponent,
+    LoginComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,
@@ -69,7 +76,8 @@ import {NgxSpinnerModule} from 'ngx-spinner';
     FormsModule,
     MatChipsModule,
     MatProgressSpinnerModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    MatCardModule
   ],
   entryComponents: [
     AddEditDialogComponent,
