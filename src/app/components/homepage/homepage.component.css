@@ -1,0 +1,33 @@
+img {
+  margin: 5px;
+}
+
+
+.container {
+  position: absolute;
+  width: 80%;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.container > div {
+  float: left;
+  width: 50%;
+  height: 500px;
+}
+
+.container .leftSide h1 {
+  font-size: 4em;
+  color: #00695C;
+  margin-bottom: 0;
+}
+
+.container .leftSide p {
+  color: #808080;
+}
+
+.container .rightSide {
+  background-image: url("https://cdn.dribbble.com/users/4831862/screenshots/9960131/media/ef92ce6b8fa6711520014c09be107e77.png");
+  background-size: 100% 100%;
+}
