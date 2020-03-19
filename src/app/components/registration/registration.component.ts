@@ -8,6 +8,7 @@ import {Component, OnInit} from '@angular/core';
 export class RegistrationComponent implements OnInit {
 
   hide = true;
+  doctor = false;
 
   constructor() {
   }
@@ -15,4 +16,7 @@ export class RegistrationComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  toggleRole(role: string) {
+    this.doctor = !this.doctor;
+  }
 }
