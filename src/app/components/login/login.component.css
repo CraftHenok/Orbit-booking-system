@@ -38,6 +38,12 @@ img {
 
 .one .loginBox > p {
   letter-spacing: .08em;
+  color: grey;
+}
+
+.one .loginBox > h1 {
+  color: #00695C;
+  margin: 0;
 }
 
 .one .role p {
