@@ -1,4 +1,9 @@
+/**
+ * Remote appointment
+ * Model representing appointment coming from remote
+ */
 export class RemoteAppointment {
+  id: number;
   patientId: number;
   appointmentTypeId: string;
   appointmentStatusId: string;
@@ -6,7 +11,6 @@ export class RemoteAppointment {
   endDateTime: Date;
   isServed: boolean;
   servedBy: number;
-  id: number;
 
 
   constructor(id: number, patientId: number, appointmentType: string, appointmentStatus: string, startDateTime: Date,

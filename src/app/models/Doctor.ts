@@ -8,11 +8,6 @@ export class Doctor {
   manageBooking: boolean;
   isDoctor: boolean;
 
-  static getAllDoctorsTemplate() {
-    return new Doctor(0, 'All doctors', 'All doctors', '',
-      0, false, false, true);
-  }
-
   constructor(seq: number, name: string, username: string, password: string, displayOrder: number,
               manageBlock: boolean, manageBooking: boolean, isDoctor: boolean) {
     this.seq = seq;
