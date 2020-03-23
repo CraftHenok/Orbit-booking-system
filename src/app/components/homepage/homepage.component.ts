@@ -18,8 +18,4 @@ export class HomepageComponent implements OnInit {
   toLoginPage() {
     this.router.navigate(['/login']);
   }
-
-  toRegistrationPage() {
-    this.router.navigate(['/registration']);
-  }
 }

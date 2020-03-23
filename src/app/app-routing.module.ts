@@ -2,13 +2,11 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {HomepageComponent} from './components/homepage/homepage.component';
 import {LoginComponent} from './components/login/login.component';
-import {RegistrationComponent} from './components/registration/registration.component';
 
 
 const routes: Routes = [
   {path: '', component: HomepageComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'registration', component: RegistrationComponent},
   // {path: 'doctors', loadChildren: () => import('./components/show/doctors/doctors.module').then(m => m.DoctorsModule)},
   // {path: 'patients', loadChildren: () => import('./components/show/patients/patients.module').then(m => m.PatientsModule)},
   // {path: 'setting', loadChildren: () => import('./components/setting/setting.module').then(m => m.SettingModule)},

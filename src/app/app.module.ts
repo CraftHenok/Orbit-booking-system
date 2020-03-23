@@ -32,9 +32,8 @@ import {NgxSpinnerModule} from 'ngx-spinner';
 import {HomepageComponent} from './components/homepage/homepage.component';
 import {AppointmentsComponent} from './components/show/appointments/appointments.component';
 import {ShowDoctorsComponent} from './components/show/appointments/show-doctors/show-doctors.component';
-import { LoginComponent } from './components/login/login.component';
+import {LoginComponent} from './components/login/login.component';
 import {MatCardModule} from '@angular/material/card';
-import { RegistrationComponent } from './components/registration/registration.component';
 
 // ng g module moduleName --flat --routing
 
@@ -48,8 +47,7 @@ import { RegistrationComponent } from './components/registration/registration.co
     ForgetIdComponent,
     QuickAddComponent,
     HomepageComponent,
-    LoginComponent,
-    RegistrationComponent
+    LoginComponent
   ],
   imports: [
     BrowserModule,
