@@ -3,7 +3,7 @@ import {Address} from './Address';
 import {EmergencyInfo} from './EmergencyInfo';
 
 export class Patient {
-  seq: number;
+  id: number;
   regDate: Date;
 
   // primary info
@@ -31,10 +31,10 @@ export class Patient {
   // used when we click view on the patient table
   code: string;
 
-  constructor(seqNumber: number, regDate: Date, patientTitleId: string, firstName: string, middleName: string,
+  constructor(id: number, regDate: Date, patientTitleId: string, firstName: string, middleName: string,
               lastName: string, gender: string, dateOfBirth: Date, age: number,
               contactInfo: Contact, address: Address, emergencyInfo: EmergencyInfo, nationality?: string) {
-    this.seq = seqNumber;
+    this.id = id;
     this.regDate = regDate;
     this.patientTitleId = patientTitleId;
     this.firstName = firstName;
