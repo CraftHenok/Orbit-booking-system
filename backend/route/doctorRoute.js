@@ -46,14 +46,14 @@ const router = express.Router();
  * @swagger
  * /doctor:
  *  get:
- *    description: get all doctors
+ *    description: get all showdoctors
  *    tags:
  *      - doctor
  *    produces:
  *      -application/json
  *    responses:
  *      200:
- *        description: all or empty list of doctors
+ *        description: all or empty list of showdoctors
  */
 router.get('/', doctorsController.getAllDoctors);
 
@@ -133,7 +133,7 @@ router.put('/:id', doctorsController.update);
  * @swagger
  * /doctor/{id}:
  *  delete:
- *    description: get doctors by name
+ *    description: get showdoctors by name
  *    tags:
  *      - doctor
  *    parameters:

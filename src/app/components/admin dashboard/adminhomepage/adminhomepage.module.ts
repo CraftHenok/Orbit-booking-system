@@ -3,15 +3,23 @@ import {CommonModule} from '@angular/common';
 
 import {AdminhomepageRoutingModule} from './adminhomepage-routing.module';
 import {AdminhomepageComponent} from './adminhomepage.component';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatIconModule} from '@angular/material/icon';
+import {MatRippleModule} from '@angular/material/core';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 
 @NgModule({
   declarations: [
-    AdminhomepageComponent
+    AdminhomepageComponent,
   ],
   imports: [
     CommonModule,
-    AdminhomepageRoutingModule
+    AdminhomepageRoutingModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatRippleModule,
+    MatTooltipModule
   ]
 })
 export class AdminhomepageModule {

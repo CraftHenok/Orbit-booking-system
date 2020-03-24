@@ -13,7 +13,7 @@ const router = express.Router();
  *      -application/json
  *    responses:
  *      200:
- *        description: available list of patients emergency Title
+ *        description: available list of showpatients emergency Title
  */
 router.get("/", emergencyTitleController.getAllEmergencyTitle);
 

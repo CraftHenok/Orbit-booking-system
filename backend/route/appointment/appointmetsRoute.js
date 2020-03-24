@@ -63,7 +63,7 @@ router.get('/', appointmentController.getAllAppointments);
 
 /**
  * @swagger
- * /appointment/doctors/{doctorId}:
+ * /appointment/showdoctors/{doctorId}:
  *  get:
  *    description: get all doctor's appointment by doctor id
  *    produces:
@@ -80,14 +80,14 @@ router.get('/', appointmentController.getAllAppointments);
  *            minimum: 1
  *    responses:
  *      200:
- *        description: list of doctors appointment
+ *        description: list of showdoctors appointment
  */
-router.get('/doctors/:doctorId', appointmentController.getDoctorAppointments);
+router.get('/showdoctors/:doctorId', appointmentController.getDoctorAppointments);
 
 
 /**
  * @swagger
- * /appointment/patients/{patientId}:
+ * /appointment/showpatients/{patientId}:
  *  get:
  *    description: get all patient's appointment by patient id
  *    produces:
@@ -106,7 +106,7 @@ router.get('/doctors/:doctorId', appointmentController.getDoctorAppointments);
  *      200:
  *        description: list of patient's appointment
  */
-router.get('/patients/:patientId', appointmentController.getPatientAppointment);
+router.get('/showpatients/:patientId', appointmentController.getPatientAppointment);
 
 /**
  * @swagger

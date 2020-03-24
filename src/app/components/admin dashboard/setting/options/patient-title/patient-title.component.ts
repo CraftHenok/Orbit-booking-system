@@ -1,11 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
-import {GeneralTitle} from '../../../../models/GeneralTitle';
-import {PatientTitleService} from '../../../../services/Patients/PatientTitle/patient-title.service';
 import {MatDialog} from '@angular/material/dialog';
 import {AddComponent} from '../add/add.component';
-import {Variables} from '../../../../utility/variables';
-import {SettingDialogData} from '../../../../utility/settingDialogData';
+import {GeneralTitle} from '../../../../../models/GeneralTitle';
+import {PatientTitleService} from '../../../../../services/Patients/PatientTitle/patient-title.service';
+import {SettingDialogData} from '../../../../../utility/settingDialogData';
+import {Variables} from '../../../../../utility/variables';
 
 @Component({
   selector: 'app-patient-title',

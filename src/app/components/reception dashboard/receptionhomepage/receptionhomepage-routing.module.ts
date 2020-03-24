@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {ReceptionhomepageComponent} from './receptionhomepage.component';
-import {AppointmentsComponent} from '../../show/appointments/appointments.component';
+import {AppointmentsComponent} from '../appointments/appointments.component';
 
 const routes: Routes = [{
   path: '', component: ReceptionhomepageComponent,

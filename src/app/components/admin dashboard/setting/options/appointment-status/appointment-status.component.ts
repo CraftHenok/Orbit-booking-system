@@ -1,11 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
-import {GeneralStatus} from '../../../../models/GeneralStatus';
-import {AppointmentStatusService} from '../../../../services/Appointments/Status/appointment-status.service';
 import {AddComponent} from '../add/add.component';
 import {MatDialog} from '@angular/material/dialog';
-import {Variables} from '../../../../utility/variables';
-import {SettingDialogData} from '../../../../utility/settingDialogData';
+import {GeneralStatus} from '../../../../../models/GeneralStatus';
+import {AppointmentStatusService} from '../../../../../services/Appointments/Status/appointment-status.service';
+import {Variables} from '../../../../../utility/variables';
+import {SettingDialogData} from '../../../../../utility/settingDialogData';
 
 @Component({
   selector: 'app-appointment-status',

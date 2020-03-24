@@ -13,7 +13,7 @@ import {Variables} from '../../../utility/variables';
 @Component({
   selector: 'app-doctors',
   templateUrl: './doctors.component.html',
-  styleUrls: ['../patients/patients.component.css'] // common css so re-use
+  styleUrls: ['../showpatients/patients.component.css'] // common css so re-use
 })
 export class DoctorsComponent implements OnInit, OnDestroy {
 
@@ -71,11 +71,11 @@ export class DoctorsComponent implements OnInit, OnDestroy {
 
   }
 
-  private deleteDoctor(seq: number) {
-    this.subscription.add(this.doctorsService.deleteDoctorById(seq).subscribe(
+  private deleteDoctor(id: number) {
+    this.subscription.add(this.doctorsService.deleteDoctorById(id).subscribe(
       result => {
         if (result > 0) {
-          const filteredDoctors = this.doctors.filter(it => it.seq !== seq);
+          const filteredDoctors = this.doctors.filter(it => it.id !== id);
           this.configureDataSource(filteredDoctors);
         }
       }, error => {

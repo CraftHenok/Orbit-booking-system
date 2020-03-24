@@ -2,10 +2,10 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {MatDialog} from '@angular/material/dialog';
 import {AddComponent} from '../add/add.component';
-import {DurationService} from '../../../../services/Duration/duration.service';
-import {Duration} from '../../../../models/Duration';
-import {Variables} from '../../../../utility/variables';
-import {SettingDialogData} from '../../../../utility/settingDialogData';
+import {DurationService} from '../../../../../services/Duration/duration.service';
+import {SettingDialogData} from '../../../../../utility/settingDialogData';
+import {Duration} from '../../../../../models/Duration';
+import {Variables} from '../../../../../utility/variables';
 
 @Component({
   selector: 'app-duration',

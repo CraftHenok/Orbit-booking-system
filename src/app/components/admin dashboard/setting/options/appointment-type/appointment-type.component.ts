@@ -1,11 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
-import {GeneralType} from '../../../../models/GeneralType';
-import {AppointmentTypeService} from '../../../../services/Appointments/Type/appointment-type.service';
 import {AddComponent} from '../add/add.component';
 import {MatDialog} from '@angular/material/dialog';
-import {Variables} from '../../../../utility/variables';
-import {SettingDialogData} from '../../../../utility/settingDialogData';
+import {GeneralType} from '../../../../../models/GeneralType';
+import {AppointmentTypeService} from '../../../../../services/Appointments/Type/appointment-type.service';
+import {Variables} from '../../../../../utility/variables';
+import {SettingDialogData} from '../../../../../utility/settingDialogData';
 
 @Component({
   selector: 'app-appointment-type',
@@ -89,7 +89,6 @@ export class AppointmentTypeComponent implements OnInit, OnDestroy {
         console.error(error);
       }
     ));
-
   }
 
   private delete(generalType: GeneralType) {

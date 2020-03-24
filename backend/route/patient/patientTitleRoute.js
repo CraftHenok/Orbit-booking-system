@@ -13,7 +13,7 @@ const router = express.Router();
  *      -application/json
  *    responses:
  *      200:
- *        description: available list of patients title
+ *        description: available list of showpatients title
  */
 router.get("/", patientTitleController.getAllPatientTitle);
 
@@ -58,7 +58,7 @@ router.post("/", patientTitleController.savePatientTitle);
  *      -application/json
  *    responses:
  *      200:
- *        description: number of rows affected in patients title
+ *        description: number of rows affected in showpatients title
  */
 router.delete("/:id", patientTitleController.deletePatientTitle);
 
@@ -89,7 +89,7 @@ router.delete("/:id", patientTitleController.deletePatientTitle);
  *      -application/json
  *    responses:
  *      200:
- *        description: number of rows affected in patients title
+ *        description: number of rows affected in showpatients title
  */
 router.put("/:id", patientTitleController.updatePatientTitle);
 

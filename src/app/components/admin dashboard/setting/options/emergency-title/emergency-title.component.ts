@@ -1,11 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
-import {GeneralTitle} from '../../../../models/GeneralTitle';
-import {EmergencyTitleService} from '../../../../services/Patients/EmergencyTitle/emergency-title.service';
 import {AddComponent} from '../add/add.component';
 import {MatDialog} from '@angular/material/dialog';
-import {Variables} from '../../../../utility/variables';
-import {SettingDialogData} from '../../../../utility/settingDialogData';
+import {GeneralTitle} from '../../../../../models/GeneralTitle';
+import {EmergencyTitleService} from '../../../../../services/Patients/EmergencyTitle/emergency-title.service';
+import {SettingDialogData} from '../../../../../utility/settingDialogData';
+import {Variables} from '../../../../../utility/variables';
 
 @Component({
   selector: 'app-emergency-title',

@@ -10,14 +10,22 @@ export class DoctorsFormManager {
 
   static bindDataToNewDoctor(id: number, primaryInfo: FormGroup, appointmentRelatedInfo: FormGroup) {
     return new Doctor(
-      id,
-      primaryInfo.get('name').value,
-      primaryInfo.get('username').value,
-      appointmentRelatedInfo.get('displayOrder').value,
-      appointmentRelatedInfo.get('manageBlock').value,
-      appointmentRelatedInfo.get('manageBooking').value,
-      appointmentRelatedInfo.get('isDoctor').value
-    );
+      '',
+      '',
+      '',
+      '',
+      '',
+      0,
+      1);
+    // return new Doctor(
+    //   id,
+    //   primaryInfo.get('name').value,
+    //   primaryInfo.get('username').value,
+    //   appointmentRelatedInfo.get('displayOrder').value,
+    //   appointmentRelatedInfo.get('manageBlock').value,
+    //   appointmentRelatedInfo.get('manageBooking').value,
+    //   appointmentRelatedInfo.get('isDoctor').value
+    // );
   }
 
   getFormBuilders() {

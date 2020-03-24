@@ -132,14 +132,14 @@ const router = express.Router();
  * @swagger
  * /patient:
  *  get:
- *    description: get all patients
+ *    description: get all showpatients
  *    tags:
  *      - patient
  *    produces:
  *      -application/json
  *    responses:
  *      200:
- *        description: all or empty list of patients
+ *        description: all or empty list of showpatients
  */
 router.get('/', patientsController.getAllPatients);
 
@@ -194,7 +194,7 @@ router.get('/byIdFull/:patientId', patientsController.getPatientByIdFull);
  * @swagger
  * /patient/byName/{firstName}/{phoneNumber}:
  *  get:
- *    description: get patients by first or phone number
+ *    description: get showpatients by first or phone number
  *    tags:
  *      - patient
  *    parameters:
@@ -212,7 +212,7 @@ router.get('/byIdFull/:patientId', patientsController.getPatientByIdFull);
  *      -application/json
  *    responses:
  *      200:
- *        description: list patients matching first name and phone number
+ *        description: list showpatients matching first name and phone number
  */
 router.get('/forgetId/:firstName/:pn', patientsController.getPatientByNameAndPn);
 
