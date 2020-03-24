@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {Account} from '../../models/Account';
 import {AccountService} from '../../services/Account/account.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -10,14 +11,20 @@ import {AccountService} from '../../services/Account/account.service';
 })
 export class LoginComponent implements OnInit {
 
+  constructor(private formBuilder: FormBuilder,
+              private router: Router,
+              private accountService: AccountService) {
+  }
+
   hide = true;
 
   accountForm = this.formBuilder.group({
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', Validators.required]
+    email: ['zd@gmail.com', [Validators.required, Validators.email]],
+    password: ['12345678', Validators.required]
   });
 
-  constructor(private formBuilder: FormBuilder, private accountService: AccountService) {
+  static saveToken(token: string) {
+    localStorage.setItem('Authorization', token);
   }
 
   ngOnInit(): void {
@@ -25,16 +32,33 @@ export class LoginComponent implements OnInit {
 
   private getAccount() {
     return new Account(this.accountForm.get('email').value,
-      this.accountForm.get('password').value, '');
+      this.accountForm.get('password').value, '', '', '');
   }
 
   formSubmitted() {
     this.accountService.loginUser(this.getAccount()).subscribe(
       result => {
-        console.log(result);
+        this.forwardUserToDashBoard(result);
       }, error => {
         console.error(error);
       }
     );
+  }
+
+  private forwardUserToDashBoard(result: Account) {
+    let destination = '';
+    switch (result.role) {
+      case 'A':
+        destination = 'admin';
+        break;
+      case 'D':
+        destination = 'doctor';
+        break;
+      case 'R':
+        destination = 'reception';
+        break;
+    }
+    LoginComponent.saveToken(result.token);
+    this.router.navigate([destination]);
   }
 }

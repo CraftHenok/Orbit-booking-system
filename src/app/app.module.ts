@@ -30,24 +30,24 @@ import {QuickAddComponent} from './components/dialogs/quick-add/quick-add.compon
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {NgxSpinnerModule} from 'ngx-spinner';
 import {HomepageComponent} from './components/homepage/homepage.component';
-import {AppointmentsComponent} from './components/show/appointments/appointments.component';
-import {ShowDoctorsComponent} from './components/show/appointments/show-doctors/show-doctors.component';
 import {LoginComponent} from './components/login/login.component';
 import {MatCardModule} from '@angular/material/card';
+import {JwtModule} from '@auth0/angular-jwt';
 
 // ng g module moduleName --flat --routing
 
+export function tokenGetter() {
+  return localStorage.getItem('Authorization');
+}
 
 @NgModule({
   declarations: [
     AppComponent,
-    AppointmentsComponent,
-    ShowDoctorsComponent,
     AddEditDialogComponent,
     ForgetIdComponent,
     QuickAddComponent,
     HomepageComponent,
-    LoginComponent
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -65,6 +65,14 @@ import {MatCardModule} from '@angular/material/card';
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
     MatTableModule,
     HttpClientModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter,
+        headerName: 'Authorization',
+        whitelistedDomains: ['localhost:8080'],
+        blacklistedRoutes: ['localhost:8080/account/login', 'localhost:8080/account/register']
+      }
+    }),
     MatIconModule,
     MatSelectModule,
     MatListModule,

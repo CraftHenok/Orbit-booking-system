@@ -4,6 +4,7 @@ export class Account {
   role: string;
   username: string;
   status: string;
+  token: string;
 
   constructor(email: string, password: string, role: string,
               username: string, status: string) {
