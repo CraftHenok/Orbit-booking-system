@@ -8,12 +8,11 @@ export class DoctorsFormManager {
 
   }
 
-  static bindDataToNewDoctor(seq: number, primaryInfo: FormGroup, appointmentRelatedInfo: FormGroup) {
+  static bindDataToNewDoctor(id: number, primaryInfo: FormGroup, appointmentRelatedInfo: FormGroup) {
     return new Doctor(
-      seq,
+      id,
       primaryInfo.get('name').value,
       primaryInfo.get('username').value,
-      primaryInfo.get('password').value,
       appointmentRelatedInfo.get('displayOrder').value,
       appointmentRelatedInfo.get('manageBlock').value,
       appointmentRelatedInfo.get('manageBooking').value,

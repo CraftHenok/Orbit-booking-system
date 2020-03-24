@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {DoctorsService} from '../../../services/Doctors/doctors.service';
 import {switchMap} from 'rxjs/operators';
@@ -54,7 +54,6 @@ export class EditdoctorComponent implements OnInit, OnDestroy {
   private updateForm(doctor: Doctor) {
     this.primaryInfo.get('name').setValue(doctor.name);
     this.primaryInfo.get('username').setValue(doctor.username);
-    this.primaryInfo.get('password').setValue(doctor.password);
 
 
     this.appointmentRelatedInfo.get('displayOrder').setValue(doctor.displayOrder);
@@ -65,7 +64,8 @@ export class EditdoctorComponent implements OnInit, OnDestroy {
 
   submit() {
     this.spinner.show();
-    const updatedDoctor = DoctorsFormManager.bindDataToNewDoctor(this.doctor.seq, this.primaryInfo, this.appointmentRelatedInfo);
+    const updatedDoctor = DoctorsFormManager.bindDataToNewDoctor(this.doctor.id,
+      this.primaryInfo, this.appointmentRelatedInfo);
 
     this.subscription.add(this.doctorService.updateDoctor(updatedDoctor).subscribe(
       result => {

@@ -54,12 +54,13 @@ export class PatientsService {
   }
 
   deletePatientById(patient: Patient) {
-    const url = this.patientsUrl + patient.seq + patient.addressId + patient.contactId + patient.emergencyInfoId;
+    const url = this.patientsUrl + patient.id + '/' + patient.addressId + '/' +
+      patient.contactId + '/' + patient.emergencyInfoId;
     return this.http.delete<number>(url);
   }
 
   updatePatient(patient: Patient) {
-    const url = this.patientsUrl + patient.seq;
+    const url = this.patientsUrl + patient.id;
     return this.http.put<number>(url, patient);
   }
 }

@@ -1,22 +1,9 @@
 export class Doctor {
-  seq: number;
-  name: string;
-  username: string;
-  password: string;
+  id: number;
   displayOrder: number;
-  manageBlocks: boolean;
-  manageBooking: boolean;
-  isDoctor: boolean;
 
-  constructor(seq: number, name: string, username: string, password: string, displayOrder: number,
-              manageBlock: boolean, manageBooking: boolean, isDoctor: boolean) {
-    this.seq = seq;
-    this.name = name;
-    this.username = username;
-    this.password = password;
+  constructor(id: number, displayOrder: number) {
+    this.id = id;
     this.displayOrder = displayOrder;
-    this.manageBlocks = manageBlock;
-    this.manageBooking = manageBooking;
-    this.isDoctor = isDoctor;
   }
 }

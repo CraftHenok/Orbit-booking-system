@@ -160,7 +160,7 @@ export class AddEditDialogComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe((result: Patient) => {
       if (result !== undefined && result) {
-        this.PatientId.setValue(result.seq);
+        this.PatientId.setValue(result.id);
       }
     });
   }
@@ -172,7 +172,7 @@ export class AddEditDialogComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe((result: Patient) => {
       if (result !== undefined && result) {
-        this.PatientId.setValue(result.seq);
+        this.PatientId.setValue(result.id);
       }
     });
   }

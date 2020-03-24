@@ -30,9 +30,11 @@ exports.login = async (req, res) => {
 
 const localRegisterToDb = async function (userData, callBack) {
   db.serialize(function () {
-    db.run("INSERT into User(email,password,role)VALUES (?,?,?)",
-      [userData.email, userData.password, userData.role], function (err) {
+    db.run("INSERT into User(email,password,role,status,username)VALUES (?,?,?,?,?)",
+      [userData.email, userData.password, userData.role, userData.status, userData.username], function (err) {
         if (err) {
+          console.log("here");
+          console.error(err);
           callBack({suc: false, msg: err});
         } else {
           callBack({suc: true, msg: userData})
@@ -52,8 +54,11 @@ exports.register = async (req, res) => {
   const newUser = {
     email: req.body.email,
     password: req.body.password,
-    role: req.body.role
+    role: req.body.role || "",
+    username: req.body.username,
+    status: req.body.status || "Pending"
   };
+
   await localRegisterToDb(newUser, function (response) {
     if (response.suc) {
       return res.status(statusCode.saveOk).json(response.msg);

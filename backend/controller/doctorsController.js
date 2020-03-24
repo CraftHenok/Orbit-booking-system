@@ -12,17 +12,12 @@ exports.update = async (req, res) => {
   }
 
   const doctorData = {
-    name: req.body.name,
     displayOrder: req.body.displayOrder,
-    manageBlocks: req.body.manageBlocks,
-    manageBooking: req.body.manageBooking,
-    isDoctor: req.body.isDoctor,
     id: req.params['id'],
   };
 
-  await db.run("update doctor set name=?,displayOrder=?,manageBlocks=?,manageBooking=?,isDoctor=? where id=?",
-    [doctorData.name, doctorData.displayOrder, doctorData.manageBlocks, doctorData.manageBooking,
-      doctorData.isDoctor, doctorData.id], function (err) {
+  await db.run("update doctor set displayOrder=? where id=?",
+    [doctorData.displayOrder, doctorData.id], function (err) {
       if (err) {
         console.error(err);
         res.json(err).status(statusCode.notFound);
@@ -53,16 +48,14 @@ exports.saveNewDoctor = async (req, res) => {
   const newUser = {
     email: req.body.email,
     password: req.body.password,
-    role: 'D'
+    username: req.body.username,
+    role: "D",
+    status: req.body.status || "Pending"
   };
 
   const doctorData = {
     ...newUser,
-    name: req.body.name,
     displayOrder: req.body.displayOrder,
-    manageBlocks: req.body.manageBlocks,
-    manageBooking: req.body.manageBooking,
-    isDoctor: req.body.isDoctor
   };
 
   // first save to the general user table
@@ -70,13 +63,14 @@ exports.saveNewDoctor = async (req, res) => {
 
   function insertIntoDoctorTable(response) {
     if (response.suc === false) {
+      console.error(response.msg);
       return res.json(response.msg);
     } else {
-      db.run("INSERT into Doctor(userId,name,displayOrder,manageBlocks,manageBooking,isDoctor)\n" +
-        "VALUES ((SELECT seq from sqlite_sequence where name='User'),?,?,?,?,?)",
-        [doctorData.name, doctorData.displayOrder,
-          doctorData.manageBlocks, doctorData.manageBooking, doctorData.isDoctor], function (err) {
+      db.run("INSERT into Doctor(userId,displayOrder)\n" +
+        "VALUES ((SELECT seq from sqlite_sequence where name='User'),?)",
+        [doctorData.displayOrder], function (err) {
           if (err) {
+            console.error(err);
             res.status(statusCode.errorInData).send(err);
           } else {
             res.status(statusCode.saveOk).json(doctorData);
@@ -89,21 +83,6 @@ exports.saveNewDoctor = async (req, res) => {
 
 };
 
-exports.getDoctorByName = (req, res) => {
-  const permission = getGrants.can(req.user.role).readAny("doctor");
-  if (!permission.granted) {
-    return res.status(statusCode.forbidden).json("Access forbidden " + req.user.role);
-  }
-
-  db.all("SELECT * from Doctor WHERE name like ?", `%${req.params["name"]}%`, (err, row) => {
-    if (err) {
-      res.json(err).status(statusCode.errorInData);
-    } else {
-      res.status(statusCode.getOk).json(row);
-    }
-  })
-};
-
 exports.getDoctorById = (req, res) => {
 
   const permission = getGrants.can(req.user.role).readOwn("doctor");
@@ -111,12 +90,15 @@ exports.getDoctorById = (req, res) => {
     return res.status(statusCode.forbidden).json("Access forbidden " + req.user.role);
   }
 
-
   db.get("Select * from doctor where id = ?", req.params["id"], (err, row) => {
     if (err) {
       res.json(err).status(statusCode.errorInData);
     } else {
-      res.status(statusCode.getOk).json(row);
+      if (row === undefined) {
+        res.status(statusCode.notFound).json(row);
+      } else {
+        res.status(statusCode.getOk).json(row);
+      }
     }
   })
 };

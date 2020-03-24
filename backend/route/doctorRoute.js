@@ -83,28 +83,6 @@ router.get('/byId/:id', doctorsController.getDoctorById);
 
 /**
  * @swagger
- * /doctor/byName/{name}:
- *  get:
- *    description: get doctors by name
- *    tags:
- *      - doctor
- *    parameters:
- *      - name: name
- *        description: the doctor's name to search with
- *        required: true
- *        in: path
- *        type: string
- *    produces:
- *      -application/json
- *    responses:
- *      200:
- *        description: return a doctors with name ending or starting with passed name
- */
-router.get('/byName/:name', doctorsController.getDoctorByName);
-
-
-/**
- * @swagger
  * /doctor:
  *  post:
  *    description: save new doctor

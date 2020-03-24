@@ -43,7 +43,7 @@ export class DoctorsService {
   }
 
   updateDoctor(doctor: Doctor) {
-    const url = this.doctorsUrl + doctor.seq;
+    const url = this.doctorsUrl + doctor.id;
     return this.http.put<number>(url, doctor);
   }
 }

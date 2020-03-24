@@ -83,11 +83,11 @@ export class PatientsComponent implements OnInit, OnDestroy {
   }
 
   private deletePatient(seq: number) {
-    const patientToDelete = this.patients.filter(it => it.seq === seq);
+    const patientToDelete = this.patients.filter(it => it.id === seq);
     this.subscription.add(this.patientService.deletePatientById(patientToDelete[0]).subscribe(
       result => {
         if (result > 0) {
-          const filteredPatients = this.patients.filter(it => it.seq !== seq);
+          const filteredPatients = this.patients.filter(it => it.id !== seq);
           this.configureDataSource(filteredPatients);
         }
       }, error => {

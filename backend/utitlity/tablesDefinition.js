@@ -71,13 +71,9 @@ const emergencyTitle = "CREATE TABLE \"emergencyTitle\" (\n" +
   ");";
 
 const doctor = "CREATE TABLE \"Doctor\" (\n" +
+  "\t\"id\"\tINTEGER PRIMARY KEY AUTOINCREMENT,\n" +
   "\t\"userId\"\tINTEGER NOT NULL,\n" +
-  "\t\"name\"\tTEXT NOT NULL,\n" +
-  "\t\"displayOrder\"\tINTEGER,\n" +
-  "\t\"manageBlocks\"\tINTEGER NOT NULL,\n" +
-  "\t\"manageBooking\"\tINTEGER NOT NULL,\n" +
-  "\t\"isDoctor\"\tINTEGER NOT NULL,\n" +
-  "\t\"id\"\tINTEGER PRIMARY KEY AUTOINCREMENT\n" +
+  "\t\"displayOrder\"\tINTEGER\n" +
   ");";
 
 const duration = "CREATE TABLE \"duration\" (\n" +
@@ -89,7 +85,9 @@ const user = "CREATE TABLE \"User\" (\n" +
   "\t\"email\"\tTEXT NOT NULL UNIQUE,\n" +
   "\t\"password\"\tTEXT NOT NULL,\n" +
   "\t\"role\"\tTEXT NOT NULL,\n" +
-  "\t\"id\"\tINTEGER PRIMARY KEY AUTOINCREMENT\n" +
+  "\t\"id\"\tINTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+  "\t\"status\"\tTEXT,\n" +
+  "\t\"username\"\tTEXT\n" +
   ");";
 
 module.exports = {
