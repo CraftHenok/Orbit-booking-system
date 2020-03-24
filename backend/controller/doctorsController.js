@@ -110,7 +110,7 @@ exports.getAllDoctors = async (req, res) => {
     return res.status(statusCode.forbidden).json("Access forbidden " + req.user.role);
   }
 
-  await db.all("select * from Doctor ORDER by displayOrder ASC;", (err, rows) => {
+  await db.all("SELECT User.*,displayOrder from User LEFT JOIN Doctor where User.id=Doctor.userId and User.role='D' ORDER by displayOrder DESC;", (err, rows) => {
     if (err) {
       console.error(err);
     }
