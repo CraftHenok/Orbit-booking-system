@@ -60,7 +60,7 @@ exports.updateAppointment = async (req, res) => {
       if (err) {
         res.status(statusCode.errorInData).send(err.message);
       } else {
-        res.status(statusCode.updateOKNoData).json(this.changes);
+        res.status(statusCode.updateOkData).json(this.changes);
       }
     });
 };

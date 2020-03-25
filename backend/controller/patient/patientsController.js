@@ -242,7 +242,7 @@ exports.updatePatientById = async (req, res) => {
         console.error(err);
         return res.json(err).status(statusCode.errorInData);
       } else {
-        return res.status(statusCode.updateOKNoData).json(this.changes);
+        return res.status(statusCode.updateOkData).json(this.changes);
       }
     });
 

@@ -64,7 +64,7 @@ exports.updateAppointmentType = async (req, res) => {
     if (err) {
       return res.status(statusCode.errorInData).send(err.message);
     } else {
-      return res.status(statusCode.updateOKNoData).json(this.changes);
+      return res.status(statusCode.updateOkData).json(this.changes);
     }
   });
 };

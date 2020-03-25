@@ -22,7 +22,7 @@ exports.update = async (req, res) => {
         console.error(err);
         res.json(err).status(statusCode.notFound);
       } else {
-        res.status(statusCode.updateOKNoData).json(this.changes);
+        res.status(statusCode.updateOkData).json(this.changes);
       }
     });
 };
@@ -90,7 +90,8 @@ exports.getDoctorById = (req, res) => {
     return res.status(statusCode.forbidden).json("Access forbidden " + req.user.role);
   }
 
-  db.get("Select * from doctor where id = ?", req.params["id"], (err, row) => {
+  //SELECT User.*,displayOrder from User LEFT JOIN Doctor on user.id=Doctor.userId where user.id = 6;
+  db.get("SELECT User.*,displayOrder from User LEFT JOIN Doctor where user.id = ? and Doctor.userId = ?", [req.params["id"], req.params["id"]], (err, row) => {
     if (err) {
       res.json(err).status(statusCode.errorInData);
     } else {
