@@ -12,6 +12,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {NgxSpinnerModule} from 'ngx-spinner';
+import {MatSelectModule} from '@angular/material/select';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import {NgxSpinnerModule} from 'ngx-spinner';
     MatIconModule,
     MatCheckboxModule,
     MatSnackBarModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    MatSelectModule
   ]
 })
 export class AdddoctorModule {
