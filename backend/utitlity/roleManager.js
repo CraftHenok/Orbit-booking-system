@@ -4,6 +4,7 @@ const roles = (function () {
 
   //R is reception
   //D is doctor
+  //A is admin
   const grantList = [
     {role: 'R', resource: 'appointment', action: 'create:any'},
     {role: 'R', resource: 'appointment', action: 'read:any'},
@@ -49,7 +50,10 @@ const roles = (function () {
 
   ];
 
-  return new AccessControl(grantList);
+  const ac = new AccessControl(grantList);
+  ac.grant('A').extend('D').extend('R');
+
+  return ac;
 })();
 
 exports.getGrants = (function () {
