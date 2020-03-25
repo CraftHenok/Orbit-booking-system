@@ -22,7 +22,7 @@ export class DoctorsFormManager {
   getFormBuilders() {
     return this.formBuilder.group({
       username: ['', Validators.required],
-      email: ['', Validators.required],
+      email: ['', Validators.required, Validators.email],
       password: ['', [Validators.required, Validators.min(6)]],
       status: ['', Validators.required],
       displayOrder: ['', Validators.required],

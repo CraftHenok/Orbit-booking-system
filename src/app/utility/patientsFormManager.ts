@@ -95,7 +95,7 @@ export class PatientsFormManager {
     });
 
     const contactInfoForm = this.formBuilder.group({
-      email: [''],
+      email: ['', Validators.email],
       primaryPhoneNumber: ['', Validators.required],
       alternatePhoneNumber: ['']
     });
