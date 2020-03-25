@@ -3,6 +3,7 @@ import {Patient} from '../models/Patient';
 import {Contact} from '../models/Contact';
 import {Address} from '../models/Address';
 import {EmergencyInfo} from '../models/EmergencyInfo';
+import {Variables} from './variables';
 
 export class PatientsFormManager {
   constructor(private formBuilder: FormBuilder) {
@@ -33,8 +34,8 @@ export class PatientsFormManager {
 
     return new Patient(
       0,
-      new Date(),
-      primaryInfoForm.get('patientTitleId').value,
+      Variables.currentDate,
+      primaryInfoForm.get('patientTitleId').value || Variables.defaultPatientTitleId,
       primaryInfoForm.get('firstName').value,
       primaryInfoForm.get('middleName').value,
       primaryInfoForm.get('lastName').value,

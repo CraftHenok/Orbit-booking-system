@@ -102,7 +102,6 @@ export class AddpatientComponent implements OnInit, OnDestroy {
 
 
   submit() {
-
     this.spinner.show();
     const newPatient = PatientsFormManager.bindDateToNewPatient(this.primaryInfoForm, this.contactInfoForm,
       this.addressForm, this.emergencyInfoForm);
