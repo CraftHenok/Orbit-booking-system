@@ -8,7 +8,7 @@
       <ng-template matStepLabel>Primary info</ng-template>
       <mat-form-field appearance="outline">
         <mat-label>Title</mat-label>
-        <mat-select formControlName="patientTitleId" required>
+        <mat-select formControlName="patientTitleId">
           <mat-option *ngFor="let pt of patientsTitles" [value]="pt.id">{{ pt.title }}</mat-option>
         </mat-select>
       </mat-form-field>
@@ -19,17 +19,17 @@
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Middle name</mat-label>
-          <input matInput placeholder="middleName" formControlName="middleName" required>
+          <input matInput placeholder="middleName" formControlName="middleName">
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Last name</mat-label>
-          <input matInput placeholder="lastName" formControlName="lastName" required>
+          <input matInput placeholder="lastName" formControlName="lastName">
         </mat-form-field>
       </div>
 
       <mat-form-field appearance="outline">
         <mat-label>Gender</mat-label>
-        <mat-select formControlName="gender" required>
+        <mat-select formControlName="gender">
           <mat-option value="m">Male</mat-option>
           <mat-option value="f">Female</mat-option>
         </mat-select>
@@ -38,12 +38,12 @@
       <div>
         <mat-form-field appearance="outline">
           <mat-label>Age</mat-label>
-          <input matInput placeholder="age" type="number" formControlName="age" required (keyup)="setBirthDate()">
+          <input matInput placeholder="age" type="number" formControlName="age" (keyup)="setBirthDate()">
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <input matInput [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" formControlName="dateOfBirth"
-                 placeholder="Date of birth" required>
+                 placeholder="Date of birth">
           <span [owlDateTimeTrigger]="dt1"><i class="fa fa-calendar"></i></span>
           <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
         </mat-form-field>
