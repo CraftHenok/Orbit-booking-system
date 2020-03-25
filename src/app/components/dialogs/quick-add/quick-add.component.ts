@@ -38,13 +38,13 @@ export class QuickAddComponent implements OnInit {
     const newPatient = new Patient(
       0,
       new Date(),
-      '38428dc2-0edd-45df-af5e-2576b411813a',
+      null,
       this.forgetForm.get('firstName').value,
       '',
       '',
       '',
       null,
-      0,
+      null,
       contactInfo,
       address,
       emergencyInfo);
@@ -55,6 +55,7 @@ export class QuickAddComponent implements OnInit {
         this.spinner.hide();
         this.dialogRef.close(result);
       }, error => {
+        this.spinner.hide();
         console.log(error);
       }
     );
