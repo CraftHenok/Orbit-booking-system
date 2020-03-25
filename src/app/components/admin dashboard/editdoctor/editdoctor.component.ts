@@ -13,7 +13,7 @@ import {NgxSpinnerService} from 'ngx-spinner';
 @Component({
   selector: 'app-editdoctor',
   templateUrl: './editdoctor.component.html',
-  styleUrls: ['./editdoctor.component.css']
+  styleUrls: ['../addpatient/addpatient.component.css']
 })
 export class EditdoctorComponent implements OnInit, OnDestroy {
 
@@ -22,7 +22,6 @@ export class EditdoctorComponent implements OnInit, OnDestroy {
 
   private commonFormBuilder: DoctorsFormManager;
   primaryInfo: FormGroup;
-  appointmentRelatedInfo: FormGroup;
   private snackBarMan: SnackBarManager;
 
   private subscription: Subscription = new Subscription();
@@ -34,8 +33,7 @@ export class EditdoctorComponent implements OnInit, OnDestroy {
               private spinner: NgxSpinnerService,
               private doctorService: DoctorsService) {
     this.commonFormBuilder = new DoctorsFormManager(this.formBuilder);
-    this.primaryInfo = this.commonFormBuilder.getFormBuilders().primaryInfo;
-    this.appointmentRelatedInfo = this.commonFormBuilder.getFormBuilders().appointmentRelatedInfo;
+    this.primaryInfo = this.commonFormBuilder.getFormBuilders();
     this.snackBarMan = new SnackBarManager(this.snackBar);
   }
 
@@ -52,18 +50,20 @@ export class EditdoctorComponent implements OnInit, OnDestroy {
   }
 
   private updateForm(doctor: Doctor) {
-    this.primaryInfo.get('name').setValue(doctor.username);
     this.primaryInfo.get('username').setValue(doctor.username);
-    this.appointmentRelatedInfo.get('displayOrder').setValue(doctor.displayOrder);
+    this.primaryInfo.get('email').setValue(doctor.email);
+    this.primaryInfo.get('password').setValue(doctor.password);
+    this.primaryInfo.get('status').setValue(doctor.status);
+    this.primaryInfo.get('displayOrder').setValue(doctor.displayOrder);
   }
 
   submit() {
     this.spinner.show();
-    const updatedDoctor = DoctorsFormManager.bindDataToNewDoctor(this.doctor.id,
-      this.primaryInfo, this.appointmentRelatedInfo);
+    const updatedDoctor = DoctorsFormManager.bindDataToNewDoctor(this.doctor.id, this.primaryInfo);
 
     this.subscription.add(this.doctorService.updateDoctor(updatedDoctor).subscribe(
       result => {
+        console.log(result);
         this.spinner.hide();
         if (result > 0) {
           this.snackBarMan.show('Doctor updated successfully', 'Ok');
