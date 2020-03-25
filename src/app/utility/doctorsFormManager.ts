@@ -8,40 +8,24 @@ export class DoctorsFormManager {
 
   }
 
-  static bindDataToNewDoctor(id: number, primaryInfo: FormGroup, appointmentRelatedInfo: FormGroup) {
+  static bindDataToNewDoctor(id: number, primaryInfo: FormGroup) {
     return new Doctor(
-      '',
-      '',
-      '',
-      '',
-      '',
-      0,
-      1);
-    // return new Doctor(
-    //   id,
-    //   primaryInfo.get('name').value,
-    //   primaryInfo.get('username').value,
-    //   appointmentRelatedInfo.get('displayOrder').value,
-    //   appointmentRelatedInfo.get('manageBlock').value,
-    //   appointmentRelatedInfo.get('manageBooking').value,
-    //   appointmentRelatedInfo.get('isDoctor').value
-    // );
+      primaryInfo.get('email').value,
+      primaryInfo.get('password').value,
+      'D',
+      primaryInfo.get('username').value,
+      primaryInfo.get('status').value,
+      id,
+      primaryInfo.get('displayOrder').value);
   }
 
   getFormBuilders() {
-    const primaryInfo = this.formBuilder.group({
-      name: ['', Validators.required],
+    return this.formBuilder.group({
       username: ['', Validators.required],
-      password: ['', [Validators.required, Validators.min(6)]]
-    });
-
-    const appointmentRelatedInfo = this.formBuilder.group({
+      email: ['', Validators.required],
+      password: ['', [Validators.required, Validators.min(6)]],
+      status: ['', Validators.required],
       displayOrder: ['', Validators.required],
-      manageBlock: [false, Validators.required],
-      manageBooking: [false, Validators.required],
-      isDoctor: [false, Validators.required]
     });
-
-    return {primaryInfo, appointmentRelatedInfo};
   }
 }

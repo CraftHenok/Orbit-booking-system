@@ -25,7 +25,6 @@ export class DoctorsService {
       );
     }
     return this.doctors$;
-
   }
 
   saveDoctor(doctor: Doctor) {

@@ -84,18 +84,18 @@ export class PatientsFormManager {
 
   getFormBuilder() {
     const primaryInfoForm = this.formBuilder.group({
-      patientTitleId: ['', Validators.required],
+      patientTitleId: [''],
       firstName: ['', Validators.required],
-      middleName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      gender: ['', Validators.required],
-      dateOfBirth: ['', Validators.required],
-      age: ['', Validators.required],
+      middleName: [''],
+      lastName: [''],
+      gender: [''],
+      dateOfBirth: [''],
+      age: [''],
       nationality: [''],
     });
 
     const contactInfoForm = this.formBuilder.group({
-      email: ['', Validators.email],
+      email: [''],
       primaryPhoneNumber: ['', Validators.required],
       alternatePhoneNumber: ['']
     });
