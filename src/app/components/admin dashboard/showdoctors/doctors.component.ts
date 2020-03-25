@@ -13,13 +13,12 @@ import {Variables} from '../../../utility/variables';
 @Component({
   selector: 'app-doctors',
   templateUrl: './doctors.component.html',
-  styleUrls: ['../showpatients/patients.component.css'] // common css so re-use
+  styleUrls: ['../showpatients/patients.component.css']
 })
 export class DoctorsComponent implements OnInit, OnDestroy {
 
   dataSource;
-  displayedColumns: string[] = ['seq', 'name', 'username', 'password', 'displayOrder', 'manageBlock',
-    'manageBooking', 'isDoctor', 'action'];
+  displayedColumns: string[] = ['id', 'username', 'email', 'password', 'status', 'displayOrder', 'action'];
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   private subscription: Subscription = new Subscription();
@@ -57,7 +56,7 @@ export class DoctorsComponent implements OnInit, OnDestroy {
   }
 
   navigateToEditDoctor(seq: number) {
-    this.router.navigate(['/editDoctor', seq]);
+    this.router.navigate(['/admin', 'editDoctor', seq]);
   }
 
   confirmAction(seq: number) {

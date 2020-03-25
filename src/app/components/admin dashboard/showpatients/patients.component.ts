@@ -19,7 +19,7 @@ import {Variables} from '../../../utility/variables';
 export class PatientsComponent implements OnInit, OnDestroy {
 
   dataSource;
-  displayedColumns: string[] = ['seq', 'regDate', 'active', 'name', 'gender', 'dateOfBirth', 'nationality',
+  displayedColumns: string[] = ['id', 'regDate', 'active', 'name', 'gender', 'dateOfBirth', 'nationality',
     'contactInfo', 'address', 'emergencyInfo', 'action'];
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -68,7 +68,7 @@ export class PatientsComponent implements OnInit, OnDestroy {
   }
 
   navigateToEditPatient(seq: number) {
-    this.router.navigate(['/editPatient', seq]);
+    this.router.navigate(['admin', 'editPatient', seq]);
   }
 
   confirmAction(seq: number) {
