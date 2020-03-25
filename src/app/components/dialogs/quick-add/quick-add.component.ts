@@ -7,6 +7,7 @@ import {Address} from '../../../models/Address';
 import {EmergencyInfo} from '../../../models/EmergencyInfo';
 import {Contact} from '../../../models/Contact';
 import {NgxSpinnerService} from 'ngx-spinner';
+import {Variables} from '../../../utility/variables';
 
 @Component({
   selector: 'app-quick-add',
@@ -37,14 +38,14 @@ export class QuickAddComponent implements OnInit {
 
     const newPatient = new Patient(
       0,
-      new Date(),
-      null,
+      Variables.currentDate,
+      Variables.defaultPatientTitleId,
       this.forgetForm.get('firstName').value,
       '',
       '',
       '',
       null,
-      null,
+      Variables.defaultAge,
       contactInfo,
       address,
       emergencyInfo);
