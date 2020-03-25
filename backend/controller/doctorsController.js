@@ -1,6 +1,6 @@
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('demo.db');
-const {registerToDB} = require('./accountController');
+const {registerToDB, updateUser} = require('./accountController');
 const {getGrants} = require('../utitlity/roleManager');
 const {statusCode} = require('../utitlity/statusCodes');
 
@@ -12,19 +12,32 @@ exports.update = async (req, res) => {
   }
 
   const doctorData = {
+    email: req.body.email,
+    password: req.body.password,
+    username: req.body.username,
+    status: req.body.status || "Pending",
     displayOrder: req.body.displayOrder,
     id: req.params['id'],
   };
 
-  await db.run("update doctor set displayOrder=? where id=?",
-    [doctorData.displayOrder, doctorData.id], function (err) {
-      if (err) {
-        console.error(err);
-        res.json(err).status(statusCode.notFound);
-      } else {
-        res.status(statusCode.updateOkData).json(this.changes);
-      }
-    });
+  await updateUser(doctorData, updateDoctor);
+
+  function updateDoctor(response) {
+    if (response.suc === false) {
+      console.error(response.msg);
+      return res.json(response.msg).status(statusCode.notFound);
+    } else {
+      db.run("update doctor set displayOrder=? where userId = ?",
+        [doctorData.displayOrder, doctorData.id], function (err) {
+          if (err) {
+            console.error(err);
+            res.json(err).status(statusCode.notFound);
+          } else {
+            res.status(statusCode.updateOkData).json(this.changes);
+          }
+        });
+    }
+  }
 };
 
 exports.deleteDoctorById = async (req, res) => {
@@ -34,7 +47,7 @@ exports.deleteDoctorById = async (req, res) => {
     return res.status(statusCode.forbidden).json("Access forbidden " + req.user.role);
   }
 
-  await db.run("DELETE from Doctor WHERE id = ?", req.params['id'], function (err) {
+  await db.run("DELETE from Doctor WHERE userId = ?", req.params['id'], function (err) {
     if (err) {
       res.json(err.message).status(statusCode.notFound);
     } else {

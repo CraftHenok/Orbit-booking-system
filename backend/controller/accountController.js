@@ -29,20 +29,34 @@ exports.login = async (req, res) => {
 
 
 const localRegisterToDb = async function (userData, callBack) {
-  db.serialize(function () {
-    db.run("INSERT into User(email,password,role,status,username)VALUES (?,?,?,?,?)",
-      [userData.email, userData.password, userData.role, userData.status, userData.username], function (err) {
-        if (err) {
-          console.log("here");
-          console.error(err);
-          callBack({suc: false, msg: err});
-        } else {
-          callBack({suc: true, msg: userData})
-        }
-      });
-  });
-
+  db.run("INSERT into User(email,password,role,status,username)VALUES (?,?,?,?,?)",
+    [userData.email, userData.password, userData.role, userData.status, userData.username], function (err) {
+      if (err) {
+        console.log("here");
+        console.error(err);
+        callBack({suc: false, msg: err});
+      } else {
+        callBack({suc: true, msg: userData})
+      }
+    });
 };
+
+const localUpdateUser = async function (userData, callBack) {
+  db.run("Update user set email=?,password=?,status=?,username=? where id=?",
+    [userData.email, userData.password, userData.status, userData.username, userData.id], function (err) {
+      if (err) {
+        console.error(err);
+        callBack({suc: false, msg: err});
+      } else {
+        callBack({suc: true, msg: this.changes})
+      }
+    });
+};
+
+
+exports.updateUser = (function () {
+  return localUpdateUser;
+})();
 
 
 exports.registerToDB = (function () {
