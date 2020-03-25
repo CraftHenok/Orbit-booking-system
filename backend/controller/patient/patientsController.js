@@ -52,22 +52,31 @@ exports.saveNewPatient = async (req, res) => {
       }
     });
 
-  db.run("INSERT into Patient(patientTitleId,firstName,middleName,lastName," +
-    "gender,dateOfBirth,nationality,contactId,addressId,emergencyInfoId,age,active,regDate) " +
-    "VALUES (?,?,?,?,?,?,?," +
-    "(select seq from sqlite_sequence where name='Contact')," +
-    "(select seq from sqlite_sequence where name='Address')," +
-    "(select seq from sqlite_sequence where name='EmergencyContact'),?,?,?)",
-    [patientData.patientTitleId, patientData.firstName, patientData.middleName,
-      patientData.lastName, patientData.gender, patientData.dateOfBirth, patientData.nationality,
-      patientData.age, patientData.active, patientData.regDate], function (err) {
+  db.serialize(function () {
+    db.run("INSERT into Patient(patientTitleId,firstName,middleName,lastName," +
+      "gender,dateOfBirth,nationality,contactId,addressId,emergencyInfoId,age,active,regDate) " +
+      "VALUES (?,?,?,?,?,?,?," +
+      "(select seq from sqlite_sequence where name='Contact')," +
+      "(select seq from sqlite_sequence where name='Address')," +
+      "(select seq from sqlite_sequence where name='EmergencyContact'),?,?,?)",
+      [patientData.patientTitleId, patientData.firstName, patientData.middleName,
+        patientData.lastName, patientData.gender, patientData.dateOfBirth, patientData.nationality,
+        patientData.age, patientData.active, patientData.regDate], function (err) {
+        if (err) {
+          console.error(err);
+        }
+      });
+
+    db.get("select seq from sqlite_sequence where name='Patient'", function (err, row) {
       if (err) {
         console.error(err);
         res.status(statusCode.errorInData).json(err);
       } else {
+        patientData.id = row.seq || 1;
         res.status(statusCode.saveOk).json(patientData);
       }
-    });
+    })
+  });
 
 
 };
