@@ -1,5 +1,6 @@
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Doctor} from '../models/Doctor';
+import {Variables} from './variables';
 
 export class DoctorsFormManager {
 
@@ -12,7 +13,7 @@ export class DoctorsFormManager {
     return new Doctor(
       primaryInfo.get('email').value,
       primaryInfo.get('password').value,
-      'D',
+      Variables.doctorRoleName,
       primaryInfo.get('username').value,
       primaryInfo.get('status').value,
       id,
