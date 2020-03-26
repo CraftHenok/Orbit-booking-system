@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {Account} from '../../models/Account';
 import {AccountService} from '../../services/Account/account.service';
@@ -23,6 +23,8 @@ export class LoginComponent implements OnInit {
     password: ['12345678', Validators.required]
   });
 
+  @ViewChild('messageArea') messageArea;
+
   static saveToken(token: string) {
     localStorage.setItem('Authorization', token);
   }
@@ -38,7 +40,11 @@ export class LoginComponent implements OnInit {
   formSubmitted() {
     this.accountService.loginUser(this.getAccount()).subscribe(
       result => {
-        this.forwardUserToDashBoard(result);
+        if (result.status.toUpperCase() === 'APPROVED') {
+          this.forwardUserToDashBoard(result);
+        } else {
+          this.userCantLogin(result);
+        }
       }, error => {
         console.error(error);
       }
@@ -60,5 +66,14 @@ export class LoginComponent implements OnInit {
     }
     LoginComponent.saveToken(result.token);
     this.router.navigate([destination]);
+  }
+
+  private userCantLogin(result: Account) {
+    this.messageArea.nativeElement.style = 'color:red';
+    if (result.status.toLowerCase() === 'pending') {
+      this.messageArea.nativeElement.innerHTML = 'Your account hasn\'t been approved contact your admin';
+    } else if (result.status.toLowerCase() === 'suspended') {
+      this.messageArea.nativeElement.innerHTML = 'Your account has been suspended contact your admin';
+    }
   }
 }

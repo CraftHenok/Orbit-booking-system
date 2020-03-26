@@ -17,7 +17,7 @@ const TREE_DATA: FoodNode[] = [
     name: 'Manage static data',
     link: '',
     children: [
-      {name: 'Appointment type', link: 'appointmentType'},
+      {name: 'Appointment type', link: '/admin/setting'},
       {name: 'Appointment status', link: 'appointmentStatus'},
       {name: 'Emergency title', link: 'emergencyTitle'},
       {name: 'Patient title', link: 'patientTitle'},
