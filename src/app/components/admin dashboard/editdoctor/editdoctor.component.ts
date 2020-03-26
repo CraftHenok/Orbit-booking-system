@@ -50,11 +50,11 @@ export class EditdoctorComponent implements OnInit, OnDestroy {
   }
 
   private updateForm(doctor: Doctor) {
-    this.primaryInfo.get('username').setValue(doctor.username);
-    this.primaryInfo.get('email').setValue(doctor.email);
     this.primaryInfo.get('password').setValue(doctor.password);
     this.primaryInfo.get('status').setValue(doctor.status);
     this.primaryInfo.get('displayOrder').setValue(doctor.displayOrder);
+    this.primaryInfo.get('username').setValue(doctor.username);
+    this.primaryInfo.get('email').setValue(doctor.email);
   }
 
   submit() {

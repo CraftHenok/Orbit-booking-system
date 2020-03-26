@@ -7,11 +7,13 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatRippleModule} from '@angular/material/core';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {StatforadminComponent} from '../statforadmin/statforadmin.component';
 
 
 @NgModule({
   declarations: [
     AdminhomepageComponent,
+    StatforadminComponent
   ],
   imports: [
     CommonModule,
