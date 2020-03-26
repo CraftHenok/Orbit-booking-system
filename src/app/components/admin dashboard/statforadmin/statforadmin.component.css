@@ -1,0 +1,34 @@
+.container {
+  position: absolute;
+  width: 80%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.container .card {
+  float: left;
+  width: calc(33.3% - 7%);
+  height: 230px;
+  margin: 1.5%;
+  padding: 2%;
+  background: #00695C;
+  color: white;
+  position: relative;
+}
+
+.card P {
+  margin-bottom: 8px;
+}
+
+.card .person {
+  margin-top: 5px;
+  font-size: 2em;
+}
+
+.card .count {
+  font-size: 2.3em;
+  position: absolute;
+  bottom: 0;
+  right: 10px;
+}
