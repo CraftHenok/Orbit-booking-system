@@ -40,9 +40,7 @@
         <mat-form-field appearance="outline">
           <mat-label>Status</mat-label>
           <mat-select formControlName="status" required>
-            <mat-option value="Pending">Pending</mat-option>
-            <mat-option value="Approved">Approved</mat-option>
-            <mat-option value="Suspended">Suspended</mat-option>
+            <mat-option *ngFor="let stat of status" [value]="stat">{{ stat }}</mat-option>
           </mat-select>
         </mat-form-field>
       </div>

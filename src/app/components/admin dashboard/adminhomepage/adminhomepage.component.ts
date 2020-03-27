@@ -4,7 +4,7 @@ import {IconNavigation, Navigation} from '../../../models/Navigation';
 @Component({
   selector: 'app-adminhomepage',
   templateUrl: './adminhomepage.component.html',
-  styleUrls: ['./adminhomepage.component.css']
+  styleUrls: ['../../reception dashboard/receptionhomepage/receptionhomepage.component.css']
 })
 export class AdminhomepageComponent implements OnInit {
 

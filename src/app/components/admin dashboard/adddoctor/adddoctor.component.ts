@@ -6,6 +6,7 @@ import {Subscription} from 'rxjs';
 import {DoctorsFormManager} from '../../../utility/doctorsFormManager';
 import {SnackBarManager} from '../../../utility/snackBarManager';
 import {NgxSpinnerService} from 'ngx-spinner';
+import {Variables} from '../../../utility/variables';
 
 @Component({
   selector: 'app-adddoctor',
@@ -22,6 +23,8 @@ export class AdddoctorComponent implements OnInit, OnDestroy {
   private snackBarMan: SnackBarManager;
 
   private subscription: Subscription = new Subscription();
+
+  status = Variables.status;
 
   constructor(private formBuilder: FormBuilder,
               private snackBar: MatSnackBar,

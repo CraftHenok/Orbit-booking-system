@@ -8,5 +8,9 @@ export class Variables {
   static doctorRoleName = 'D';
   static adminRoleName = 'A';
   static receptionRoleName = 'R';
-
+  static status = [
+    'Approved',
+    'Pending',
+    'Suspended'
+  ];
 }

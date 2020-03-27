@@ -4,7 +4,7 @@ import {Navigation} from '../../../models/Navigation';
 @Component({
   selector: 'app-doctorhomepage',
   templateUrl: './doctorhomepage.component.html',
-  styleUrls: ['./doctorhomepage.component.css']
+  styleUrls: ['../../reception dashboard/receptionhomepage/receptionhomepage.component.css']
 })
 export class DoctorhomepageComponent implements OnInit {
 
@@ -14,7 +14,7 @@ export class DoctorhomepageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.navigationData = new Navigation('doctors', []);
+    this.navigationData = new Navigation('/doctor', []);
   }
 
 }
