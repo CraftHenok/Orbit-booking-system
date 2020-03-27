@@ -95,18 +95,32 @@ exports.getPatientAppointment = async (req, res) => {
   });
 };
 
-exports.getDoctorAppointments = async (req, res) => {
-  const permission1 = getGrants.can(req.user.role).readAny("appointment");
-  const permission2 = getGrants.can(req.user.role).readOwn("appointment");
 
-  if (!permission1.granted && !permission2.granted) {
+function checkDoctorRole(role) {
+  const permission1 = getGrants.can(role).readAny("appointment");
+  const permission2 = getGrants.can(role).readOwn("appointment");
+  return !(!permission1.granted && !permission2.granted);
+}
+
+
+exports.getLogedInDoctorAppointment = async (req, res) => {
+  if (!checkDoctorRole(req.user.role)) {
     return res.status(statusCode.forbidden).json("Access forbidden for " + req.user.role);
   }
+  await db.all("select * from appointment where servedBy = ?", [req.user.userId], function (err, rows) {
+    return res.status(statusCode.getOk).json(rows);
+  });
+};
 
+exports.getDoctorAppointmentByItsId = async (req, res) => {
+  if (!checkDoctorRole(req.user.role)) {
+    return res.status(statusCode.forbidden).json("Access forbidden for " + req.user.role);
+  }
   await db.all("select * from appointment where servedBy = ?", [req.params['doctorId']], function (err, rows) {
     return res.status(statusCode.getOk).json(rows);
   });
 };
+
 
 exports.getAllAppointments = async (req, res) => {
 

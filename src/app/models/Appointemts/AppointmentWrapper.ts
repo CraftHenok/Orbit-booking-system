@@ -11,13 +11,19 @@ export class AppointmentWrapper {
   /**
    * Convert a remote appointment to local appointment
    * @param remoteAppointment - the remote appointment to convert
+   * @param isDoctor - state to manage appointment card mobility
    * @returns - the converted local appointment
    */
-  static toLocalAppointment(remoteAppointment: RemoteAppointment): LocalAppointments {
-    return new LocalAppointmentsBuilder(remoteAppointment.id, remoteAppointment.patientId, remoteAppointment.appointmentTypeId,
+  static toLocalAppointment(remoteAppointment: RemoteAppointment, isDoctor: boolean = false): LocalAppointments {
+
+    const result = new LocalAppointmentsBuilder(remoteAppointment.id, remoteAppointment.patientId, remoteAppointment.appointmentTypeId,
       remoteAppointment.appointmentStatusId, new Date(remoteAppointment.startDateTime),
       new Date(remoteAppointment.endDateTime), remoteAppointment.isServed,
-      remoteAppointment.servedBy).setColor().build();
+      remoteAppointment.servedBy).setColor();
+    if (!isDoctor) {
+      return result.build();
+    }
+    return result.changeResizableState(false, false).changeDraggable(false).build();
   }
 
   /**
@@ -34,12 +40,13 @@ export class AppointmentWrapper {
   /**
    * convert list of remote appointments to local appointments
    * @param remoteAppointments - list of remote appointments to convert
+   * @param isDoctor - pass true to make card non resizable, and fixed
    * @returns - converted local appointments
    */
-  static toLocalAppointmentBatch(remoteAppointments: RemoteAppointment[]): LocalAppointments[] {
+  static toLocalAppointmentBatch(remoteAppointments: RemoteAppointment[], isDoctor: boolean = false): LocalAppointments[] {
     const localAppointments: LocalAppointments[] = [];
     for (const ra of remoteAppointments) {
-      localAppointments.push(this.toLocalAppointment(ra));
+      localAppointments.push(this.toLocalAppointment(ra, isDoctor));
     }
     return localAppointments;
   }

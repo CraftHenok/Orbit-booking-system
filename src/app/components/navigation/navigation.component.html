@@ -2,6 +2,13 @@
   <mat-toolbar-row>
     <img src="http://orbithealth.co/wp-content/uploads/2018/12/orbit-health-logo-1.png" alt="logo" style="height: 100%"
          [routerLink]="navigationData.homeLink">
+    <!-- This fills the remaining space of the current row -->
+    <span class="example-fill-remaining-space"></span>
+
+    <button mat-stroked-button [matMenuTriggerFor]="menu" color="primary">{{ userEmail }}</button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="logOut()">Logout</button>
+    </mat-menu>
   </mat-toolbar-row>
 </mat-toolbar>
 

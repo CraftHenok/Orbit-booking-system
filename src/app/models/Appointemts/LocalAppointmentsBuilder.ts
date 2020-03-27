@@ -62,6 +62,7 @@ export class LocalAppointmentsBuilder {
   changeResizableState(beforeStart: boolean, afterEnd: boolean) {
     this.appointment.resizable.afterEnd = afterEnd;
     this.appointment.resizable.beforeStart = beforeStart;
+    return this;
   }
 
   /**

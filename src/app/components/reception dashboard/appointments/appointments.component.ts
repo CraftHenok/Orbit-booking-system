@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {CalendarEvent, CalendarEventTimesChangedEvent, CalendarView, CalendarWeekViewBeforeRenderEvent} from 'angular-calendar';
 import {Subject, Subscription} from 'rxjs';
 import {isSameDay, isSameMonth} from 'date-fns';
@@ -17,11 +17,7 @@ import {Variables} from '../../../utility/variables';
 })
 export class AppointmentsComponent implements OnInit, OnDestroy {
 
-  @ViewChild('modalContent', {static: true}) modalContent: TemplateRef<any>;
-
   @ViewChild('shoeDate') showDate: ElementRef;
-
-  isFabHidden = false;
 
   view: CalendarView = CalendarView.Week;
 
@@ -34,7 +30,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
   events: CalendarEvent[] = [];
 
   activeDayIsOpen = true;
+
   doctorName: string;
+  isFabHidden = false;
 
   private currentSelectedDoctorSeq = 0;
   private subscription: Subscription = new Subscription();

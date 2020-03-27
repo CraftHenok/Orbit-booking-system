@@ -6,6 +6,8 @@ import {MatIconModule} from '@angular/material/icon';
 import {RouterModule} from '@angular/router';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatRippleModule} from '@angular/material/core';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatButtonModule} from '@angular/material/button';
 
 
 @NgModule({
@@ -18,7 +20,9 @@ import {MatRippleModule} from '@angular/material/core';
     MatIconModule,
     RouterModule,
     MatTooltipModule,
-    MatRippleModule
+    MatRippleModule,
+    MatMenuModule,
+    MatButtonModule
   ],
   exports: [
     NavigationComponent

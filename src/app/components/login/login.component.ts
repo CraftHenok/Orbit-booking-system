@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
   hide = true;
 
   accountForm = this.formBuilder.group({
-    email: ['admin@admin.com', [Validators.required, Validators.email]],
+    email: ['doctor2@gmail.com', [Validators.required, Validators.email]],
     password: ['12345678', Validators.required]
   });
 
@@ -41,6 +41,7 @@ export class LoginComponent implements OnInit {
     this.accountService.loginUser(this.getAccount()).subscribe(
       result => {
         if (result.status.toUpperCase() === 'APPROVED') {
+          this.accountService.saveEmail('zekaryasdinku@gmail.com');
           this.forwardUserToDashBoard(result);
         } else {
           this.userCantLogin(result);

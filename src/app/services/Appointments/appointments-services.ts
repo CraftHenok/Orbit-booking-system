@@ -36,7 +36,13 @@ export class AppointmentsServices {
 
 
   getAppointmentByDoctor(seq: number) {
-    const url = this.appointmentUrl + 'showdoctors/' + seq;
+    const url = this.appointmentUrl + 'doctors/' + seq;
+    return this.http.get<RemoteAppointment[]>(url);
+  }
+
+
+  getDoctorsAppointment() {
+    const url = this.appointmentUrl + 'doctors';
     return this.http.get<RemoteAppointment[]>(url);
   }
 
