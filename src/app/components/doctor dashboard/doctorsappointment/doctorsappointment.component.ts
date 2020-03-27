@@ -38,4 +38,12 @@ export class DoctorsappointmentComponent implements OnInit {
     );
   }
 
+  setView(view: CalendarView) {
+    this.view = view;
+  }
+
+  closeOpenMonthViewDay() {
+    this.activeDayIsOpen = false;
+  }
+
 }

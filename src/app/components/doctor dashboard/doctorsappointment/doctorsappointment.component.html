@@ -2,15 +2,15 @@
   <div class="topSide">
     <div>
       <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
-        <mat-button-toggle value="Month"
+        <mat-button-toggle value="Month" (click)="setView(CalendarView.Month)"
                            [class.active]="view === CalendarView.Month" matTooltip="Monthly view">
           <mat-icon aria-hidden="false" aria-label="Example home icon" class="navigate_next">view_module</mat-icon>
         </mat-button-toggle>
-        <mat-button-toggle value="Week"
+        <mat-button-toggle value="Week" (click)="setView(CalendarView.Week)"
                            [class.active]="view === CalendarView.Week" matTooltip="Weekly view">
           <mat-icon aria-hidden="false" aria-label="Example home icon" class="navigate_next">view_week</mat-icon>
         </mat-button-toggle>
-        <mat-button-toggle value="Day"
+        <mat-button-toggle value="Day" (click)="setView(CalendarView.Day)"
                            [class.active]="view === CalendarView.Day" matTooltip="Daily view">
           <mat-icon aria-hidden="false" aria-label="Example home icon" class="navigate_next">view_day</mat-icon>
         </mat-button-toggle>
@@ -20,7 +20,7 @@
       <mat-button-toggle-group name="fontStyle" aria-label="Font Style" class="calenderFormat">
         <mat-button-toggle value="Previous" mwlCalendarPreviousView [view]="view"
                            [(viewDate)]="viewDate"
-                           matTooltip="Previous">
+                           (viewDateChange)="closeOpenMonthViewDay()" matTooltip="Previous">
           <mat-icon aria-hidden="false" aria-label="Example home icon" class="navigate_before">navigate_before
           </mat-icon>
         </mat-button-toggle>
@@ -30,14 +30,15 @@
         </mat-button-toggle>
         <mat-button-toggle value="Next" mwlCalendarNextView
                            [view]="view"
-                           [(viewDate)]="viewDate" matTooltip="Next">
+                           [(viewDate)]="viewDate"
+                           (viewDateChange)="closeOpenMonthViewDay()" matTooltip="Next">
           <mat-icon aria-hidden="false" aria-label="Example home icon" class="navigate_next">navigate_next</mat-icon>
         </mat-button-toggle>
       </mat-button-toggle-group>
     </div>
     <div>
       <mat-button-toggle-group name="fontStyle" aria-label="Font Style" class="addNew">
-        <mat-button-toggle value="Month" matTooltip="New appointment">
+        <mat-button-toggle value="Month" matTooltip="Block Schedule">
           <mat-icon aria-hidden="false" aria-label="Example home icon" class="navigate_next">add</mat-icon>
         </mat-button-toggle>
       </mat-button-toggle-group>
