@@ -20,6 +20,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
   @ViewChild('modalContent', {static: true}) modalContent: TemplateRef<any>;
 
   @ViewChild('shoeDate') showDate: ElementRef;
+
   isFabHidden = false;
 
   view: CalendarView = CalendarView.Week;
@@ -43,14 +44,14 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // this.subscription.add(this.calenderEventService.getAllAppointments().subscribe(
-    //   result => {
-    //     this.events = AppointmentWrapper.toLocalAppointmentBatch(result);
-    //   },
-    //   error => {
-    //     console.error(error + 'On appointment getAllEvents ngOnInit');
-    //   }
-    // ));
+    this.subscription.add(this.calenderEventService.getAllAppointments().subscribe(
+      result => {
+        this.events = AppointmentWrapper.toLocalAppointmentBatch(result);
+      },
+      error => {
+        console.error(error + 'On appointment getAllEvents ngOnInit');
+      }
+    ));
   }
 
   dayClicked({date, events}: { date: Date; events: CalendarEvent[] }): void {
