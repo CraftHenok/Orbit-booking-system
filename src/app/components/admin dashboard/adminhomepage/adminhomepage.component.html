@@ -1,28 +1,4 @@
-<mat-toolbar class="mat-elevation-z1">
-  <mat-toolbar-row>
-    <img src="http://orbithealth.co/wp-content/uploads/2018/12/orbit-health-logo-1.png" alt="" style="height: 100%"
-         routerLink="/admin">
-  </mat-toolbar-row>
-</mat-toolbar>
-
-<div class="iconNavigation">
-  <div>
-    <mat-icon matRipple matTooltip="Doctors" matTooltipPosition="right" routerLink="/admin" routerLinkActive="active"
-              svgIcon="doctor" color="primary">
-    </mat-icon>
-  </div>
-  <div>
-    <mat-icon matRipple matTooltip="Patients" matTooltipPosition="right" routerLink="patients" routerLinkActive="active"
-              svgIcon="patient" color="primary">
-    </mat-icon>
-  </div>
-  <div>
-    <mat-icon matRipple matTooltip="Settings" matTooltipPosition="right" routerLink="setting"
-              routerLinkActive="active"
-              svgIcon="setting" color="primary">
-    </mat-icon>
-  </div>
-</div>
+<app-navigation [navigationData]="navigationData"></app-navigation>
 
 <div class="routerOutLetContainer">
   <router-outlet></router-outlet>

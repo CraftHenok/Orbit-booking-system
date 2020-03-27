@@ -16,6 +16,7 @@ import {ReceptionhomepageComponent} from './receptionhomepage.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {AppointmentsComponent} from '../appointments/appointments.component';
 import {ShowDoctorsComponent} from '../appointments/show-doctors/show-doctors.component';
+import {NavigationModule} from '../../navigation/navigation.module';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import {ShowDoctorsComponent} from '../appointments/show-doctors/show-doctors.co
     MatButtonToggleModule,
     MatTableModule,
     MatRippleModule,
-    MatToolbarModule
+    MatToolbarModule,
+    NavigationModule
   ]
 })
 export class ReceptionhomepageModule {

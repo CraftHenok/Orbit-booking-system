@@ -1,0 +1,19 @@
+<mat-toolbar class="mat-elevation-z1">
+  <mat-toolbar-row>
+    <img src="http://orbithealth.co/wp-content/uploads/2018/12/orbit-health-logo-1.png" alt="logo" style="height: 100%"
+         [routerLink]="navigationData.homeLink">
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<div class="iconNavigation">
+  <div *ngFor="let sublinks of navigationData.iconNavigations">
+    <mat-icon matRipple [matTooltip]="sublinks.toolTipTitle" matTooltipPosition="right"
+              [routerLink]="sublinks.link" routerLinkActive="active"
+              [svgIcon]="sublinks.iconName" color="primary">
+    </mat-icon>
+  </div>
+</div>
+
+<div class="routerOutLetContainer">
+  <router-outlet></router-outlet>
+</div>

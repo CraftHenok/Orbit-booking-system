@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Navigation} from '../../../models/Navigation';
 
 @Component({
   selector: 'app-receptionhomepage',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ReceptionhomepageComponent implements OnInit {
 
-  constructor() { }
+  navigationData: Navigation;
+
+  constructor() {
+  }
 
   ngOnInit(): void {
+    this.navigationData = new Navigation('/reception', []);
   }
 
 }

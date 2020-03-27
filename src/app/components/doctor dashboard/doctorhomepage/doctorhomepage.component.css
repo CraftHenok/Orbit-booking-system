@@ -1,0 +1,7 @@
+.routerOutLetContainer {
+  position: absolute;
+  left: 5%;
+  width: 95%;
+  top: 56px;
+  min-height: 90vh;
+}

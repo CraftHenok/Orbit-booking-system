@@ -6,6 +6,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatRippleModule} from '@angular/material/core';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {NavigationModule} from '../../navigation/navigation.module';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     MatToolbarModule,
     MatIconModule,
     MatRippleModule,
-    MatTooltipModule
+    MatTooltipModule,
+    NavigationModule
   ]
 })
 export class AdminhomepageModule {
