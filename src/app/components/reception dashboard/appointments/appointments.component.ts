@@ -7,7 +7,7 @@ import {LocalAppointments} from '../../../models/Appointemts/LocalAppointments';
 import {MatDialog} from '@angular/material/dialog';
 import {AppointmentsServices} from '../../../services/Appointments/appointments-services';
 import {LocalAppointmentsBuilder} from '../../../models/Appointemts/LocalAppointmentsBuilder';
-import {AppointmentWrapper} from '../../../models/Appointemts/AppointmentWrapper';
+import {AppointmentConverter} from '../../../models/Appointemts/AppointmentConverter';
 import {Variables} from '../../../utility/variables';
 
 @Component({
@@ -44,7 +44,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription.add(this.calenderEventService.getAllAppointments().subscribe(
       result => {
-        this.events = AppointmentWrapper.toLocalAppointmentBatch(result);
+        this.events = AppointmentConverter.toLocalAppointmentBatch(result);
       },
       error => {
         console.error(error + 'On appointment getAllEvents ngOnInit');
@@ -124,7 +124,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
       result => {
         this.events = [
           ...this.events,
-          AppointmentWrapper.toLocalAppointment(result)
+          AppointmentConverter.toLocalAppointment(result)
         ];
       },
       error => {
@@ -174,7 +174,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
   private showDoctorsAppointment(seq: number) {
     this.subscription.add(this.calenderEventService.getAppointmentByDoctor(seq).subscribe(
       result => {
-        this.events = AppointmentWrapper.toLocalAppointmentBatch(result);
+        this.events = AppointmentConverter.toLocalAppointmentBatch(result);
       }, error => {
         console.error(error);
       }

@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
     this.accountService.loginUser(this.getAccount()).subscribe(
       result => {
         if (result.status.toUpperCase() === 'APPROVED') {
-          this.accountService.saveEmail('zekaryasdinku@gmail.com');
+          this.accountService.saveEmail(result.email);
           this.forwardUserToDashBoard(result);
         } else {
           this.userCantLogin(result);

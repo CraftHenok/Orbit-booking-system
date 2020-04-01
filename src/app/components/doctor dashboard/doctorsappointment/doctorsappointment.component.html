@@ -37,7 +37,8 @@
       </mat-button-toggle-group>
     </div>
     <div>
-      <mat-button-toggle-group name="fontStyle" aria-label="Font Style" class="addNew">
+      <mat-button-toggle-group name="fontStyle" aria-label="Font Style" class="addNew"
+                               (click)="openDialogWith(null)">
         <mat-button-toggle value="Month" matTooltip="Block Schedule">
           <mat-icon aria-hidden="false" aria-label="Example home icon" class="navigate_next">add</mat-icon>
         </mat-button-toggle>
@@ -52,6 +53,7 @@
           [viewDate]="viewDate"
           [events]="events"
           [refresh]="refresh"
+          (eventClicked)="handleEvent($event.event)"
           [activeDayIsOpen]="activeDayIsOpen"
         >
         </mwl-calendar-month-view>
@@ -59,14 +61,19 @@
           *ngSwitchCase="CalendarView.Week"
           [viewDate]="viewDate"
           [events]="events"
+          (eventClicked)="handleEvent($event.event)"
           [refresh]="refresh"
+          (dayHeaderClicked)="calenderClicked($event.day.date)"
+          (hourSegmentClicked)="calenderClicked($event.date)"
         >
         </mwl-calendar-week-view>
         <mwl-calendar-day-view
           *ngSwitchCase="CalendarView.Day"
           [viewDate]="viewDate"
           [events]="events"
+          (eventClicked)="handleEvent($event.event)"
           [refresh]="refresh"
+          (hourSegmentClicked)="calenderClicked($event.date)"
         >
         </mwl-calendar-day-view>
       </div>

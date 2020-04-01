@@ -1,28 +1,29 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Navigation} from '../../models/Navigation';
 import {AccountService} from '../../services/Account/account.service';
-import {Subscription} from 'rxjs';
 import {Router} from '@angular/router';
+import {MatDialog} from '@angular/material/dialog';
+import {Variables} from '../../utility/variables';
+import {ManageAccountComponent} from '../dialogs/manage-account/manage-account.component';
 
 @Component({
   selector: 'app-navigation',
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.css']
 })
-export class NavigationComponent implements OnInit, OnDestroy {
+export class NavigationComponent implements OnInit {
 
   @Input() navigationData: Navigation;
-
-  subscription: Subscription;
 
   userEmail = 'Account';
 
   constructor(private accountService: AccountService,
+              private dialog: MatDialog,
               private router: Router) {
   }
 
   ngOnInit(): void {
-    this.subscription = this.accountService.getEmail().subscribe(
+    this.accountService.currentEmail.subscribe(
       result => {
         this.userEmail = result;
       }
@@ -34,9 +35,9 @@ export class NavigationComponent implements OnInit, OnDestroy {
     this.router.navigate(['login']);
   }
 
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+  openManageAccountDialog() {
+    return this.dialog.open(ManageAccountComponent, {
+      width: Variables.dialogSmallWidth,
+    });
   }
-
 }

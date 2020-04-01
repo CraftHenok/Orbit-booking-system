@@ -5,26 +5,18 @@ import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CalendarModule, DateAdapter} from 'angular-calendar';
 import {adapterFactory} from 'angular-calendar/date-adapters/date-fns';
-import {AddEditDialogComponent} from './components/dialogs/addEditDialog/addEditDialog.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ServiceWorkerModule} from '@angular/service-worker';
 import {environment} from '../environments/environment';
 import {MatButtonModule} from '@angular/material/button';
-import {MatDialogModule} from '@angular/material/dialog';
 import {MatInputModule} from '@angular/material/input';
 import {HttpClientModule} from '@angular/common/http';
-import {MatListModule} from '@angular/material/list';
-import {MatSelectModule} from '@angular/material/select';
-import {OwlDateTimeModule, OwlNativeDateTimeModule} from 'ng-pick-datetime';
-import {MatCheckboxModule} from '@angular/material/checkbox';
-import {MatChipsModule} from '@angular/material/chips';
-import {ForgetIdComponent} from './components/dialogs/forget-id/forget-id.component';
-import {QuickAddComponent} from './components/dialogs/quick-add/quick-add.component';
-import {NgxSpinnerModule} from 'ngx-spinner';
 import {HomepageComponent} from './components/homepage/homepage.component';
 import {LoginComponent} from './components/login/login.component';
 import {JwtModule} from '@auth0/angular-jwt';
+import {DialogFeatureModuleModule} from './components/dialogs/dialog-feature-module.module';
 import {MatIconModule} from '@angular/material/icon';
+import {OwlNativeDateTimeModule} from 'ng-pick-datetime';
 
 // ng g module moduleName --flat --routing
 
@@ -35,23 +27,18 @@ export function tokenGetter() {
 @NgModule({
   declarations: [
     AppComponent,
-    AddEditDialogComponent,
-    ForgetIdComponent,
-    QuickAddComponent,
     HomepageComponent,
     LoginComponent,
   ],
   imports: [
+    DialogFeatureModuleModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatButtonModule,
-    OwlDateTimeModule,
-    OwlNativeDateTimeModule,
-    MatIconModule,
     MatInputModule,
+    OwlNativeDateTimeModule,
     CalendarModule.forRoot({provide: DateAdapter, useFactory: adapterFactory}),
-    MatDialogModule,
     ReactiveFormsModule,
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
     HttpClientModule,
@@ -63,17 +50,8 @@ export function tokenGetter() {
         blacklistedRoutes: ['localhost:8080/account/login', 'localhost:8080/account/register']
       }
     }),
-    MatSelectModule,
-    MatListModule,
-    MatCheckboxModule,
     FormsModule,
-    MatChipsModule,
-    NgxSpinnerModule,
-  ],
-  entryComponents: [
-    AddEditDialogComponent,
-    ForgetIdComponent,
-    QuickAddComponent
+    MatIconModule
   ],
   providers: [],
   exports: [],

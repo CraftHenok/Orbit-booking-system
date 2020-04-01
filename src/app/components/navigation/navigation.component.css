@@ -19,7 +19,7 @@ mat-toolbar {
   top: 56px;
   z-index: 1;
   height: 100vh;
-  box-shadow: -1px -1px 5px 0 rgb(133, 124, 133);
+  /*box-shadow: -1px -1px 5px 0 rgb(133, 124, 133);*/
 }
 
 .routerOutLetContainer {

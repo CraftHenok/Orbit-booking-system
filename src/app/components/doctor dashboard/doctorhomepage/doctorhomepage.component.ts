@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Navigation} from '../../../models/Navigation';
+import {IconNavigation, Navigation} from '../../../models/Navigation';
 
 @Component({
   selector: 'app-doctorhomepage',

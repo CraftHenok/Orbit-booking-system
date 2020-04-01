@@ -103,8 +103,7 @@ exports.getDoctorById = (req, res) => {
     return res.status(statusCode.forbidden).json("Access forbidden " + req.user.role);
   }
 
-  //SELECT User.*,displayOrder from User LEFT JOIN Doctor on user.id=Doctor.userId where user.id = 6;
-  db.get("SELECT User.*,displayOrder from User LEFT JOIN Doctor where user.id = ? and Doctor.userId = ?", [req.params["id"], req.params["id"]], (err, row) => {
+  db.get("SELECT User.*,displayOrder from User LEFT JOIN Doctor where user.id = ? and Doctor.userId = ?", [req.params['id'], req.params['id']], (err, row) => {
     if (err) {
       res.json(err).status(statusCode.errorInData);
     } else {
@@ -116,6 +115,7 @@ exports.getDoctorById = (req, res) => {
     }
   })
 };
+
 
 exports.getAllDoctors = async (req, res) => {
 

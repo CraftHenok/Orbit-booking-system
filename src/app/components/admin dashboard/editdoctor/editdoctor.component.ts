@@ -21,7 +21,6 @@ export class EditdoctorComponent implements OnInit, OnDestroy {
   hidePassword = true;
   doctor: Doctor;
 
-  private commonFormBuilder: DoctorsFormManager;
   primaryInfo: FormGroup;
   private snackBarMan: SnackBarManager;
 
@@ -34,8 +33,8 @@ export class EditdoctorComponent implements OnInit, OnDestroy {
               private activatedRoute: ActivatedRoute,
               private spinner: NgxSpinnerService,
               private doctorService: DoctorsService) {
-    this.commonFormBuilder = new DoctorsFormManager(this.formBuilder);
-    this.primaryInfo = this.commonFormBuilder.getFormBuilders();
+    const commonFormBuilder = new DoctorsFormManager(this.formBuilder);
+    this.primaryInfo = commonFormBuilder.getFormBuilders();
     this.snackBarMan = new SnackBarManager(this.snackBar);
   }
 

@@ -3,8 +3,7 @@ import {Account} from '../../models/Account';
 import {HttpClient} from '@angular/common/http';
 import {UrlManager} from '../../utility/urlManager';
 import {JwtHelperService} from '@auth0/angular-jwt';
-import {Observable, Subject} from 'rxjs';
-import {shareReplay} from 'rxjs/operators';
+import {BehaviorSubject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +11,8 @@ import {shareReplay} from 'rxjs/operators';
 export class AccountService {
 
 
-  private emailSubject = new Subject<string>();
+  private emailSubject = new BehaviorSubject<string>('Account');
+  currentEmail = this.emailSubject.asObservable();
 
   private accountUrl = UrlManager.getSupperUrl() + '/account/';
 
@@ -29,8 +29,6 @@ export class AccountService {
 
   public isAuthenticated(): boolean {
     const token = localStorage.getItem('Authorization');
-    // Check whether the token is expired and return
-    // true or false
     return !this.jwtHelper.isTokenExpired(token);
   }
 
@@ -38,10 +36,14 @@ export class AccountService {
     this.emailSubject.next(email);
   }
 
-  getEmail(): Observable<string> {
-    return this.emailSubject.asObservable().pipe(
-      shareReplay(1)
-    );
+  getAccountInfo() {
+    const url = UrlManager.getSupperUrl() + '/accountManager';
+    return this.http.get<Account>(url);
+  }
+
+  updateAccountInfo(account: Account) {
+    const url = UrlManager.getSupperUrl() + '/accountManager';
+    return this.http.put<null>(url, account);
   }
 
 

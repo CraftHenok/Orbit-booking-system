@@ -1,8 +1,14 @@
 import {Component, OnInit} from '@angular/core';
-import {CalendarEvent, CalendarView} from 'angular-calendar';
+import {CalendarView} from 'angular-calendar';
 import {Subject} from 'rxjs';
 import {AppointmentsServices} from '../../../services/Appointments/appointments-services';
-import {AppointmentWrapper} from '../../../models/Appointemts/AppointmentWrapper';
+import {AppointmentConverter} from '../../../models/Appointemts/AppointmentConverter';
+import {MatDialog} from '@angular/material/dialog';
+import {Variables} from '../../../utility/variables';
+import {ScheduleblockingComponent} from '../scheduleblocking/scheduleblocking.component';
+import {ScheduleBlockingService} from '../../../services/ScheduleBlocking/schedule-blocking.service';
+import {ScheduleBlockingConverter} from '../../../models/ScheduleBlocking/ScheduleBlockingConverter';
+import {LocalScheduleBlocking} from '../../../models/ScheduleBlocking/LocalScheduleBlocking';
 
 @Component({
   selector: 'app-doctorsappointment',
@@ -18,24 +24,70 @@ export class DoctorsappointmentComponent implements OnInit {
 
   viewDate: Date = new Date();
 
-  events: CalendarEvent[] = [];
+  events = [];
 
   refresh: Subject<any> = new Subject();
 
   activeDayIsOpen = true;
 
-  constructor(private appointmentService: AppointmentsServices) {
+  constructor(private appointmentService: AppointmentsServices,
+              private scheduleBlockingService: ScheduleBlockingService,
+              private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
     this.appointmentService.getDoctorsAppointment().subscribe(
       result => {
-        this.events = AppointmentWrapper.toLocalAppointmentBatch(result, true);
+        this.events = AppointmentConverter.toLocalAppointmentBatch(result, true);
       },
       error => {
         console.error(error);
       }
     );
+
+    this.scheduleBlockingService.get().subscribe(
+      result => {
+        console.log(result);
+        this.events = [...this.events, ...ScheduleBlockingConverter.convertToLocalBatch(result)];
+      }, error => {
+        console.error(error);
+      }
+    );
+  }
+
+  calenderClicked(date) {
+    const event = new LocalScheduleBlocking(0, new Date(date), null, 0, '');
+    this.openDialogWith(event);
+  }
+
+  openDialogWith(event: LocalScheduleBlocking) {
+    if (event == null) {
+      event = new LocalScheduleBlocking(0, new Date(), null, 0, '');
+    }
+
+    const dialogRef = this.dialog.open(ScheduleblockingComponent, {
+      width: Variables.dialogSmallWidth,
+      data: event
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.action === 'D') {
+        this.events = this.events.filter(it => it.id !== result.id);
+      } else if (result.action === 'U') {
+        this.events = this.events.map(iEvent => {
+          if (iEvent.id === result.id) {
+            return {
+              ...result
+            };
+          }
+          return iEvent;
+        });
+
+      } else if (result.action === 'A') {
+        this.events = [...this.events, result];
+      }
+    });
+
   }
 
   setView(view: CalendarView) {
@@ -46,4 +98,10 @@ export class DoctorsappointmentComponent implements OnInit {
     this.activeDayIsOpen = false;
   }
 
+  handleEvent(event) {
+    if (event.patientId) {
+      return;
+    }
+    this.openDialogWith(event);
+  }
 }

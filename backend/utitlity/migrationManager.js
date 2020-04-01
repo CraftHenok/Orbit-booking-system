@@ -50,6 +50,9 @@ exports.doMigration = () => {
     db.run(tablesCollection.user);
     console.log("User table created");
 
+    db.run(tablesCollection.scheduleBlocking);
+    console.log("scheduleBlocking table created");
+
   });
 
   console.log("All tables are created");

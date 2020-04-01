@@ -90,6 +90,14 @@ const user = "CREATE TABLE \"User\" (\n" +
   "\t\"username\"\tTEXT\n" +
   ");";
 
+const scheduleBlocking = "CREATE TABLE \"LocalScheduleBlocking\" (\n" +
+  "\t\"id\"\tINTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+  "\t\"startDate\"\tINTEGER NOT NULL,\n" +
+  "\t\"endDate\"\tINTEGER NOT NULL,\n" +
+  "\t\"userId\"\tINTEGER NOT NULL,\n" +
+  "\t\"reason\"\tTEXT\n" +
+  ");";
+
 module.exports = {
   "appointmentTable": appointment,
   "appointmentType": appointmentType,
@@ -102,5 +110,6 @@ module.exports = {
   "emergencyTitle": emergencyTitle,
   "doctor": doctor,
   "duration": duration,
-  "user": user
+  "user": user,
+  "scheduleBlocking": scheduleBlocking
 };

@@ -61,22 +61,14 @@ router.get('/', doctorsController.getAllDoctors);
  * @swagger
  * /doctor/byId/{id}:
  *  get:
- *    description: get doctor by it's id
+ *    description: get doctor's profile by id
  *    tags:
  *      - doctor
- *    parameters:
- *      - name: id
- *        description: the id of the doctor
- *        required: true
- *        in: path
- *        type: integer
- *        schema:
- *          minimum: 1
  *    produces:
  *      -application/json
  *    responses:
  *      200:
- *        description: return a doctor matching the id
+ *        description: return doctor profile
  */
 router.get('/byId/:id', doctorsController.getDoctorById);
 

@@ -40,6 +40,7 @@ app.use('/account', require('./backend/route/accountRoute'));
 app.use(tokenVerifier);
 
 // apis that require user authentication
+app.use('/accountManager', require('./backend/route/accountManagerRoute'));
 app.use('/appointment', require('./backend/route/appointment/appointmetsRoute'));
 app.use('/doctor', require('./backend/route/doctorRoute'));
 app.use('/patient', require('./backend/route/patient/patientRoute'));
@@ -48,6 +49,7 @@ app.use('/appointmentStatus', require('./backend/route/appointment/appointmentSt
 app.use('/emergencyTitle', require('./backend/route/emerergencyTitleRoute'));
 app.use('/patientTitle', require('./backend/route/patient/patientTitleRoute'));
 app.use('/duration', require('./backend/route/durationRoute'));
+app.use('/scheduleBlocking', require('./backend/route/scheduleBlockingRoute'));
 
 
 /**

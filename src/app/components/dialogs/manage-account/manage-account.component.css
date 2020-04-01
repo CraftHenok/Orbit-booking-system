@@ -1,0 +1,9 @@
+mat-form-field {
+  width: 100%;
+}
+
+hr {
+  opacity: 0.5;
+  box-shadow: inset 0 0 10px #000000;
+  margin-bottom: 15px;
+}

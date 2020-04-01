@@ -3,10 +3,10 @@ import {LocalAppointments} from './LocalAppointments';
 import {RemoteAppointment} from './RemoteAppointment';
 
 /**
- * Appointment wrapper
+ * Appointment Converter
  * use this class to convert to local appointment to remote appointment and vise versa
  */
-export class AppointmentWrapper {
+export class AppointmentConverter {
 
   /**
    * Convert a remote appointment to local appointment

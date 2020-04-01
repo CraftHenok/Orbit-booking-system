@@ -294,7 +294,6 @@ exports.getContactById = async (req, res) => {
       res.status(statusCode.getOk).json(row);
     }
   });
-
 };
 
 exports.getAddressById = async (req, res) => {

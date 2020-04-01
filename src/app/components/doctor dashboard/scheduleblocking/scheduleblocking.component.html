@@ -1,0 +1,53 @@
+<div *ngIf="data.id===0 else update">
+  <h1 mat-dialog-title align="center" style="color:#00695C">Block a Schedule</h1>
+</div>
+<ng-template #update>
+  <h1 mat-dialog-title align="center" style="color:#00695C">Manage a Schedule blocking event</h1>
+</ng-template>
+
+<hr>
+
+<form [formGroup]="scheduleBlockingForm">
+
+  <mat-dialog-content class="mat-typography">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Start date</mat-label>
+      <input matInput [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" formControlName="startDate"
+             placeholder="Start date">
+      <span [owlDateTimeTrigger]="dt1"><i class="fa fa-calendar"></i></span>
+      <owl-date-time #dt1></owl-date-time>
+    </mat-form-field>
+
+
+    <mat-form-field appearance="outline">
+      <mat-label>End date</mat-label>
+      <input matInput [owlDateTime]="dt2" [owlDateTimeTrigger]="dt2" formControlName="endDate"
+             placeholder="End date">
+      <span [owlDateTimeTrigger]="dt2"><i class="fa fa-calendar"></i></span>
+      <owl-date-time #dt2></owl-date-time>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Reason</mat-label>
+      <input matInput placeholder="Reason" id="PatientId" type="text" formControlName="reason">
+    </mat-form-field>
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+
+    <div *ngIf="data.id==0 else updateAndDelete">
+      <button mat-flat-button color="primary" type="submit" (click)="submit()">Save</button>
+      <button mat-button mat-dialog-close>Cancel</button>
+    </div>
+    <ng-template #updateAndDelete>
+      <button mat-flat-button color="warn" type="submit" (click)="deleteClicked()">Delete</button>
+      <button mat-flat-button color="primary" type="submit" (click)="updateClicked()">Update</button>
+      <button mat-button mat-dialog-close>Cancel</button>
+    </ng-template>
+
+
+  </mat-dialog-actions>
+
+</form>

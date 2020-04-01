@@ -27,6 +27,25 @@ exports.login = async (req, res) => {
   })
 };
 
+exports.register = async (req, res) => {
+  const newUser = {
+    email: req.body.email,
+    password: req.body.password,
+    role: req.body.role || "",
+    username: req.body.username,
+    status: req.body.status || "Pending"
+  };
+
+  await localRegisterToDb(newUser, function (response) {
+    if (response.suc) {
+      return res.status(statusCode.saveOk).json(response.msg);
+    } else {
+      return res.status(statusCode.errorInData).json(response.msg);
+    }
+  });
+
+};
+
 
 const localRegisterToDb = async function (userData, callBack) {
   db.run("INSERT into User(email,password,role,status,username)VALUES (?,?,?,?,?)",
@@ -45,7 +64,7 @@ const localUpdateUser = async function (userData, callBack) {
   db.run("Update user set email=?,password=?,status=?,username=? where id=?",
     [userData.email, userData.password, userData.status, userData.username, userData.id], function (err) {
       if (err) {
-        console.error(err);
+        console.error("here" + err);
         callBack({suc: false, msg: err});
       } else {
         callBack({suc: true, msg: this.changes})
@@ -64,22 +83,4 @@ exports.registerToDB = (function () {
 })();
 
 
-exports.register = async (req, res) => {
-  const newUser = {
-    email: req.body.email,
-    password: req.body.password,
-    role: req.body.role || "",
-    username: req.body.username,
-    status: req.body.status || "Pending"
-  };
 
-  await localRegisterToDb(newUser, function (response) {
-    if (response.suc) {
-      return res.status(statusCode.saveOk).json(response.msg);
-    } else {
-      return res.status(statusCode.errorInData).json(response.msg);
-    }
-  });
-
-
-};

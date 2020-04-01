@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {LocalAppointments} from '../../models/Appointemts/LocalAppointments';
-import {AppointmentWrapper} from '../../models/Appointemts/AppointmentWrapper';
+import {AppointmentConverter} from '../../models/Appointemts/AppointmentConverter';
 import {HttpClient} from '@angular/common/http';
 import {RemoteAppointment} from '../../models/Appointemts/RemoteAppointment';
 import {UrlManager} from '../../utility/urlManager';
@@ -21,12 +21,12 @@ export class AppointmentsServices {
   }
 
   addNewAppointment(newAppointment: LocalAppointments) {
-    return this.http.post<RemoteAppointment>(this.appointmentUrl, AppointmentWrapper.toRemoteAppointment(newAppointment));
+    return this.http.post<RemoteAppointment>(this.appointmentUrl, AppointmentConverter.toRemoteAppointment(newAppointment));
   }
 
   updateAppointment(appointmentToUpdate: LocalAppointments) {
     const url = this.appointmentUrl + appointmentToUpdate.id;
-    return this.http.put<number>(url, AppointmentWrapper.toRemoteAppointment(appointmentToUpdate));
+    return this.http.put<number>(url, AppointmentConverter.toRemoteAppointment(appointmentToUpdate));
   }
 
   deleteAppointment(appointmentToDelete: LocalAppointments) {
