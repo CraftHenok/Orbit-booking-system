@@ -1,13 +1,16 @@
-<div *ngIf="data.patientId else newAppointment">
-  <h1 mat-dialog-title align="center" style="color:#00695C">Manage Appointment</h1>
-</div>
+<h1 *ngIf="data.id else newAppointment" mat-dialog-title align="center" style="color:#00695C">
+  Manage Appointment
+</h1>
+
 <ng-template #newAppointment>
   <h1 mat-dialog-title align="center" style="color:#00695C">New Appointment</h1>
 </ng-template>
 
+<p class="errorMessage" *ngIf="error">{{ error | uppercase }}</p>
+
 <hr>
 
-<form [formGroup]="addForm" (ngSubmit)="onSubmit(data.patientId ? 'U' : 'S')">
+<form [formGroup]="addForm">
 
   <mat-dialog-content class="mat-typography">
 
@@ -86,7 +89,7 @@
       </mat-form-field>
     </div>
 
-    <div *ngIf="data.patientId">
+    <div *ngIf="data.id">
       <mat-checkbox formControlName="IsServed">Is served</mat-checkbox>
     </div>
 
@@ -94,18 +97,21 @@
   </mat-dialog-content>
 
 
-  <div *ngIf="data.patientId else showSaveButton">
+  <div *ngIf="data.id else showSaveButton">
     <mat-dialog-actions align="end">
-      <button mat-dialog-close mat-flat-button color="warn" (click)="deleteClicked()" [disabled]="!addForm.valid">
+      <button mat-flat-button color="warn" (click)="deleteClicked()" [disabled]="!addForm.valid">
         Delete
       </button>
-      <button mat-flat-button color="primary" type="submit" [disabled]="!addForm.valid">Update</button>
+      <button mat-flat-button color="primary" type="submit" [disabled]="!addForm.valid" (click)="updateClicked()">
+        Update
+      </button>
       <button mat-button mat-dialog-close>Cancel</button>
     </mat-dialog-actions>
   </div>
   <ng-template #showSaveButton>
     <mat-dialog-actions align="end">
-      <button mat-flat-button color="primary" type="submit" [disabled]="!addForm.valid">Save</button>
+      <button mat-flat-button color="primary" type="submit" [disabled]="!addForm.valid" (click)="saveClicked()">Save
+      </button>
       <button mat-button mat-dialog-close>Cancel</button>
     </mat-dialog-actions>
   </ng-template>

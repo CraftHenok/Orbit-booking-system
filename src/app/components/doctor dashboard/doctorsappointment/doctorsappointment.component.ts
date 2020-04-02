@@ -71,23 +71,39 @@ export class DoctorsappointmentComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result.action === 'D') {
-        this.events = this.events.filter(it => it.id !== result.id);
-      } else if (result.action === 'U') {
-        this.events = this.events.map(iEvent => {
-          if (iEvent.id === result.id) {
-            return {
-              ...result
-            };
-          }
-          return iEvent;
-        });
-
-      } else if (result.action === 'A') {
-        this.events = [...this.events, result];
-      }
+      this.handleDialogResult(result);
     });
 
+  }
+
+  handleDialogResult(result: any) {
+    if (result.action === Variables.actions.deleted) {
+      this.deleteScheduleBlocking(result);
+    } else if (result.action === Variables.actions.updated) {
+      this.updateScheduleBlocking(result);
+    } else if (result.action === Variables.actions.saved) {
+      this.saveScheduleBlocking(result);
+    }
+  }
+
+  saveScheduleBlocking(result) {
+    this.events = [...this.events, result];
+  }
+
+  updateScheduleBlocking(result) {
+    this.events = this.events.map(iEvent => {
+      if (iEvent.id === result.id) {
+        return {
+          ...result
+        };
+      }
+      return iEvent;
+    });
+
+  }
+
+  deleteScheduleBlocking(result) {
+    this.events = this.events.filter(it => it.id !== result.id);
   }
 
   setView(view: CalendarView) {

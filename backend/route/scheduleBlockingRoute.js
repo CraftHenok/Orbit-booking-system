@@ -17,6 +17,8 @@ const router = express.Router();
  */
 router.get("/", scheduleBlockingController.getDoctorsScheduleBlocking);
 
+router.get("/:id", scheduleBlockingController.getDoctorsScheduleBlockingById);
+
 /**
  * @swagger
  * /scheduleBlocking:

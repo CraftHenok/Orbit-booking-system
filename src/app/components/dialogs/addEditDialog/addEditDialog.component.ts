@@ -17,6 +17,7 @@ import {Variables} from '../../../utility/variables';
 import {ForgetIdComponent} from '../forget-id/forget-id.component';
 import {Patient} from '../../../models/Patient';
 import {QuickAddComponent} from '../quick-add/quick-add.component';
+import {AppointmentConverter} from '../../../models/Appointemts/AppointmentConverter';
 
 
 /** Error when invalid control is dirty, touched, or submitted. */
@@ -46,6 +47,8 @@ export class AddEditDialogComponent implements OnInit, OnDestroy {
   });
 
   public matcher = new MyErrorStateMatcher();
+
+  error;
 
   public appointmentStatus: GeneralStatus[] = [];
   public appointmentType: GeneralType[] = [];
@@ -92,20 +95,6 @@ export class AddEditDialogComponent implements OnInit, OnDestroy {
     ));
   }
 
-  deleteClicked() {
-    this.bindData();
-    if (this.data.patientId) {
-      this.data.action = 'D';
-      this.dialogRef.close(this.data);
-    }
-  }
-
-  onSubmit(state: string) {
-    this.bindData();
-    this.data.action = state;
-    this.dialogRef.close(this.data);
-  }
-
 
   bindData() {
     this.data.patientId = this.PatientId.value;
@@ -117,6 +106,82 @@ export class AddEditDialogComponent implements OnInit, OnDestroy {
 
     this.data.isServed = this.IsServed.value !== false;
     this.data.servedBy = this.ServedBy.value;
+
+    return this.data;
+  }
+
+  closeDialogWithAction(action, result?) {
+    const data = result || this.bindData();
+    data.action = action;
+    this.dialogRef.close(data);
+  }
+
+  updateClicked() {
+    this.calenderEventService.updateAppointment(this.bindData()).subscribe(
+      result => {
+        if (result !== 0) {
+          this.closeDialogWithAction(Variables.actions.updated);
+        }
+      },
+      error => {
+        console.error(error);
+      }
+    );
+  }
+
+  saveClicked() {
+    this.calenderEventService.addNewAppointment(this.bindData()).subscribe(
+      result => {
+        this.closeDialogWithAction(Variables.actions.saved, AppointmentConverter.toLocalAppointment(result));
+      },
+      error => {
+        this.error = error.error;
+      }
+    );
+  }
+
+  deleteClicked() {
+    const data = this.bindData();
+    if (data.patientId) {
+      this.subscription.add(this.calenderEventService.deleteAppointment(this.bindData()).subscribe(
+        result => {
+          if (result !== 0) {
+            this.closeDialogWithAction(Variables.actions.deleted);
+          }
+        },
+        error => {
+          console.error(error);
+        }
+      ));
+    }
+  }
+
+  openForgetIdDialog() {
+    const dialogRef = this.dialog.open(ForgetIdComponent, {
+      width: Variables.dialogBigWidth,
+    });
+
+    dialogRef.afterClosed().subscribe((result: Patient) => {
+      if (result !== undefined && result) {
+        this.PatientId.setValue(result.id);
+      }
+    });
+  }
+
+  openQuickAddDialog() {
+    const dialogRef = this.dialog.open(QuickAddComponent, {
+      width: Variables.dialogBigWidth,
+    });
+
+    dialogRef.afterClosed().subscribe((result: Patient) => {
+      if (result !== undefined && result) {
+        this.PatientId.setValue(result.id);
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   get PatientId() {
@@ -145,33 +210,5 @@ export class AddEditDialogComponent implements OnInit, OnDestroy {
 
   get ServedBy() {
     return this.addForm.get('ServedBy');
-  }
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
-
-  openForgetIdDialog() {
-    const dialogRef = this.dialog.open(ForgetIdComponent, {
-      width: Variables.dialogBigWidth,
-    });
-
-    dialogRef.afterClosed().subscribe((result: Patient) => {
-      if (result !== undefined && result) {
-        this.PatientId.setValue(result.id);
-      }
-    });
-  }
-
-  openQuickAddDialog() {
-    const dialogRef = this.dialog.open(QuickAddComponent, {
-      width: Variables.dialogBigWidth,
-    });
-
-    dialogRef.afterClosed().subscribe((result: Patient) => {
-      if (result !== undefined && result) {
-        this.PatientId.setValue(result.id);
-      }
-    });
   }
 }

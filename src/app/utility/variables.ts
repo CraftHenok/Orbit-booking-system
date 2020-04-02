@@ -8,6 +8,11 @@ export class Variables {
   static doctorRoleName = 'D';
   static adminRoleName = 'A';
   static receptionRoleName = 'R';
+  static actions = {
+    deleted: 'D',
+    saved: 'S',
+    updated: 'U'
+  };
   static status = [
     'Approved',
     'Pending',

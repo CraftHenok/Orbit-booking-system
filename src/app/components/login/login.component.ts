@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
   hide = true;
 
   accountForm = this.formBuilder.group({
-    email: ['doctor2@gmail.com', [Validators.required, Validators.email]],
+    email: ['zd@gmail.com', [Validators.required, Validators.email]],
     password: ['12345678', Validators.required]
   });
 

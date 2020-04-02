@@ -32,4 +32,8 @@ export class ScheduleBlockingService {
     return this.http.delete<number>(this.url + scheduleBlocking.id);
   }
 
+  getByDoctorId(id: number) {
+    return this.http.get<RemoteScheduleBlocking[]>(this.url + id);
+  }
+
 }

@@ -25,8 +25,10 @@ exports.saveNewAppointment = async (req, res) => {
   const forScheduleBlocking = {
     startDate: appointmentData.startDateTime,
     endDate: appointmentData.endDateTime,
-    userId: appointmentData.userId
+    userId: appointmentData.servedBy
   };
+
+  console.log(forScheduleBlocking);
 
   await scheduleBlockingCheck(forScheduleBlocking, (response) => {
     console.table(response);
@@ -34,10 +36,10 @@ exports.saveNewAppointment = async (req, res) => {
       if (response.msg === 0) {
         saveAppointment();
       } else {
-        return res.json("Can't add doctor blocked this area").status(statusCode.errorInData);
+        return res.status(statusCode.errorInData).json("Doctor blocked this area can't add");
       }
     } else {
-      console.error(response.msg)
+      res.status(statusCode.errorInData).json(response.msg)
     }
   });
 
