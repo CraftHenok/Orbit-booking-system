@@ -10,6 +10,13 @@ exports.getDoctorsScheduleBlocking = async (req, res) => {
     });
 };
 
+exports.getDoctorsScheduleBlockingById = async (req, res) => {
+  await db.all("Select * from ScheduleBlocking where userId = ?",
+    [req.params['id']], function (err, row) {
+      res.status(statusCode.getOk).json(row);
+    });
+};
+
 exports.saveNewScheduleBlocking = async (req, res) => {
   const newScheduleBlocking = {
     startDate: req.body.startDate,
@@ -55,5 +62,17 @@ exports.updateScheduleBlocking = async (req, res) => {
         return res.status(statusCode.updateOkData).json(this.changes);
       }
     });
+};
+
+exports.scheduleBlockingCheck = async function (scheduleBlockingData, callBack) {
+  await db.get("select count(*) as count from ScheduleBlocking where ? between startDate and" +
+    " endDate or ? between startDate and endDate and userId = ?",
+    [scheduleBlockingData.startDate, scheduleBlockingData.endDate, scheduleBlockingData.userId], function (err, row) {
+      if (err) {
+        callBack({suc: false, msg: err})
+      } else {
+        callBack({suc: true, msg: row.count})
+      }
+    })
 };
 
