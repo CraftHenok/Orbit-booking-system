@@ -2,6 +2,7 @@ const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('demo.db');
 const {getGrants} = require('../../utitlity/roleManager');
 const {statusCode} = require('../../utitlity/statusCodes');
+const {scheduleBlockingCheck} = require('../../controller/scheduleBlockingController');
 
 exports.saveNewAppointment = async (req, res) => {
 
@@ -21,17 +22,39 @@ exports.saveNewAppointment = async (req, res) => {
     userId: req.user.userId
   };
 
-  await db.run("INSERT into Appointment(patientId,appointmentTypeId,appointmentStatusId," +
-    "startDateTime,endDateTime,isServed,servedBy,userId)\n" +
-    "VALUES (?,?,?,?,?,?,?,?)", [appointmentData.patientId, appointmentData.appointmentTypeId, appointmentData.appointmentStatusId,
-    appointmentData.startDateTime, appointmentData.endDateTime, appointmentData.isServed,
-    appointmentData.servedBy, appointmentData.userId], function (err) {
-    if (err) {
-      res.status(statusCode.errorInData).send(err.message);
+  const forScheduleBlocking = {
+    startDate: appointmentData.startDateTime,
+    endDate: appointmentData.endDateTime,
+    userId: appointmentData.userId
+  };
+
+  await scheduleBlockingCheck(forScheduleBlocking, (response) => {
+    console.table(response);
+    if (response.suc) {
+      if (response.msg === 0) {
+        saveAppointment();
+      } else {
+        return res.json("Can't add doctor blocked this area").status(statusCode.errorInData);
+      }
     } else {
-      res.status(statusCode.saveOk).json(appointmentData);
+      console.error(response.msg)
     }
   });
+
+  async function saveAppointment() {
+    await db.run("INSERT into Appointment(patientId,appointmentTypeId,appointmentStatusId," +
+      "startDateTime,endDateTime,isServed,servedBy,userId)\n" +
+      "VALUES (?,?,?,?,?,?,?,?)", [appointmentData.patientId, appointmentData.appointmentTypeId, appointmentData.appointmentStatusId,
+      appointmentData.startDateTime, appointmentData.endDateTime, appointmentData.isServed,
+      appointmentData.servedBy, appointmentData.userId], function (err) {
+      if (err) {
+        res.status(statusCode.errorInData).send(err.message);
+      } else {
+        res.status(statusCode.saveOk).json(appointmentData);
+      }
+    });
+  }
+
 
 };
 
