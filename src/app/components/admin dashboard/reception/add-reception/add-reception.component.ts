@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Variables} from '../../../../utility/variables';
 import {FormBuilder} from '@angular/forms';
 import {AccountService} from '../../../../services/Account/account.service';
-import {Account} from '../../../../models/Account';
+import {ReceptionFormManager} from '../../../../utility/receptionFormManager';
 
 @Component({
   selector: 'app-add-reception',
@@ -13,32 +13,23 @@ export class AddReceptionComponent implements OnInit {
   hidePassword = true;
   status = Variables.status;
 
-  addReceptionForm = this.fb.group({
-    username: [''],
-    email: [''],
-    password: [''],
-    status: [''],
-  });
+  receptionFormManager: ReceptionFormManager;
 
   constructor(private fb: FormBuilder, private accountService: AccountService) {
+    this.receptionFormManager = new ReceptionFormManager(fb);
   }
 
   ngOnInit(): void {
   }
 
   getAccountFromForm() {
-    return new Account(
-      this.addReceptionForm.get('email').value,
-      this.addReceptionForm.get('password').value,
-      Variables.receptionRoleName,
-      this.addReceptionForm.get('username').value,
-      this.addReceptionForm.get('status').value);
+    return this.receptionFormManager.bindToNewReception();
   }
 
   submit() {
     this.accountService.registerAccount(this.getAccountFromForm()).subscribe(
       result => {
-        this.addReceptionForm.reset();
+        this.receptionFormManager.receptionForm.reset();
       }, error => {
         console.error(error);
       }

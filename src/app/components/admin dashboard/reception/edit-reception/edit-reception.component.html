@@ -4,7 +4,7 @@
     <p class="subheader">Enter the required fill to Update reception</p>
   </div>
   <div class="bottom">
-    <form [formGroup]="editReceptionForm" (submit)="submit()">
+    <form [formGroup]="receptionFormManager.receptionForm" (submit)="submit()">
       <div>
         <mat-form-field appearance="outline">
           <mat-label>Username</mat-label>

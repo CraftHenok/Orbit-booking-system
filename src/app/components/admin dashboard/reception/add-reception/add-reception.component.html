@@ -4,7 +4,7 @@
     <p class="subheader">Enter the required fill to add new reception</p>
   </div>
   <div class="bottom">
-    <form [formGroup]="addReceptionForm" (ngSubmit)="submit()">
+    <form [formGroup]="receptionFormManager.receptionForm" (ngSubmit)="submit()">
       <div>
         <mat-form-field appearance="outline">
           <mat-label>Username</mat-label>

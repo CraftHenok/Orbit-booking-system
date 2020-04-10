@@ -8,7 +8,7 @@
     <p class="subheader">Enter the required fill to add new doctor</p>
   </div>
   <div class="bottom">
-    <form [formGroup]="doctorsFormManager.doctorForm">
+    <form [formGroup]="doctorsFormManager.doctorForm" (submit)="submit()">
       <div>
         <mat-form-field appearance="outline">
           <mat-label>Username</mat-label>
@@ -45,7 +45,7 @@
       </mat-form-field>
 
       <div align="end">
-        <button mat-flat-button color="primary" type="submit" (click)="submit()">Submit</button>
+        <button mat-flat-button color="primary" type="submit">Submit</button>
       </div>
 
     </form>
