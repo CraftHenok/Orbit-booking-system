@@ -4,86 +4,161 @@ import {Contact} from '../models/Contact';
 import {Address} from '../models/Address';
 import {EmergencyInfo} from '../models/EmergencyInfo';
 import {Variables} from './variables';
+import {DateManager} from './dateManager';
 
 export class PatientsFormManager {
-  constructor(private formBuilder: FormBuilder) {
+  private PrimaryInfoForm: FormGroup;
+  private ContactInfoForm: FormGroup;
+  private AddressForm: FormGroup;
+  private EmergencyInfoForm: FormGroup;
 
+
+  get primaryInfoForm() {
+    return this.PrimaryInfoForm;
   }
 
-  static bindDateToNewPatient(primaryInfoForm: FormGroup, contactInfoForm: FormGroup, addressForm: FormGroup,
-                              emergencyInfoForm: FormGroup) {
+  set primaryInfoForm(value) {
+    this.PrimaryInfoForm = value;
+  }
+
+  get contactInfoForm() {
+    return this.ContactInfoForm;
+  }
+
+  set contactInfoForm(value) {
+    this.ContactInfoForm = value;
+  }
+
+  get addressForm() {
+    return this.AddressForm;
+  }
+
+  set addressForm(value) {
+    this.AddressForm = value;
+  }
+
+  get emergencyInfoForm() {
+    return this.EmergencyInfoForm;
+  }
+
+  set emergencyInfoForm(value) {
+    this.EmergencyInfoForm = value;
+  }
+
+  constructor(private formBuilder: FormBuilder) {
+    const result = this.getFormBuilder();
+    this.primaryInfoForm = result.primaryInfoForm;
+    this.contactInfoForm = result.contactInfoForm;
+    this.addressForm = result.addressForm;
+    this.emergencyInfoForm = result.emergencyInfoForm;
+  }
+
+
+  updateForm(patient: Patient) {
+    // primary info
+    this.primaryInfoForm.setValue({
+      patientTitleId: patient.patientTitleId,
+      firstName: patient.firstName,
+      middleName: patient.middleName,
+      lastName: patient.lastName,
+      gender: patient.gender,
+      dateOfBirth: patient.dateOfBirth,
+      age: patient.age,
+      nationality: patient.nationality,
+    });
+
+    this.contactInfoForm.setValue({
+      email: patient.contact.email,
+      primaryPhoneNumber: patient.contact.phoneNumber,
+      alternatePhoneNumber: patient.contact.alternatePhoneNumber,
+    });
+
+    this.addressForm.setValue({
+      line1: patient.address.line1,
+      line2: patient.address.line2,
+      city: patient.address.city,
+      country: patient.address.country,
+    });
+
+    this.emergencyInfoForm.setValue({
+      title: patient.emergencyInfo.emergencyTitleId,
+      name: patient.emergencyInfo.name,
+      primaryPhoneNumber: patient.emergencyInfo.phoneNumber,
+      alternatePhoneNumber: patient.emergencyInfo.alternatePhoneNumber,
+    });
+  }
+
+  bindDateToNewPatient() {
     const contactInfo = new Contact(
-      contactInfoForm.get('primaryPhoneNumber').value,
-      contactInfoForm.get('email').value,
-      contactInfoForm.get('alternatePhoneNumber').value,
+      this.contactInfoForm.get('primaryPhoneNumber').value,
+      this.contactInfoForm.get('email').value,
+      this.contactInfoForm.get('alternatePhoneNumber').value,
     );
 
     const addressInfo = new Address(
-      addressForm.get('line1').value,
-      addressForm.get('line2').value,
-      addressForm.get('city').value,
-      addressForm.get('country').value
+      this.addressForm.get('line1').value,
+      this.addressForm.get('line2').value,
+      this.addressForm.get('city').value,
+      this.addressForm.get('country').value
     );
 
     const emergencyInfo = new EmergencyInfo(
-      emergencyInfoForm.get('title').value,
-      emergencyInfoForm.get('name').value,
-      emergencyInfoForm.get('primaryPhoneNumber').value,
-      emergencyInfoForm.get('alternatePhoneNumber').value
+      this.emergencyInfoForm.get('title').value,
+      this.emergencyInfoForm.get('name').value,
+      this.emergencyInfoForm.get('primaryPhoneNumber').value,
+      this.emergencyInfoForm.get('alternatePhoneNumber').value
     );
 
     return new Patient(
-      0,
       Variables.currentDate,
-      primaryInfoForm.get('patientTitleId').value || Variables.defaultPatientTitleId,
-      primaryInfoForm.get('firstName').value,
-      primaryInfoForm.get('middleName').value,
-      primaryInfoForm.get('lastName').value,
-      primaryInfoForm.get('gender').value,
-      primaryInfoForm.get('dateOfBirth').value,
-      primaryInfoForm.get('age').value,
+      this.primaryInfoForm.get('patientTitleId').value || Variables.defaultPatientTitleId,
+      this.primaryInfoForm.get('firstName').value,
+      this.primaryInfoForm.get('middleName').value,
+      this.primaryInfoForm.get('lastName').value,
+      this.primaryInfoForm.get('gender').value,
+      this.primaryInfoForm.get('dateOfBirth').value,
+      this.primaryInfoForm.get('age').value,
       contactInfo,
       addressInfo,
       emergencyInfo,
-      primaryInfoForm.get('nationality').value,
+      this.primaryInfoForm.get('nationality').value,
     );
 
   }
 
-  static bindDateToOldPatient(primaryInfoForm: FormGroup, contactInfoForm: FormGroup, addressForm: FormGroup,
-                              emergencyInfoForm: FormGroup, patient: Patient) {
+  bindDateToOldPatient(patient: Patient) {
     // update patient it self
-    patient.patientTitleId = primaryInfoForm.get('patientTitleId').value;
-    patient.firstName = primaryInfoForm.get('firstName').value;
-    patient.middleName = primaryInfoForm.get('middleName').value;
-    patient.lastName = primaryInfoForm.get('lastName').value;
-    patient.gender = primaryInfoForm.get('gender').value;
-    patient.dateOfBirth = primaryInfoForm.get('dateOfBirth').value;
-    patient.age = primaryInfoForm.get('age').value;
-    patient.nationality = primaryInfoForm.get('nationality').value;
+    patient.patientTitleId = this.primaryInfoForm.get('patientTitleId').value;
+    patient.firstName = this.primaryInfoForm.get('firstName').value;
+    patient.middleName = this.primaryInfoForm.get('middleName').value;
+    patient.lastName = this.primaryInfoForm.get('lastName').value;
+    patient.gender = this.primaryInfoForm.get('gender').value;
+    patient.dateOfBirth = this.primaryInfoForm.get('dateOfBirth').value;
+    patient.age = this.primaryInfoForm.get('age').value;
+    patient.nationality = this.primaryInfoForm.get('nationality').value;
 
     // update patient's contact
-    patient.contact.phoneNumber = contactInfoForm.get('primaryPhoneNumber').value;
-    patient.contact.alternatePhoneNumber = contactInfoForm.get('alternatePhoneNumber').value;
-    patient.contact.email = contactInfoForm.get('email').value;
+    patient.contact.phoneNumber = this.contactInfoForm.get('primaryPhoneNumber').value;
+    patient.contact.alternatePhoneNumber = this.contactInfoForm.get('alternatePhoneNumber').value;
+    patient.contact.email = this.contactInfoForm.get('email').value;
 
     // update patient's address
-    patient.address.line1 = addressForm.get('line1').value;
-    patient.address.line2 = addressForm.get('line2').value;
-    patient.address.city = addressForm.get('city').value;
-    patient.address.country = addressForm.get('country').value;
+    patient.address.line1 = this.addressForm.get('line1').value;
+    patient.address.line2 = this.addressForm.get('line2').value;
+    patient.address.city = this.addressForm.get('city').value;
+    patient.address.country = this.addressForm.get('country').value;
 
 
     // update patient's emergency info
-    patient.emergencyInfo.name = emergencyInfoForm.get('name').value;
-    patient.emergencyInfo.emergencyTitleId = emergencyInfoForm.get('title').value;
-    patient.emergencyInfo.phoneNumber = emergencyInfoForm.get('primaryPhoneNumber').value;
-    patient.emergencyInfo.alternatePhoneNumber = emergencyInfoForm.get('alternatePhoneNumber').value;
+    patient.emergencyInfo.name = this.emergencyInfoForm.get('name').value;
+    patient.emergencyInfo.emergencyTitleId = this.emergencyInfoForm.get('title').value;
+    patient.emergencyInfo.phoneNumber = this.emergencyInfoForm.get('primaryPhoneNumber').value;
+    patient.emergencyInfo.alternatePhoneNumber = this.emergencyInfoForm.get('alternatePhoneNumber').value;
 
     return patient;
   }
 
-  getFormBuilder() {
+  private getFormBuilder() {
     const primaryInfoForm = this.formBuilder.group({
       patientTitleId: [''],
       firstName: ['', Validators.required],
@@ -115,7 +190,11 @@ export class PatientsFormManager {
       alternatePhoneNumber: [''],
     });
     return {primaryInfoForm, contactInfoForm, addressForm, emergencyInfoForm};
+  }
 
+  birthDateFromAge() {
+    const age = this.primaryInfoForm.get('age').value;
+    this.primaryInfoForm.get('dateOfBirth').setValue(DateManager.getDateFromAge(age));
   }
 
 

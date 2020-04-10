@@ -43,8 +43,28 @@ export class AccountService {
 
   updateAccountInfo(account: Account) {
     const url = UrlManager.getSupperUrl() + '/accountManager';
-    return this.http.put<null>(url, account);
+    return this.http.put<number>(url, account);
+  }
+
+  updateAccountInfoById(account: Account) {
+    const url = UrlManager.getSupperUrl() + '/accountManager/' + account.id;
+    return this.http.put<number>(url, account);
   }
 
 
+  getReception() {
+    const url = UrlManager.getSupperUrl() + '/reception/';
+    return this.http.get<Account[]>(url);
+  }
+
+
+  deleteUser(id: number) {
+    const url = UrlManager.getSupperUrl() + '/accountManager/' + id;
+    return this.http.delete<number>(url);
+  }
+
+  getAccountById(id: number) {
+    const url = UrlManager.getSupperUrl() + '/accountManager/' + id;
+    return this.http.get<Account>(url);
+  }
 }

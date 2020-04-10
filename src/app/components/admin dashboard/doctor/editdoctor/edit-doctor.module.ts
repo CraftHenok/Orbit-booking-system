@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 
 import {EditDoctorRoutingModule} from './edit-doctor-routing.module';
-import {EditpatientComponent} from '../editpatient/editpatient.component';
 import {EditdoctorComponent} from './editdoctor.component';
 import {MatStepperModule} from '@angular/material/stepper';
 import {ReactiveFormsModule} from '@angular/forms';

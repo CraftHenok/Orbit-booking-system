@@ -4,23 +4,45 @@ import {Variables} from './variables';
 
 export class DoctorsFormManager {
 
+  private DoctorForm: FormGroup;
+
+
+  get doctorForm(): FormGroup {
+    return this.DoctorForm;
+  }
+
+  set doctorForm(value: FormGroup) {
+    this.DoctorForm = value;
+  }
+
+  updateForm(doctor: Doctor) {
+    this.doctorForm.patchValue({
+      password: doctor.password,
+      status: doctor.status,
+      displayOrder: doctor.displayOrder,
+      username: doctor.username,
+      email: doctor.email
+    });
+  }
 
   constructor(private formBuilder: FormBuilder) {
-
+    this.doctorForm = this.getFormBuilders();
   }
 
-  static bindDataToNewDoctor(id: number, primaryInfo: FormGroup) {
-    return new Doctor(
-      primaryInfo.get('email').value,
-      primaryInfo.get('password').value,
+  bindDataToNewDoctor(id?: number): Doctor {
+    const result = new Doctor(
+      this.DoctorForm.get('email').value,
+      this.DoctorForm.get('password').value,
       Variables.doctorRoleName,
-      primaryInfo.get('username').value,
-      primaryInfo.get('status').value,
-      id,
-      primaryInfo.get('displayOrder').value);
+      this.DoctorForm.get('username').value,
+      this.DoctorForm.get('status').value,
+      this.DoctorForm.get('displayOrder').value);
+
+    result.id = id;
+    return result;
   }
 
-  getFormBuilders() {
+  private getFormBuilders() {
     return this.formBuilder.group({
       username: ['', Validators.required],
       email: ['', Validators.required, Validators.email],

@@ -50,6 +50,7 @@ app.use('/emergencyTitle', require('./backend/route/emerergencyTitleRoute'));
 app.use('/patientTitle', require('./backend/route/patient/patientTitleRoute'));
 app.use('/duration', require('./backend/route/durationRoute'));
 app.use('/scheduleBlocking', require('./backend/route/scheduleBlockingRoute'));
+app.use('/reception', require('./backend/route/receptionRoute'));
 
 
 /**

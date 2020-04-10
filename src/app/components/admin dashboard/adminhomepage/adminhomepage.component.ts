@@ -18,6 +18,7 @@ export class AdminhomepageComponent implements OnInit {
       new IconNavigation('/admin', 'Doctors', 'doctor'),
       new IconNavigation('patients', 'Patients', 'patient'),
       new IconNavigation('setting', 'Setting', 'setting'),
+      new IconNavigation('reception', 'Reception', 'setting'),
     ];
     this.navigationData = new Navigation('/admin', iconNavigation);
   }

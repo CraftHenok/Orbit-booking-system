@@ -3,8 +3,8 @@
 </ngx-spinner>
 
 <mat-vertical-stepper [linear]="true" #stepper>
-  <mat-step [stepControl]="primaryInfoForm">
-    <form [formGroup]="primaryInfoForm">
+  <mat-step [stepControl]="patientsFormManager.primaryInfoForm">
+    <form [formGroup]="patientsFormManager.primaryInfoForm">
       <ng-template matStepLabel>Primary info</ng-template>
       <mat-form-field appearance="outline">
         <mat-label>Title</mat-label>
@@ -38,7 +38,8 @@
       <div>
         <mat-form-field appearance="outline">
           <mat-label>Age</mat-label>
-          <input matInput placeholder="age" type="number" formControlName="age" (keyup)="setBirthDate()">
+          <input matInput placeholder="age" type="number" formControlName="age"
+                 (keyup)="patientsFormManager.birthDateFromAge()">
         </mat-form-field>
 
         <mat-form-field appearance="outline">
@@ -67,8 +68,8 @@
       </div>
     </form>
   </mat-step>
-  <mat-step [stepControl]="contactInfoForm">
-    <form [formGroup]="contactInfoForm">
+  <mat-step [stepControl]="patientsFormManager.contactInfoForm">
+    <form [formGroup]="patientsFormManager.contactInfoForm">
       <ng-template matStepLabel>Contact info</ng-template>
       <mat-form-field appearance="outline">
         <mat-label>Email</mat-label>
@@ -91,8 +92,8 @@
       </div>
     </form>
   </mat-step>
-  <mat-step [stepControl]="addressForm">
-    <form [formGroup]="addressForm">
+  <mat-step [stepControl]="patientsFormManager.addressForm">
+    <form [formGroup]="patientsFormManager.addressForm">
       <ng-template matStepLabel>Address info</ng-template>
       <mat-form-field appearance="outline">
         <mat-label>Line 1</mat-label>
@@ -130,8 +131,8 @@
       </div>
     </form>
   </mat-step>
-  <mat-step [stepControl]="emergencyInfoForm">
-    <form [formGroup]="emergencyInfoForm">
+  <mat-step [stepControl]="patientsFormManager.emergencyInfoForm">
+    <form [formGroup]="patientsFormManager.emergencyInfoForm">
       <ng-template matStepLabel>Emergency info</ng-template>
       <mat-form-field appearance="outline">
         <mat-label>Title</mat-label>

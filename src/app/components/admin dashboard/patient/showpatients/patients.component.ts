@@ -1,15 +1,15 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {PatientsService} from '../../../services/Patients/patients.service';
 import {MatTableDataSource} from '@angular/material/table';
-import {Patient} from '../../../models/Patient';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {Subscription} from 'rxjs';
 import {MatDialog} from '@angular/material/dialog';
-import {PatientsdetaildialogComponent} from '../../dialogs/patientsdetaildialog/patientsdetaildialog.component';
 import {Router} from '@angular/router';
-import {ConfirmActionDialogComponent} from '../../dialogs/confirm-action-dialog/confirm-action-dialog.component';
-import {Variables} from '../../../utility/variables';
+import {Patient} from '../../../../models/Patient';
+import {PatientsService} from '../../../../services/Patients/patients.service';
+import {PatientsdetaildialogComponent} from '../../../dialogs/patientsdetaildialog/patientsdetaildialog.component';
+import {Variables} from '../../../../utility/variables';
+import {ConfirmActionDialogComponent} from '../../../dialogs/confirm-action-dialog/confirm-action-dialog.component';
 
 @Component({
   selector: 'app-patients',

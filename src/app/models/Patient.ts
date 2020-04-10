@@ -31,10 +31,9 @@ export class Patient {
   // used when we click view on the patient table
   code: string;
 
-  constructor(id: number, regDate: Date, patientTitleId: number, firstName: string, middleName: string,
+  constructor(regDate: Date, patientTitleId: number, firstName: string, middleName: string,
               lastName: string, gender: string, dateOfBirth: Date, age: number,
               contactInfo: Contact, address: Address, emergencyInfo: EmergencyInfo, nationality?: string) {
-    this.id = id;
     this.regDate = regDate;
     this.patientTitleId = patientTitleId;
     this.firstName = firstName;

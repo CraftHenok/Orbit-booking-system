@@ -1,17 +1,16 @@
 import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder} from '@angular/forms';
 import {Observable, Subscription} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
-import {PatientsService} from '../../../services/Patients/patients.service';
-import {GeneralTitle} from '../../../models/GeneralTitle';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {Country} from '../../../models/Country';
-import {PatientsFormManager} from '../../../utility/patientsFormManager';
-import {SnackBarManager} from '../../../utility/snackBarManager';
-import {DateManager} from '../../../utility/dateManager';
-import {PatientTitleService} from '../../../services/Patients/PatientTitle/patient-title.service';
-import {EmergencyTitleService} from '../../../services/Patients/EmergencyTitle/emergency-title.service';
 import {NgxSpinnerService} from 'ngx-spinner';
+import {Country} from '../../../../models/Country';
+import {GeneralTitle} from '../../../../models/GeneralTitle';
+import {PatientsFormManager} from '../../../../utility/patientsFormManager';
+import {SnackBarManager} from '../../../../utility/snackBarManager';
+import {PatientsService} from '../../../../services/Patients/patients.service';
+import {PatientTitleService} from '../../../../services/Patients/PatientTitle/patient-title.service';
+import {EmergencyTitleService} from '../../../../services/Patients/EmergencyTitle/emergency-title.service';
 
 export const filter = (opt: string[], value: string): string[] => {
   const filterValue = value.toLowerCase();
@@ -35,15 +34,7 @@ export class AddpatientComponent implements OnInit, OnDestroy {
   patientsTitles: GeneralTitle[] = [];
   emergencyTitle: GeneralTitle[] = [];
 
-  private patientsFormManager: PatientsFormManager;
-
-  primaryInfoForm: FormGroup;
-
-  contactInfoForm: FormGroup;
-
-  addressForm: FormGroup;
-
-  emergencyInfoForm: FormGroup;
+  patientsFormManager: PatientsFormManager;
 
   private subscription: Subscription = new Subscription();
 
@@ -56,10 +47,6 @@ export class AddpatientComponent implements OnInit, OnDestroy {
               private spinner: NgxSpinnerService,
               private snackBar: MatSnackBar) {
     this.patientsFormManager = new PatientsFormManager(formBuilder);
-    this.primaryInfoForm = this.patientsFormManager.getFormBuilder().primaryInfoForm;
-    this.contactInfoForm = this.patientsFormManager.getFormBuilder().contactInfoForm;
-    this.addressForm = this.patientsFormManager.getFormBuilder().addressForm;
-    this.emergencyInfoForm = this.patientsFormManager.getFormBuilder().emergencyInfoForm;
     this.snackBarMan = new SnackBarManager(this.snackBar);
 
   }
@@ -67,14 +54,14 @@ export class AddpatientComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
 
     // tslint:disable-next-line:no-non-null-assertion
-    this.filteredCountry = this.primaryInfoForm.get('nationality')!.valueChanges
+    this.filteredCountry = this.patientsFormManager.primaryInfoForm.get('nationality')!.valueChanges
       .pipe(
         startWith(''),
         map(country => country ? Country.filter(country) : this.countries.slice())
       );
 
     // tslint:disable-next-line:no-non-null-assertion
-    this.filteredCountry2 = this!.addressForm.get('country')!.valueChanges
+    this.filteredCountry2 = this!.patientsFormManager.addressForm.get('country')!.valueChanges
       .pipe(
         startWith(''),
         map(country => country ? Country.filter(country) : this.countries.slice())
@@ -103,8 +90,8 @@ export class AddpatientComponent implements OnInit, OnDestroy {
 
   submit() {
     this.spinner.show();
-    const newPatient = PatientsFormManager.bindDateToNewPatient(this.primaryInfoForm, this.contactInfoForm,
-      this.addressForm, this.emergencyInfoForm);
+
+    const newPatient = this.patientsFormManager.bindDateToNewPatient();
 
     this.subscription.add(this.patientService.savePatient(newPatient).subscribe(
       result => {
@@ -117,11 +104,6 @@ export class AddpatientComponent implements OnInit, OnDestroy {
       }
     ));
 
-  }
-
-  setBirthDate() {
-    const age = this.primaryInfoForm.get('age').value;
-    this.primaryInfoForm.get('dateOfBirth').setValue(DateManager.getDateFromAge(age));
   }
 
   ngOnDestroy(): void {

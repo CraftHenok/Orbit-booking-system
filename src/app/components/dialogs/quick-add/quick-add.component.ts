@@ -37,7 +37,6 @@ export class QuickAddComponent implements OnInit {
     const contactInfo = new Contact(this.forgetForm.get('phoneNumber').value);
 
     const newPatient = new Patient(
-      0,
       Variables.currentDate,
       Variables.defaultPatientTitleId,
       this.forgetForm.get('firstName').value,

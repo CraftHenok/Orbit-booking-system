@@ -1,0 +1,55 @@
+<ngx-spinner>
+  <p style="color: white">Adding new doctor...</p>
+</ngx-spinner>
+
+<div class="container mat-elevation-z8">
+  <div class="top">
+    <p class="header">Add new Doctor</p>
+    <p class="subheader">Enter the required fill to add new doctor</p>
+  </div>
+  <div class="bottom">
+    <form [formGroup]="doctorsFormManager.doctorForm">
+      <div>
+        <mat-form-field appearance="outline">
+          <mat-label>Username</mat-label>
+          <input matInput formControlName="username" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" required type="email">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" required>
+          <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'"
+                  [attr.aria-pressed]="hidePassword">
+            <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field appearance="outline">
+          <mat-label>Display Order</mat-label>
+          <input matInput formControlName="displayOrder" type="number" required>
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Status</mat-label>
+        <mat-select formControlName="status" required>
+          <mat-option *ngFor="let stat of status" [value]="stat">{{ stat }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div align="end">
+        <button mat-flat-button color="primary" type="submit" (click)="submit()">Submit</button>
+      </div>
+
+    </form>
+
+  </div>
+</div>
+

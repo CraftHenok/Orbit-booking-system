@@ -18,7 +18,7 @@
     <mat-form-field appearance="outline">
       <mat-label>Patient Id</mat-label>
       <input matInput placeholder="Patient Id" id="PatientId" type="number" formControlName="PatientId"
-             [errorStateMatcher]="matcher">
+        [errorStateMatcher]="matcher">
 
       <mat-error *ngIf="PatientId.hasError('required')">
         Patient id is <strong>required</strong>
@@ -52,8 +52,7 @@
     <mat-form-field appearance="outline">
       <mat-label>Appointment Status</mat-label>
 
-      <mat-select formControlName="AppointmentStatus" [errorStateMatcher]="matcher"
-                  [value]="data.appointmentStatusId">
+      <mat-select formControlName="AppointmentStatus" [errorStateMatcher]="matcher" [value]="data.appointmentStatusId">
         <mat-option *ngFor="let status of appointmentStatus" [value]="status.id">
           {{status.status | uppercase}}
         </mat-option>
@@ -67,8 +66,7 @@
 
     <mat-form-field appearance="outline">
       <mat-label>Start date</mat-label>
-      <input matInput [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" formControlName="start"
-             placeholder="Date Time">
+      <input matInput [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" formControlName="start" placeholder="Date Time">
       <span [owlDateTimeTrigger]="dt1"><i class="fa fa-calendar"></i></span>
       <owl-date-time #dt1></owl-date-time>
     </mat-form-field>
@@ -76,8 +74,7 @@
     <mat-form-field appearance="outline">
       <mat-label>Duration</mat-label>
       <mat-select formControlName="duration" required>
-        <mat-option *ngFor="let duration of durationList"
-                    [value]="duration.duration">{{ duration.duration }} minutes
+        <mat-option *ngFor="let duration of durationList" [value]="duration.duration">{{ duration.duration }} minutes
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -99,7 +96,7 @@
 
   <div *ngIf="data.id else showSaveButton">
     <mat-dialog-actions align="end">
-      <button mat-flat-button color="warn" (click)="deleteClicked()" [disabled]="!addForm.valid">
+      <button mat-stroked-button color="warn" (click)="deleteClicked()" [disabled]="!addForm.valid">
         Delete
       </button>
       <button mat-flat-button color="primary" type="submit" [disabled]="!addForm.valid" (click)="updateClicked()">
@@ -117,6 +114,3 @@
   </ng-template>
 
 </form>
-
-
-

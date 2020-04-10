@@ -1,25 +1,25 @@
 import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
-import {DoctorsService} from '../../../services/Doctors/doctors.service';
+import {FormBuilder} from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {Subscription} from 'rxjs';
-import {DoctorsFormManager} from '../../../utility/doctorsFormManager';
-import {SnackBarManager} from '../../../utility/snackBarManager';
 import {NgxSpinnerService} from 'ngx-spinner';
-import {Variables} from '../../../utility/variables';
+import {DoctorsFormManager} from '../../../../utility/doctorsFormManager';
+import {SnackBarManager} from '../../../../utility/snackBarManager';
+import {Variables} from '../../../../utility/variables';
+import {DoctorsService} from '../../../../services/Doctors/doctors.service';
 
 @Component({
   selector: 'app-adddoctor',
   templateUrl: './adddoctor.component.html',
-  styleUrls: ['../addpatient/addpatient.component.css'] // reuse
+  styleUrls: ['../../reception/add-reception/add-reception.component.css'] // reuse
 })
 export class AdddoctorComponent implements OnInit, OnDestroy {
 
   hidePassword = true;
   @ViewChild('stepper') stepper: ElementRef;
 
-  private commonFormBuilder: DoctorsFormManager;
-  primaryInfo: FormGroup;
+  doctorsFormManager: DoctorsFormManager;
+
   private snackBarMan: SnackBarManager;
 
   private subscription: Subscription = new Subscription();
@@ -33,23 +33,24 @@ export class AdddoctorComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.commonFormBuilder = new DoctorsFormManager(this.formBuilder);
-    this.primaryInfo = this.commonFormBuilder.getFormBuilders();
+    this.doctorsFormManager = new DoctorsFormManager(this.formBuilder);
     this.snackBarMan = new SnackBarManager(this.snackBar);
   }
 
   submit() {
     this.spinner.show();
-    const newDoctor = DoctorsFormManager.bindDataToNewDoctor(0, this.primaryInfo);
+
+    const newDoctor = this.doctorsFormManager.bindDataToNewDoctor();
 
     this.subscription.add(this.doctorService.saveDoctor(newDoctor).subscribe(
       result => {
-        this.spinner.hide();
         this.snackBarMan.show('New Doctor added', 'Ok');
       },
       error => {
-        this.spinner.hide();
         console.error(error);
+      },
+      () => {
+        this.spinner.hide();
       }
     ));
 

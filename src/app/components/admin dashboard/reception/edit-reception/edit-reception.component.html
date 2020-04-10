@@ -1,13 +1,10 @@
-<ngx-spinner>
-  <p style="color: white">Adding new doctor...</p>
-</ngx-spinner>
-
-
-<mat-vertical-stepper [linear]="true" #stepper>
-  <mat-step [stepControl]="primaryInfo">
-    <form [formGroup]="primaryInfo">
-      <ng-template matStepLabel>Primary info</ng-template>
-
+<div class="container mat-elevation-z8">
+  <div class="top">
+    <p class="header">Update reception</p>
+    <p class="subheader">Enter the required fill to Update reception</p>
+  </div>
+  <div class="bottom">
+    <form [formGroup]="editReceptionForm" (submit)="submit()">
       <div>
         <mat-form-field appearance="outline">
           <mat-label>Username</mat-label>
@@ -29,13 +26,6 @@
         </mat-form-field>
       </div>
 
-      <div>
-        <mat-form-field appearance="outline">
-          <mat-label>Display Order</mat-label>
-          <input matInput formControlName="displayOrder" type="number" required>
-        </mat-form-field>
-      </div>
-
       <mat-form-field appearance="outline">
         <mat-label>Status</mat-label>
         <mat-select formControlName="status" required>
@@ -43,18 +33,11 @@
         </mat-select>
       </mat-form-field>
 
-      <div>
-        <button mat-button matStepperNext>Next</button>
+      <div align="end">
+        <button mat-flat-button color="primary" type="submit">Update</button>
       </div>
+
     </form>
-  </mat-step>
-  <mat-step>
-    <ng-template matStepLabel>Done</ng-template>
-    <p>You are now done.</p>
-    <div>
-      <button mat-flat-button color="primary" (click)="submit()" [disabled]="primaryInfo.invalid">Submit</button>
-      <button mat-button matStepperPrevious>Back</button>
-      <button mat-button (click)="stepper.reset()">Reset</button>
-    </div>
-  </mat-step>
-</mat-vertical-stepper>
+
+  </div>
+</div>

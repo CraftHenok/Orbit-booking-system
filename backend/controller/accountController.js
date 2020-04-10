@@ -72,6 +72,21 @@ const localUpdateUser = async function (userData, callBack) {
     });
 };
 
+const localDeleteUser = async function (userId, callBack) {
+  db.run("delete from user where id = ?",
+    [userId], function (err) {
+      if (err) {
+        callBack({suc: false, msg: err});
+      } else {
+        callBack({suc: true, msg: this.changes})
+      }
+    });
+};
+
+exports.deleteUser = (function () {
+  return localDeleteUser;
+})();
+
 
 exports.updateUser = (function () {
   return localUpdateUser;

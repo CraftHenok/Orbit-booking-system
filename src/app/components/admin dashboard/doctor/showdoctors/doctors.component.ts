@@ -3,17 +3,17 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {Subscription} from 'rxjs';
 import {MatTableDataSource} from '@angular/material/table';
-import {DoctorsService} from '../../../services/Doctors/doctors.service';
-import {Doctor} from '../../../models/Doctor';
 import {Router} from '@angular/router';
-import {ConfirmActionDialogComponent} from '../../dialogs/confirm-action-dialog/confirm-action-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
-import {Variables} from '../../../utility/variables';
+import {Doctor} from '../../../../models/Doctor';
+import {DoctorsService} from '../../../../services/Doctors/doctors.service';
+import {ConfirmActionDialogComponent} from '../../../dialogs/confirm-action-dialog/confirm-action-dialog.component';
+import {Variables} from '../../../../utility/variables';
 
 @Component({
   selector: 'app-doctors',
   templateUrl: './doctors.component.html',
-  styleUrls: ['../showpatients/patients.component.css']
+  styleUrls: ['../../patient/showpatients/patients.component.css']
 })
 export class DoctorsComponent implements OnInit, OnDestroy {
 

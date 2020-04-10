@@ -1,0 +1,26 @@
+.header {
+  color: #00695C;
+  font-size: 2em;
+  margin: 0;
+}
+
+.subheader {
+  color: grey;
+  margin-top: 10px;
+  margin-bottom: 30px;
+}
+
+.container {
+  width: 40%;
+  padding: 3em;
+  margin: 40px auto 10px;
+  border-radius: 0.5em;
+}
+
+.bottom mat-form-field {
+  display: block;
+}
+
+button {
+  width: 100%;
+}

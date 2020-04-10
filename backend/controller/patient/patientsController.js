@@ -139,7 +139,7 @@ exports.getPatientByIdFull = async (req, res) => {
           return res.status(statusCode.notFound).json("resource doesn't exist")
         } else {
           const result = {
-            "id": row.id,
+            "id": req.params["patientId"],
             "patientTitleId": row.patientTitleId,
             "firstName": row.firstName,
             "middleName": row.middleName,
