@@ -34,11 +34,11 @@ export class EmergencyTitleComponent implements OnInit, OnDestroy {
   }
 
   addClicked() {
-    this.openDialogWith(SettingDialogData.prepareForNew('Emergency title'));
+    this.openDialogWith(SettingDialogData.prepare('Emergency title'));
   }
 
   itemClicked(title: GeneralTitle) {
-    this.openDialogWith(SettingDialogData.prepareForOld(title.id.toString(), title.title, 'Emergency title'));
+    this.openDialogWith(SettingDialogData.prepare('Emergency title', title.id, title.title));
   }
 
   private openDialogWith(title: Map<string, string>) {
@@ -52,13 +52,13 @@ export class EmergencyTitleComponent implements OnInit, OnDestroy {
       generalTitle.title = result.get('value');
       generalTitle.id = result.get('id');
       switch (result.get('action')) {
-        case 'A':
+        case Variables.actions.saved:
           this.add(generalTitle);
           break;
-        case 'D':
+        case Variables.actions.deleted:
           this.delete(generalTitle);
           break;
-        case 'U':
+        case Variables.actions.updated:
           this.update(generalTitle);
           break;
         default:

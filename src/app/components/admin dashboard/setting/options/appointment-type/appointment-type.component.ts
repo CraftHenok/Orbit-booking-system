@@ -45,13 +45,13 @@ export class AppointmentTypeComponent implements OnInit, OnDestroy {
       generalType.type = result.get('value');
       generalType.id = result.get('id');
       switch (result.get('action')) {
-        case 'A':
+        case Variables.actions.saved:
           this.add(generalType);
           break;
-        case 'D':
+        case Variables.actions.deleted:
           this.delete(generalType);
           break;
-        case 'U':
+        case Variables.actions.updated:
           this.update(generalType);
           break;
         default:
@@ -61,16 +61,17 @@ export class AppointmentTypeComponent implements OnInit, OnDestroy {
   }
 
   itemClicked(type: GeneralType) {
-    this.openDialogWith(SettingDialogData.prepareForOld(type.id.toString(), type.type, 'Appointment type'));
+    this.openDialogWith(SettingDialogData.prepare('Appointment type', type.id, type.type));
   }
 
   addClicked() {
-    this.openDialogWith(SettingDialogData.prepareForNew('Appointment type'));
+    this.openDialogWith(SettingDialogData.prepare('Appointment type'));
   }
 
   private add(generalType: GeneralType) {
     this.subscription.add(this.appointmentTypeService.save(generalType).subscribe(
       result => {
+        console.log(result);
         this.dataSource.push(result);
       }, error => {
         console.error(error);

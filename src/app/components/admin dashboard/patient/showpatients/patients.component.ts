@@ -21,10 +21,10 @@ export class PatientsComponent implements OnInit, OnDestroy {
   dataSource;
   displayedColumns: string[] = ['id', 'regDate', 'active', 'name', 'gender', 'dateOfBirth', 'nationality',
     'contactInfo', 'address', 'emergencyInfo', 'action'];
+
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   private subscription: Subscription = new Subscription();
-  expandedElement: Patient | null;
 
   private patients: Patient[] = [];
 
@@ -82,13 +82,12 @@ export class PatientsComponent implements OnInit, OnDestroy {
 
   }
 
-  private deletePatient(seq: number) {
-    const patientToDelete = this.patients.filter(it => it.id === seq);
+  private deletePatient(id: number) {
+    const patientToDelete = this.patients.filter(it => it.id === id);
     this.subscription.add(this.patientService.deletePatientById(patientToDelete[0]).subscribe(
       result => {
         if (result > 0) {
-          const filteredPatients = this.patients.filter(it => it.id !== seq);
-          this.configureDataSource(filteredPatients);
+          this.dataSource.data = this.patients.filter(it => it.id !== id);
         }
       }, error => {
         console.error(error);

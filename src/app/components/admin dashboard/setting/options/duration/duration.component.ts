@@ -34,12 +34,12 @@ export class DurationComponent implements OnInit, OnDestroy {
   }
 
   addClicked() {
-    this.openDialogWith(SettingDialogData.prepareForNew('Duration'));
+    this.openDialogWith(SettingDialogData.prepare('Duration'));
   }
 
   itemClicked(duration: Duration) {
-    this.openDialogWith(SettingDialogData.prepareForOld(duration.id.toString(),
-      duration.duration.toString(), 'Duration'));
+    this.openDialogWith(SettingDialogData.prepare('Duration', duration.id,
+      duration.duration));
   }
 
   private openDialogWith(title: Map<string, string>) {
@@ -53,13 +53,13 @@ export class DurationComponent implements OnInit, OnDestroy {
       duration.duration = Number(result.get('value'));
       duration.id = result.get('id');
       switch (result.get('action')) {
-        case 'A':
+        case Variables.actions.saved:
           this.add(duration);
           break;
-        case 'D':
+        case Variables.actions.deleted:
           this.delete(duration);
           break;
-        case 'U':
+        case Variables.actions.updated:
           this.update(duration);
           break;
         default:

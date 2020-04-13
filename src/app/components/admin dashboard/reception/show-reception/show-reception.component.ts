@@ -24,6 +24,8 @@ export class ShowReceptionComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   private subscription: Subscription = new Subscription();
 
+  private receptions: Account[] = [];
+
   constructor(private accountService: AccountService,
               private dialog: MatDialog,
               private router: Router) {
@@ -32,8 +34,8 @@ export class ShowReceptionComponent implements OnInit {
   ngOnInit(): void {
     this.accountService.getReception().subscribe(
       result => {
-        console.log(result.length);
         this.configureDataSource(result);
+        this.receptions.push(...result);
       }, error => {
         console.error(error);
       }
@@ -69,8 +71,8 @@ export class ShowReceptionComponent implements OnInit {
   private deleteDoctor(id: number) {
     this.accountService.deleteUser(id).subscribe(
       result => {
-        if (result !== 0) {
-          alert('removed');
+        if (result > 0) {
+          this.dataSource.data = this.receptions.filter(it => it.id !== id);
         }
       }, error => {
         console.error(error);

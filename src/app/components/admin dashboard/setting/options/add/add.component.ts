@@ -1,5 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {Variables} from '../../../../../utility/variables';
 
 @Component({
   selector: 'app-add',
@@ -21,18 +22,18 @@ export class AddComponent implements OnInit {
 
   add() {
     this.data.set('value', this.value);
-    this.data.set('action', 'A');
+    this.data.set('action', Variables.actions.saved);
     this.dialogRef.close(this.data);
   }
 
   delete() {
-    this.data.set('action', 'D');
+    this.data.set('action', Variables.actions.deleted);
     this.dialogRef.close(this.data);
   }
 
   update() {
     this.data.set('value', this.value);
-    this.data.set('action', 'U');
+    this.data.set('action', Variables.actions.updated);
     this.dialogRef.close(this.data);
   }
 }

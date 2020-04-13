@@ -34,8 +34,8 @@ export class DoctorsComponent implements OnInit, OnDestroy {
 
     this.subscription.add(this.doctorsService.getAllDoctors().subscribe(
       result => {
-        this.doctors.push(...result);
         this.configureDataSource(result);
+        this.doctors.push(...result);
       },
       error => {
         console.error(error);
@@ -74,8 +74,7 @@ export class DoctorsComponent implements OnInit, OnDestroy {
     this.subscription.add(this.doctorsService.deleteDoctorById(id).subscribe(
       result => {
         if (result > 0) {
-          const filteredDoctors = this.doctors.filter(it => it.id !== id);
-          this.configureDataSource(filteredDoctors);
+          this.dataSource.data = this.doctors.filter(it => it.id !== id);
         }
       }, error => {
         console.error(error);

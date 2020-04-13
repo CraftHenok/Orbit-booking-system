@@ -25,7 +25,7 @@ export class AppointmentStatusComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription.add(this.appointmentStatusService.get().subscribe(
       result => {
-        this.dataSource = result;
+        this.dataSource.push(...result);
       },
       error => {
         console.error(error);
@@ -44,13 +44,13 @@ export class AppointmentStatusComponent implements OnInit, OnDestroy {
       generalStatus.status = result.get('value');
       generalStatus.id = result.get('id');
       switch (result.get('action')) {
-        case 'A':
+        case Variables.actions.saved:
           this.add(generalStatus);
           break;
-        case 'D':
+        case Variables.actions.deleted:
           this.delete(generalStatus);
           break;
-        case 'U':
+        case Variables.actions.updated:
           this.update(generalStatus);
           break;
         default:
@@ -60,11 +60,11 @@ export class AppointmentStatusComponent implements OnInit, OnDestroy {
   }
 
   itemClicked(generalStatus: GeneralStatus) {
-    this.openDialogWith(SettingDialogData.prepareForOld(generalStatus.id.toString(), generalStatus.status, 'Appointment status'));
+    this.openDialogWith(SettingDialogData.prepare('Appointment status', generalStatus.id, generalStatus.status));
   }
 
   addClicked() {
-    this.openDialogWith(SettingDialogData.prepareForNew('Appointment status'));
+    this.openDialogWith(SettingDialogData.prepare('Appointment status'));
   }
 
   private add(generalStatus: GeneralStatus) {
@@ -94,6 +94,7 @@ export class AppointmentStatusComponent implements OnInit, OnDestroy {
   private delete(generalStatus: GeneralStatus) {
     this.subscription.add(this.appointmentStatusService.delete(generalStatus).subscribe(
       result => {
+        console.log(result);
         if (result > 0) {
           this.dataSource = this.dataSource.filter(it => it.id !== generalStatus.id);
         }

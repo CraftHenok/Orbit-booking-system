@@ -35,11 +35,11 @@ export class PatientTitleComponent implements OnInit, OnDestroy {
 
 
   addClicked() {
-    this.openDialogWith(SettingDialogData.prepareForNew('Patient title'));
+    this.openDialogWith(SettingDialogData.prepare('Patient title'));
   }
 
   itemClicked(title: GeneralTitle) {
-    this.openDialogWith(SettingDialogData.prepareForOld(title.id.toString(), title.title, 'Patient title'));
+    this.openDialogWith(SettingDialogData.prepare('Patient title', title.id, title.title));
   }
 
   private openDialogWith(title: Map<string, string>) {
@@ -53,13 +53,13 @@ export class PatientTitleComponent implements OnInit, OnDestroy {
       generalTitle.title = result.get('value');
       generalTitle.id = result.get('id');
       switch (result.get('action')) {
-        case 'A':
+        case Variables.actions.saved:
           this.add(generalTitle);
           break;
-        case 'D':
+        case Variables.actions.deleted:
           this.delete(generalTitle);
           break;
-        case 'U':
+        case Variables.actions.updated:
           this.update(generalTitle);
           break;
         default:

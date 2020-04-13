@@ -2,3 +2,8 @@
   width: 300px;
   margin: 2% 2% 0 0;
 }
+
+button{
+  width: 96%;
+  margin: auto;
+}
