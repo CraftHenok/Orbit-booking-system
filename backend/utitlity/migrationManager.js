@@ -11,9 +11,6 @@ const db = new sqlite3.Database('demo.db', (err) => {
 
 exports.doMigration = () => {
 
-
-  db.serialize(function () {
-
     db.run(tablesCollection.appointmentTable);
     console.log("appointment table created");
 
@@ -52,10 +49,6 @@ exports.doMigration = () => {
 
     db.run(tablesCollection.scheduleBlocking);
     console.log("scheduleBlocking table created");
-
-  });
-
-  console.log("All tables are created");
 
 };
 

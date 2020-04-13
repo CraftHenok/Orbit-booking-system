@@ -57,7 +57,7 @@ exports.deleteDuration = async (req, res) => {
     if (err) {
       res.json(err.message).status(statusCode.notFound);
     } else {
-      res.status(statusCode.deleteOk).json(this.changes);
+      res.json(this.changes).status(statusCode.deleteOk);
     }
   });
 };

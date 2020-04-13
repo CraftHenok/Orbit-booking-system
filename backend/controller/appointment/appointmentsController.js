@@ -39,6 +39,7 @@ exports.saveNewAppointment = async (req, res) => {
         return res.status(statusCode.errorInData).json("Doctor blocked this area can't add");
       }
     } else {
+      console.error(response.msg);
       res.status(statusCode.errorInData).json(response.msg)
     }
   });

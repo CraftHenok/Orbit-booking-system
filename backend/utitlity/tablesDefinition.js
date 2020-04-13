@@ -90,7 +90,7 @@ const user = "CREATE TABLE \"User\" (\n" +
   "\t\"username\"\tTEXT\n" +
   ");";
 
-const scheduleBlocking = "CREATE TABLE \"LocalScheduleBlocking\" (\n" +
+const scheduleBlocking = "CREATE TABLE \"ScheduleBlocking\" (\n" +
   "\t\"id\"\tINTEGER PRIMARY KEY AUTOINCREMENT,\n" +
   "\t\"startDate\"\tINTEGER NOT NULL,\n" +
   "\t\"endDate\"\tINTEGER NOT NULL,\n" +
