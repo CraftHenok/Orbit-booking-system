@@ -1,4 +1,4 @@
 export class Duration {
-  id: string;
+  id: number;
   duration: number;
 }
