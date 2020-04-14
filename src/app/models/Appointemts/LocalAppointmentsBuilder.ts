@@ -35,12 +35,12 @@ export class LocalAppointmentsBuilder {
     const isPastAppointment = new Date() > this.appointment.start;
     if (isPastAppointment) {
       if (this.appointment.isServed) {
-        this.appointment.color = Color.getColorOf('blue');
+        this.appointment.color = Color.getColorOf('pastServed');
       } else {
-        this.appointment.color = Color.getColorOf('red');
+        this.appointment.color = Color.getColorOf('pastUnserved');
       }
     } else {
-      this.appointment.color = Color.getColorOf('yellow');
+      this.appointment.color = Color.getColorOf('future');
     }
     return this;
   }
