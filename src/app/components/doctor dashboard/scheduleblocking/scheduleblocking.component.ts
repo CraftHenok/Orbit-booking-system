@@ -4,6 +4,7 @@ import {FormBuilder, Validators} from '@angular/forms';
 import {ScheduleBlockingService} from '../../../services/ScheduleBlocking/schedule-blocking.service';
 import {LocalScheduleBlocking} from '../../../models/ScheduleBlocking/LocalScheduleBlocking';
 import {ScheduleBlockingConverter} from '../../../models/ScheduleBlocking/ScheduleBlockingConverter';
+import {Variables} from '../../../utility/variables';
 
 @Component({
   selector: 'app-scheduleblocking',
@@ -42,7 +43,7 @@ export class ScheduleblockingComponent implements OnInit {
     this.scheduleBlockingService.save(this.getLocalScheduleBlocking()).subscribe(
       result => {
         const local = ScheduleBlockingConverter.convertToLocal(result);
-        local.action = 'A';
+        local.action = Variables.actions.saved;
         this.dialogRef.close(local);
       }, error => {
         console.error(error);
@@ -50,12 +51,14 @@ export class ScheduleblockingComponent implements OnInit {
   }
 
   deleteClicked() {
-
     this.scheduleBlockingService.delete(this.getLocalScheduleBlocking()).subscribe(
       result => {
-        const local = this.getLocalScheduleBlocking();
-        local.action = 'D';
-        this.dialogRef.close(local);
+        console.log(result);
+        if (result > 0) {
+          const local = this.getLocalScheduleBlocking();
+          local.action = Variables.actions.deleted;
+          this.dialogRef.close(local);
+        }
       }, error => {
         console.error(error);
       }
@@ -67,7 +70,7 @@ export class ScheduleblockingComponent implements OnInit {
       result => {
         if (result > 0) {
           const local = this.getLocalScheduleBlocking();
-          local.action = 'U';
+          local.action = Variables.actions.updated;
           this.dialogRef.close(local);
         }
       }, error => {
