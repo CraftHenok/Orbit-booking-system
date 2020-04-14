@@ -1,11 +1,9 @@
 import {CalendarEvent} from 'calendar-utils';
+import {Color} from '../Color';
 
 export class LocalScheduleBlocking implements CalendarEvent {
 
-  color = {
-    primary: '#123',
-    secondary: '#123'
-  };
+  color;
 
   end: Date;
   id: number;
@@ -25,5 +23,6 @@ export class LocalScheduleBlocking implements CalendarEvent {
     this.title = reason || 'Schedule blocking';
     this.userId = userId;
     this.reason = reason;
+    this.color = Color.getColorOf('scheduleBlocking');
   }
 }
