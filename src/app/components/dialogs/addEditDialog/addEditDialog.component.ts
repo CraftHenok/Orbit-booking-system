@@ -124,7 +124,7 @@ export class AddEditDialogComponent implements OnInit, OnDestroy {
         }
       },
       error => {
-        console.error(error);
+        this.error = error.error;
       }
     );
   }
@@ -150,7 +150,7 @@ export class AddEditDialogComponent implements OnInit, OnDestroy {
           }
         },
         error => {
-          console.error(error);
+          this.error = error.error;
         }
       ));
     }

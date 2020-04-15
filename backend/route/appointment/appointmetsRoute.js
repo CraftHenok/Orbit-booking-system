@@ -100,30 +100,6 @@ router.get('/doctors', appointmentController.getLogedInDoctorAppointment);
  */
 router.get('/doctors/:doctorId', appointmentController.getDoctorAppointmentByItsId);
 
-
-/**
- * @swagger
- * /appointment/patients/{patientId}:
- *  get:
- *    description: get all patient's appointment by patient id
- *    produces:
- *      -application/json
- *    tags:
- *      - appointment
- *    parameters:
- *       - name: patientId
- *         description: the id of the patient.
- *         required: true
- *         in: path
- *         schema:
- *            type: integer
- *            minimum: 1
- *    responses:
- *      200:
- *        description: list of patient's appointment
- */
-router.get('/patients/:patientId', appointmentController.getPatientAppointment);
-
 /**
  * @swagger
  * /appointment:

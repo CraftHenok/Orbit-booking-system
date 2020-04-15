@@ -1,7 +1,28 @@
+/**
+ * Country
+ * List of all the country in the world 2020
+ */
 export class Country {
+
+  /**
+   * name
+   * name of the country
+   * example: Ethiopia
+   */
   name: string;
+
+  /**
+   * Code
+   * code of the country
+   * example: Et
+   */
   code: string;
 
+  /**
+   * getAll
+   * get all the countries in the world
+   * @returns - list of all countries with name and code
+   */
   static getAll(): Country[] {
     return [
       {
@@ -979,6 +1000,13 @@ export class Country {
     ];
   }
 
+
+  /**
+   * filter
+   * filter country based on passed word
+   * @param name - keyword to filter with
+   * example: if name is et the function returns countries stating with et..
+   */
   static filter(name: string): Country[] {
     const filterValue = name.toLowerCase();
     return this.getAll().filter(c => c.name.toLowerCase().indexOf(filterValue) === 0);

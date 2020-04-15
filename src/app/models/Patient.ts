@@ -15,20 +15,20 @@ export class Patient {
   dateOfBirth: Date;
   age: number;
   nationality: string;
+  active = false;
+
+  contactId: string;
+  addressId: string;
+  emergencyInfoId: string;
+
 
   // optional fields
   contact: Contact;
   address: Address;
   emergencyInfo: EmergencyInfo;
 
-  contactId: string;
-  addressId: string;
-  emergencyInfoId: string;
 
-  // additional info
-  active = false;
-
-  // used when we click view on the patient table
+  // ui related addition information
   code: string;
 
   constructor(regDate: Date, patientTitleId: number, firstName: string, middleName: string,

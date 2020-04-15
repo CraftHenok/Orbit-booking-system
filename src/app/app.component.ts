@@ -24,5 +24,9 @@ export class AppComponent {
       'patient',
       this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/p.svg')
     );
+    this.matIconRegistry.addSvgIcon(
+      'reception',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/r.svg')
+    );
   }
 }

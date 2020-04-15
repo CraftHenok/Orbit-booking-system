@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {UrlManager} from '../../../utility/urlManager';
-import {GeneralStatus} from '../../../models/GeneralStatus';
 import {GeneralTitle} from '../../../models/GeneralTitle';
 import {Observable} from 'rxjs';
 import {shareReplay} from 'rxjs/operators';
@@ -37,6 +36,6 @@ export class PatientTitleService {
   }
 
   delete(generalTitle: GeneralTitle) {
-    return this.http.delete(this.patientTitleUrl + generalTitle.id);
+    return this.http.delete<number>(this.patientTitleUrl + generalTitle.id);
   }
 }

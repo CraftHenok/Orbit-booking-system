@@ -11,14 +11,6 @@ export class AuthGuardService {
   constructor(public auth: AccountService, public router: Router) {
   }
 
-  // canActivate(): boolean {
-  //   if (!this.auth.isAuthenticated()) {
-  //     this.router.navigate(['login']);
-  //     return false;
-  //   }
-  //   return true;
-  // }
-
   canActivate(route: ActivatedRouteSnapshot): boolean {
     // this will be passed from the route config
     // on the data property

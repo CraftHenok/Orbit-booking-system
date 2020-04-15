@@ -7,7 +7,8 @@
   <div class="one">
     <div class="loginBox">
       <h1>Welcome</h1>
-      <p #messageArea>Please login to access your account</p>
+      <p>Please login to access your account</p>
+      <p class="errorMessage" *ngIf="error" style="color: tomato">{{ error | uppercase }}</p>
       <form [formGroup]="accountForm" (ngSubmit)="formSubmitted()">
         <div>
           <mat-form-field class="example-full-width" appearance="outline">

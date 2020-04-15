@@ -10,6 +10,8 @@ import {AppointmentConverter} from '../../../models/Appointemts/AppointmentConve
 import {Variables} from '../../../utility/variables';
 import {ScheduleBlockingConverter} from '../../../models/ScheduleBlocking/ScheduleBlockingConverter';
 import {ScheduleBlockingService} from '../../../services/ScheduleBlocking/schedule-blocking.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {SnackBarManager} from '../../../utility/snackBarManager';
 
 @Component({
   selector: 'app-appointments',
@@ -35,15 +37,20 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
   doctorName: string;
   isFabHidden = false;
 
+  private snackBarMan: SnackBarManager;
+
   private currentSelectedDoctorSeq = 0;
   private subscription: Subscription = new Subscription();
 
   constructor(private dialog: MatDialog,
+              private snackBar: MatSnackBar,
               private scheduleBlockingService: ScheduleBlockingService,
               private calenderEventService: AppointmentsServices) {
   }
 
   ngOnInit(): void {
+    this.snackBarMan = new SnackBarManager(this.snackBar);
+
     this.subscription.add(this.calenderEventService.getAllAppointments().subscribe(
       result => {
         this.events = AppointmentConverter.toLocalAppointmentBatch(result);
@@ -70,12 +77,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
     // make remote update then update ui
     this.calenderEventService.updateAppointment(event as LocalAppointments).subscribe(
       result => {
-        if (result !== 0) {
+        if (result > 0) {
           this.updateEvent(event as LocalAppointments);
         }
       },
       error => {
-        console.error(error);
+        this.snackBarMan.show(error.error, 'Ok');
       }
     );
   }

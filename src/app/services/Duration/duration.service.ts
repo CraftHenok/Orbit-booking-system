@@ -36,7 +36,7 @@ export class DurationService {
   }
 
   delete(duration: Duration) {
-    return this.http.delete(this.durationUrl + duration.id);
+    return this.http.delete<number>(this.durationUrl + duration.id);
   }
 
 

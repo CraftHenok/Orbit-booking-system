@@ -36,6 +36,6 @@ export class AppointmentStatusService {
   }
 
   delete(generalStatus: GeneralStatus) {
-    return this.http.delete(this.appointmentStatusUrl + generalStatus.id);
+    return this.http.delete<number>(this.appointmentStatusUrl + generalStatus.id);
   }
 }

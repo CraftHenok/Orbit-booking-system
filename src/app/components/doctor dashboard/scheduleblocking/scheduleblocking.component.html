@@ -1,5 +1,5 @@
 <div *ngIf="data.id===0 else update">
-  <h1 mat-dialog-title align="center" style="color:#00695C">Block a Schedule</h1>
+  <h1 mat-dialog-title style="color:#00695C;">Block a Schedule</h1>
 </div>
 <ng-template #update>
   <h1 mat-dialog-title align="center" style="color:#00695C">Manage a Schedule blocking event</h1>
@@ -42,7 +42,7 @@
       <button mat-button mat-dialog-close>Cancel</button>
     </div>
     <ng-template #updateAndDelete>
-      <button mat-stroked-button color="warn" type="submit" (click)="deleteClicked()">Delete</button>
+      <button mat-button color="warn" type="submit" (click)="deleteClicked()">Delete</button>
       <button mat-flat-button color="primary" type="submit" (click)="updateClicked()">Update</button>
       <button mat-button mat-dialog-close>Cancel</button>
     </ng-template>

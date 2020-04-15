@@ -18,7 +18,7 @@
     <mat-form-field appearance="outline">
       <mat-label>Patient Id</mat-label>
       <input matInput placeholder="Patient Id" id="PatientId" type="number" formControlName="PatientId"
-        [errorStateMatcher]="matcher">
+             [errorStateMatcher]="matcher">
 
       <mat-error *ngIf="PatientId.hasError('required')">
         Patient id is <strong>required</strong>
@@ -96,7 +96,7 @@
 
   <div *ngIf="data.id else showSaveButton">
     <mat-dialog-actions align="end">
-      <button mat-stroked-button color="warn" (click)="deleteClicked()" [disabled]="!addForm.valid">
+      <button mat-button color="warn" (click)="deleteClicked()" [disabled]="!addForm.valid">
         Delete
       </button>
       <button mat-flat-button color="primary" type="submit" [disabled]="!addForm.valid" (click)="updateClicked()">

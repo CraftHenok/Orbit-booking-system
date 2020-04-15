@@ -17,14 +17,14 @@ export class LoginComponent implements OnInit {
               private accountService: AccountService) {
   }
 
-  @ViewChild('messageArea') messageArea;
-
   hide = true;
 
   accountForm = this.formBuilder.group({
     email: ['admin@gmail.com', [Validators.required, Validators.email]],
     password: ['12345678', Validators.required]
   });
+
+  error: string;
 
   static saveToken(token: string) {
     localStorage.setItem('Authorization', token);
@@ -48,6 +48,7 @@ export class LoginComponent implements OnInit {
           this.userCantLogin(result);
         }
       }, error => {
+        this.error = error.error;
         console.error(error);
       }
     );
@@ -71,11 +72,10 @@ export class LoginComponent implements OnInit {
   }
 
   private userCantLogin(result: Account) {
-    this.messageArea.nativeElement.style = 'color:red';
     if (result.status.toUpperCase() === Variables.status[0].toUpperCase()) {
-      this.messageArea.nativeElement.innerHTML = 'Your account hasn\'t been approved contact your admin';
+      this.error = 'Your account hasn\'t been approved contact your admin';
     } else if (result.status.toUpperCase() === Variables.status[2].toUpperCase()) {
-      this.messageArea.nativeElement.innerHTML = 'Your account has been suspended contact your admin';
+      this.error = 'Your account has been suspended contact your admin';
     }
   }
 }

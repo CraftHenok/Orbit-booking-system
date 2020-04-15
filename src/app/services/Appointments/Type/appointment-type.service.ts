@@ -36,6 +36,6 @@ export class AppointmentTypeService {
   }
 
   delete(generalType: GeneralType) {
-    return this.http.delete(this.appointmentTypeUrl + generalType.id);
+    return this.http.delete<number>(this.appointmentTypeUrl + generalType.id);
   }
 }

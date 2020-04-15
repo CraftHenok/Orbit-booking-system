@@ -3,6 +3,8 @@ const db = new sqlite3.Database('demo.db');
 const {getGrants} = require('../../utitlity/roleManager');
 const {statusCode} = require('../../utitlity/statusCodes');
 const {scheduleBlockingCheck} = require('../../controller/scheduleBlockingController');
+const {responseMessages} = require("../../utitlity/responseMessages");
+const {constantVariables} = require("../../utitlity/variables");
 
 exports.saveNewAppointment = async (req, res) => {
 
@@ -28,19 +30,17 @@ exports.saveNewAppointment = async (req, res) => {
     userId: appointmentData.servedBy
   };
 
-  console.log(forScheduleBlocking);
-
   await scheduleBlockingCheck(forScheduleBlocking, (response) => {
     console.table(response);
     if (response.suc) {
       if (response.msg === 0) {
         saveAppointment();
       } else {
-        return res.status(statusCode.errorInData).json("Doctor blocked this area can't add");
+        return res.status(statusCode.errorInData).json(responseMessages.scheduleBlocked);
       }
     } else {
       console.error(response.msg);
-      res.status(statusCode.errorInData).json(response.msg)
+      res.status(statusCode.errorInData).json(responseMessages.serverError)
     }
   });
 
@@ -51,7 +51,8 @@ exports.saveNewAppointment = async (req, res) => {
       appointmentData.startDateTime, appointmentData.endDateTime, appointmentData.isServed,
       appointmentData.servedBy, appointmentData.userId], function (err) {
       if (err) {
-        res.status(statusCode.errorInData).send(err.message);
+        console.error(err);
+        res.status(statusCode.errorInData).json(responseMessages.serverError);
       } else {
         res.status(statusCode.saveOk).json(appointmentData);
       }
@@ -78,17 +79,39 @@ exports.updateAppointment = async (req, res) => {
     id: req.params['appointmentId'],
   };
 
-  await db.run("update Appointment set patientId =?,appointmentTypeId=?,appointmentStatusId=?," +
-    "startDateTime=?,endDateTime=?,isServed=?,servedBy=? where id = ?",
-    [appointmentData.patientId, appointmentData.appointmentTypeId, appointmentData.appointmentStatusId,
-      appointmentData.startDateTime, appointmentData.endDateTime, appointmentData.isServed,
-      appointmentData.servedBy, appointmentData.id], function (err) {
-      if (err) {
-        res.status(statusCode.errorInData).send(err.message);
+  const forScheduleBlocking = {
+    startDate: appointmentData.startDateTime,
+    endDate: appointmentData.endDateTime,
+    userId: appointmentData.servedBy
+  };
+
+  await scheduleBlockingCheck(forScheduleBlocking, (response) => {
+    console.table(response);
+    if (response.suc) {
+      if (response.msg === 0) {
+        updateAppointment();
       } else {
-        res.status(statusCode.updateOkData).json(this.changes);
+        return res.status(statusCode.errorInData).json(responseMessages.scheduleBlocked);
       }
-    });
+    } else {
+      console.error(response.msg);
+      res.status(statusCode.errorInData).json(responseMessages.serverError)
+    }
+  });
+
+  async function updateAppointment() {
+    await db.run("update Appointment set patientId =?,appointmentTypeId=?,appointmentStatusId=?," +
+      "startDateTime=?,endDateTime=?,isServed=?,servedBy=? where id = ?",
+      [appointmentData.patientId, appointmentData.appointmentTypeId, appointmentData.appointmentStatusId,
+        appointmentData.startDateTime, appointmentData.endDateTime, appointmentData.isServed,
+        appointmentData.servedBy, appointmentData.id], function (err) {
+        if (err) {
+          res.status(statusCode.errorInData).send(err.message);
+        } else {
+          res.status(statusCode.updateOkData).json(this.changes);
+        }
+      });
+  }
 };
 
 exports.deleteAppointmentById = async (req, res) => {
@@ -110,18 +133,6 @@ function hasReadAnyAccess(role) {
   return getGrants.can(role).readAny("appointment").granted;
 }
 
-
-exports.getPatientAppointment = async (req, res) => {
-  if (!hasReadAnyAccess(req.user.role)) {
-    return res.status(statusCode.forbidden).json("Access forbidden for " + req.user.role);
-  }
-
-  await db.all("select * from appointment where patientId = ?", [req.params['patientId']], function (err, rows) {
-    return res.status(statusCode.getOk).json(rows);
-  });
-};
-
-
 function checkDoctorRole(role) {
   const permission1 = getGrants.can(role).readAny("appointment");
   const permission2 = getGrants.can(role).readOwn("appointment");
@@ -133,7 +144,7 @@ exports.getLogedInDoctorAppointment = async (req, res) => {
   if (!checkDoctorRole(req.user.role)) {
     return res.status(statusCode.forbidden).json("Access forbidden for " + req.user.role);
   }
-  await db.all("select * from appointment where servedBy = ?", [req.user.userId], function (err, rows) {
+  await db.all("select * from appointment where servedBy = ? ORDER by startDateTime LIMIT ?", [req.user.userId, constantVariables.queryLimit], function (err, rows) {
     return res.status(statusCode.getOk).json(rows);
   });
 };
@@ -142,7 +153,7 @@ exports.getDoctorAppointmentByItsId = async (req, res) => {
   if (!checkDoctorRole(req.user.role)) {
     return res.status(statusCode.forbidden).json("Access forbidden for " + req.user.role);
   }
-  await db.all("select * from appointment where servedBy = ?", [req.params['doctorId']], function (err, rows) {
+  await db.all(`select * from appointment where servedBy = ? ORDER by startDateTime LIMIT ?`, [req.params['doctorId'], constantVariables.queryLimit], function (err, rows) {
     return res.status(statusCode.getOk).json(rows);
   });
 };
@@ -154,7 +165,7 @@ exports.getAllAppointments = async (req, res) => {
     return res.status(statusCode.forbidden).json("Access forbidden for " + req.user.role);
   }
 
-  await db.all("SELECT * FROM appointment", function (err, rows) {
+  await db.all("SELECT * FROM appointment ORDER by startDateTime LIMIT ?", [constantVariables.queryLimit], function (err, rows) {
     return res.status(statusCode.getOk).json(rows);
   });
 };

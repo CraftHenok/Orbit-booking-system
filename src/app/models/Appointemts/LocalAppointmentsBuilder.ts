@@ -21,7 +21,7 @@ export class LocalAppointmentsBuilder {
     this.appointment.isServed = IsServed;
     this.appointment.servedBy = ServedBy;
     this.appointment.title
-      = `Patient id: ${PatientId}<br> Duration: ${DateManager.findDuration(start, end)} min <br> Is Served: ${IsServed}`;
+      = `Patient id: ${PatientId} <br> Duration: ${DateManager.findDuration(start, end)} min <br> Is Served: ${IsServed}`;
   }
 
   /**

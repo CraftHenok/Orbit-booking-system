@@ -17,8 +17,8 @@ export class AdminhomepageComponent implements OnInit {
     const iconNavigation = [
       new IconNavigation('/admin', 'Doctors', 'doctor'),
       new IconNavigation('patients', 'Patients', 'patient'),
+      new IconNavigation('reception', 'Reception', 'reception'),
       new IconNavigation('setting', 'Setting', 'setting'),
-      new IconNavigation('reception', 'Reception', 'setting'),
     ];
     this.navigationData = new Navigation('/admin', iconNavigation);
   }

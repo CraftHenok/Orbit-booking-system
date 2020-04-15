@@ -47,7 +47,6 @@ export class DoctorsappointmentComponent implements OnInit {
 
     this.scheduleBlockingService.get().subscribe(
       result => {
-        console.log(result);
         this.events = [...this.events, ...ScheduleBlockingConverter.convertToLocalBatch(result)];
       }, error => {
         console.error(error);
@@ -87,7 +86,8 @@ export class DoctorsappointmentComponent implements OnInit {
   }
 
   saveScheduleBlocking(result) {
-    this.events = [...this.events, result];
+    console.log('The result is ' + result);
+    this.events.push(result);
   }
 
   updateScheduleBlocking(result) {

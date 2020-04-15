@@ -36,6 +36,6 @@ export class EmergencyTitleService {
   }
 
   delete(generalTitle: GeneralTitle) {
-    return this.http.delete(this.emergencyTitleUrl + generalTitle.id);
+    return this.http.delete<number>(this.emergencyTitleUrl + generalTitle.id);
   }
 }

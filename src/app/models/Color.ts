@@ -17,8 +17,18 @@ const colors: any = {
   }
 };
 
+/**
+ * Color
+ * This class is a gateway to all colors used on the appointment card found on the calender
+ * use getcolorof to access color by passing the color name
+ */
 export class Color {
 
+  /**
+   *
+   * @param colorName - name of the color you need to access
+   * @returns - color
+   */
   public static getColorOf(colorName: string) {
     return colors[colorName];
   }

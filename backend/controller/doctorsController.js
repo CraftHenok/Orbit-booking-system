@@ -76,7 +76,6 @@ exports.saveNewDoctor = async (req, res) => {
 
   function insertIntoDoctorTable(response) {
     if (response.suc === false) {
-      console.error(response.msg);
       return res.json(response.msg);
     } else {
       db.run("INSERT into Doctor(userId,displayOrder)\n" +
