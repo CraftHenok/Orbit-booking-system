@@ -5,7 +5,8 @@
     <p class="errorMessage" *ngIf="error">{{ error | uppercase }}</p>
   </div>
   <div class="bottom">
-    <form [formGroup]="receptionFormManager.receptionForm" (submit)="submit()">
+    <form [formGroup]="receptionFormManager.receptionForm"
+          (submit)="receptionFormManager.receptionForm.valid ? submit() : ''">
       <div>
         <mat-form-field appearance="outline">
           <mat-label>Username</mat-label>

@@ -1,4 +1,4 @@
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Account} from '../models/Account';
 import {Variables} from './variables';
 
@@ -40,10 +40,10 @@ export class ReceptionFormManager {
 
   private getFormBuilder() {
     return this.formBuilder.group({
-      username: [''],
-      email: [''],
-      password: [''],
-      status: [''],
+      username: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(Variables.minPasswordLength)]],
+      status: ['', Validators.required],
     });
   }
 }

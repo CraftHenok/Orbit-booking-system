@@ -146,7 +146,7 @@ export class AddEditDialogComponent implements OnInit, OnDestroy {
 
   openForgetIdDialog() {
     const dialogRef = this.dialog.open(ForgetIdComponent, {
-      width: Variables.dialogBigWidth,
+      width: Variables.dialogSmallWidth,
     });
 
     dialogRef.afterClosed().subscribe((result: Patient) => {
@@ -158,7 +158,7 @@ export class AddEditDialogComponent implements OnInit, OnDestroy {
 
   openQuickAddDialog() {
     const dialogRef = this.dialog.open(QuickAddComponent, {
-      width: Variables.dialogBigWidth,
+      width: Variables.dialogSmallWidth,
     });
 
     dialogRef.afterClosed().subscribe((result: Patient) => {

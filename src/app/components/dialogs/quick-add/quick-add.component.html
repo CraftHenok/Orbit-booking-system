@@ -1,23 +1,30 @@
-<h1 mat-dialog-title style="color: #00695C">Add new patient</h1>
-<div mat-dialog-content>
-  <ngx-spinner [fullScreen]="false">
-    <p style="color: white"> Saving new patient </p>
-  </ngx-spinner>
-  <div class="queryArea">
-    <form action="" [formGroup]="forgetForm">
-      <mat-form-field appearance="outline">
-        <mat-label>First name</mat-label>
-        <input matInput placeholder="First name" formControlName="firstName">
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Phone number</mat-label>
-        <input matInput placeholder="Phone number" formControlName="phoneNumber">
-      </mat-form-field>
-    </form>
-  </div>
-</div>
-<div mat-dialog-actions align="end">
-  <button mat-flat-button color="primary" [disabled]="!forgetForm.valid" (click)="quickAdd()">Quick add</button>
-  <button mat-flat-button [mat-dialog-close]>Cancel</button>
-</div>
+<h1 mat-dialog-title style="color: #00695C" align="center">Add new patient</h1>
+<hr>
+<form action="" [formGroup]="quickAddForm" (submit)="quickAddForm.valid ? quickAdd() : ''">
 
+  <div mat-dialog-content>
+    <ngx-spinner [fullScreen]="false">
+      <p style="color: white"> Saving new patient </p>
+    </ngx-spinner>
+    <div class="queryArea">
+      <div>
+        <mat-form-field appearance="outline">
+          <mat-label>First name</mat-label>
+          <input matInput placeholder="First name" formControlName="firstName" required>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field appearance="outline">
+          <mat-label>Phone number</mat-label>
+          <input matInput placeholder="Phone number" formControlName="phoneNumber" required>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions align="end">
+    <button mat-flat-button color="primary" type="submit" style="width: 100%">Quick add
+    </button>
+  </div>
+
+
+</form>

@@ -37,11 +37,16 @@
 
   <mat-dialog-actions align="end">
     <div *ngIf="data.id==0 else updateAndDelete">
-      <button mat-flat-button color="primary" type="submit" (click)="submit()">Save</button>
+      <button mat-flat-button color="primary" type="submit" (click)="scheduleBlockingForm.valid ? submit() : ''"
+              style="width: 100%">Save
+      </button>
     </div>
     <ng-template #updateAndDelete>
-      <button mat-button color="warn" type="submit" (click)="deleteClicked()">Delete</button>
-      <button mat-flat-button color="primary" type="submit" (click)="updateClicked()">Update</button>
+      <button mat-button color="warn" type="submit" (click)="scheduleBlockingForm.valid ? deleteClicked() : ''">Delete
+      </button>
+      <button mat-flat-button color="primary" type="submit" (click)="scheduleBlockingForm.valid ? updateClicked() : ''">
+        Update
+      </button>
     </ng-template>
 
 

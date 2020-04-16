@@ -2,7 +2,7 @@
   <p style="color: white">Saving update...</p>
 </ngx-spinner>
 
-<mat-vertical-stepper [linear]="false" #stepper>
+<mat-vertical-stepper [linear]="true" #stepper>
   <mat-step [stepControl]="patientsFormManager.primaryInfoForm">
     <form [formGroup]="patientsFormManager.primaryInfoForm">
       <ng-template matStepLabel>Primary info</ng-template>

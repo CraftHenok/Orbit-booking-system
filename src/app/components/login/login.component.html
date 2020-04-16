@@ -9,7 +9,7 @@
       <h1>Welcome</h1>
       <p>Please login to access your account</p>
       <p class="errorMessage" *ngIf="error" style="color: tomato">{{ error | uppercase }}</p>
-      <form [formGroup]="accountForm" (ngSubmit)="formSubmitted()">
+      <form [formGroup]="accountForm" (ngSubmit)="accountForm.valid ? formSubmitted() : ''">
         <div>
           <mat-form-field class="example-full-width" appearance="outline">
             <mat-label>Email</mat-label>
@@ -21,15 +21,14 @@
           <mat-form-field appearance="outline">
             <mat-label>Enter your password</mat-label>
             <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" required
-                   autocomplete="password">
+                   autocomplete="password" minlength="6">
             <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
                     [attr.aria-pressed]="hide">
               <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>
           </mat-form-field>
         </div>
-        <button mat-flat-button color="primary" style="width: 100%; margin-bottom: 10px"
-                [disabled]="accountForm.invalid" type="submit">Login
+        <button mat-flat-button color="primary" style="width: 100%; margin-bottom: 10px" type="submit">Login
         </button>
       </form>
     </div>

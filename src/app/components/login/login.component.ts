@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
 
   accountForm = this.formBuilder.group({
     email: ['admin@gmail.com', [Validators.required, Validators.email]],
-    password: ['12345678', Validators.required]
+    password: ['12345678', [Validators.required, Validators.minLength(Variables.minPasswordLength)]]
   });
 
   error: string;

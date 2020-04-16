@@ -21,9 +21,11 @@ export class AddComponent implements OnInit {
   }
 
   add() {
-    this.data.set('value', this.value);
-    this.data.set('action', Variables.actions.saved);
-    this.dialogRef.close(this.data);
+    if (this.value) {
+      this.data.set('value', this.value);
+      this.data.set('action', Variables.actions.saved);
+      this.dialogRef.close(this.data);
+    }
   }
 
   delete() {
@@ -32,8 +34,10 @@ export class AddComponent implements OnInit {
   }
 
   update() {
-    this.data.set('value', this.value);
-    this.data.set('action', Variables.actions.updated);
-    this.dialogRef.close(this.data);
+    if (this.value) {
+      this.data.set('value', this.value);
+      this.data.set('action', Variables.actions.updated);
+      this.dialogRef.close(this.data);
+    }
   }
 }

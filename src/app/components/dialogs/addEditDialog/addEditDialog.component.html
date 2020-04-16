@@ -83,10 +83,10 @@
 
   <div *ngIf="data.id else showSaveButton">
     <mat-dialog-actions align="end">
-      <button mat-button color="warn" (click)="deleteClicked()" [disabled]="!addForm.valid">
+      <button mat-button color="warn" (click)="addForm.valid ? deleteClicked() : ''">
         Delete
       </button>
-      <button mat-flat-button color="primary" type="submit" (click)="updateClicked()">
+      <button mat-flat-button color="primary" type="submit" (click)="addForm.valid ? updateClicked() : ''">
         Update
       </button>
     </mat-dialog-actions>

@@ -16,7 +16,7 @@ import {Variables} from '../../../utility/variables';
 })
 export class QuickAddComponent implements OnInit {
 
-  forgetForm = this.fb.group({
+  quickAddForm = this.fb.group({
     firstName: ['', Validators.required],
     phoneNumber: ['', Validators.required],
   });
@@ -34,12 +34,12 @@ export class QuickAddComponent implements OnInit {
   quickAdd() {
     const address = new Address();
     const emergencyInfo = new EmergencyInfo();
-    const contactInfo = new Contact(this.forgetForm.get('phoneNumber').value);
+    const contactInfo = new Contact(this.quickAddForm.get('phoneNumber').value);
 
     const newPatient = new Patient(
       Variables.currentDate,
       Variables.defaultPatientTitleId,
-      this.forgetForm.get('firstName').value,
+      this.quickAddForm.get('firstName').value,
       '',
       '',
       '',

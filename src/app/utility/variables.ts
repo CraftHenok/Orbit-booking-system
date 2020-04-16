@@ -8,6 +8,7 @@ export class Variables {
   static doctorRoleName = 'D';
   static adminRoleName = 'A';
   static receptionRoleName = 'R';
+  static minPasswordLength = 6;
   static actions = {
     deleted: 'D',
     saved: 'S',

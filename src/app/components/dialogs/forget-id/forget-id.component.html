@@ -1,14 +1,15 @@
-<h1 mat-dialog-title style="color: #00695C">Search to find patients</h1>
+<h1 mat-dialog-title style="color: #00695C" align="center">Search to find patients</h1>
+<hr>
 <div mat-dialog-content>
   <div class="queryArea">
     <form action="" [formGroup]="forgetForm">
       <mat-form-field appearance="outline">
         <mat-label>First name</mat-label>
-        <input matInput placeholder="First name" formControlName="firstName">
+        <input matInput placeholder="First name" formControlName="firstName" required>
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Phone number</mat-label>
-        <input matInput placeholder="Phone number" formControlName="phoneNumber">
+        <input matInput placeholder="Phone number" formControlName="phoneNumber" required>
       </mat-form-field>
     </form>
   </div>
@@ -27,6 +28,5 @@
   </mat-action-list>
 </div>
 <div mat-dialog-actions align="end">
-  <button mat-flat-button color="primary" [disabled]="!forgetForm.valid" (click)="search()">Search</button>
-  <button mat-flat-button [mat-dialog-close]>Cancel</button>
+  <button mat-flat-button color="primary" (click)="forgetForm.valid ? search(): ''" style="width: 100%">Search</button>
 </div>

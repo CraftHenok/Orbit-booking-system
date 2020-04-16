@@ -1,5 +1,3 @@
-.queryArea mat-form-field {
-  float: left;
-  width: 48%;
-  margin: 1%;
+mat-form-field {
+  width: 100%;
 }

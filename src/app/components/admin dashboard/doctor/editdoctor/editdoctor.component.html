@@ -5,7 +5,7 @@
     <p class="errorMessage" *ngIf="error">{{ error | uppercase }}</p>
   </div>
   <div class="bottom">
-    <form [formGroup]="doctorFormManager.doctorForm" (submit)="submit()">
+    <form [formGroup]="doctorFormManager.doctorForm" (submit)="doctorFormManager.doctorForm.valid ? submit() : ''">
       <div>
         <mat-form-field appearance="outline">
           <mat-label>Username</mat-label>

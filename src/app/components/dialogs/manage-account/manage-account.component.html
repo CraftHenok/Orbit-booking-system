@@ -5,7 +5,6 @@
 <hr>
 <div mat-dialog-content>
   <form [formGroup]="editAccountForm">
-
     <div>
       <mat-form-field appearance="outline">
         <mat-label>Username</mat-label>
@@ -36,7 +35,7 @@
 </div>
 
 <div mat-dialog-actions align="end">
-  <button mat-flat-button color="primary" (click)="submit()">Update
+  <button mat-flat-button color="primary" (click)="editAccountForm.valid ? submit() : ''">Update
   </button>
 </div>
 
