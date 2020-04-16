@@ -36,15 +36,12 @@
   </mat-dialog-content>
 
   <mat-dialog-actions align="end">
-
     <div *ngIf="data.id==0 else updateAndDelete">
       <button mat-flat-button color="primary" type="submit" (click)="submit()">Save</button>
-      <button mat-button mat-dialog-close>Cancel</button>
     </div>
     <ng-template #updateAndDelete>
       <button mat-button color="warn" type="submit" (click)="deleteClicked()">Delete</button>
       <button mat-flat-button color="primary" type="submit" (click)="updateClicked()">Update</button>
-      <button mat-button mat-dialog-close>Cancel</button>
     </ng-template>
 
 

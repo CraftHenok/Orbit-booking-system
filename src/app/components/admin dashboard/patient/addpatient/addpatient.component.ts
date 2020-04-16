@@ -88,6 +88,13 @@ export class AddpatientComponent implements OnInit, OnDestroy {
   }
 
 
+  resetAllForms() {
+    this.patientsFormManager.emergencyInfoForm.reset();
+    this.patientsFormManager.primaryInfoForm.reset();
+    this.patientsFormManager.contactInfoForm.reset();
+    this.patientsFormManager.addressForm.reset();
+  }
+
   submit() {
     this.spinner.show();
 
@@ -96,6 +103,7 @@ export class AddpatientComponent implements OnInit, OnDestroy {
     this.subscription.add(this.patientService.savePatient(newPatient).subscribe(
       result => {
         this.spinner.hide();
+        this.resetAllForms();
         this.snackBarMan.show('New patient added', 'Ok');
       },
       error => {

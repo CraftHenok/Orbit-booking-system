@@ -6,6 +6,7 @@
   <div class="top">
     <p class="header">Add new Doctor</p>
     <p class="subheader">Enter the required fill to add new doctor</p>
+    <p *ngIf="error" class="errorMessage">{{ error | uppercase }}</p>
   </div>
   <div class="bottom">
     <form [formGroup]="doctorsFormManager.doctorForm" (submit)="submit()">

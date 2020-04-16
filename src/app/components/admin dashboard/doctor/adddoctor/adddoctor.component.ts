@@ -25,6 +25,7 @@ export class AdddoctorComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
 
   status = Variables.status;
+  error: string;
 
   constructor(private formBuilder: FormBuilder,
               private snackBar: MatSnackBar,
@@ -45,8 +46,11 @@ export class AdddoctorComponent implements OnInit, OnDestroy {
     this.subscription.add(this.doctorService.saveDoctor(newDoctor).subscribe(
       result => {
         this.snackBarMan.show('New Doctor added', 'Ok');
+        this.doctorsFormManager.doctorForm.reset();
       },
       error => {
+        this.spinner.hide();
+        this.error = error.error;
         console.error(error);
       },
       () => {

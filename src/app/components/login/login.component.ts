@@ -72,7 +72,7 @@ export class LoginComponent implements OnInit {
   }
 
   private userCantLogin(result: Account) {
-    if (result.status.toUpperCase() === Variables.status[0].toUpperCase()) {
+    if (result.status.toUpperCase() === Variables.status[1].toUpperCase()) {
       this.error = 'Your account hasn\'t been approved contact your admin';
     } else if (result.status.toUpperCase() === Variables.status[2].toUpperCase()) {
       this.error = 'Your account has been suspended contact your admin';

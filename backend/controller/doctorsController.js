@@ -76,7 +76,7 @@ exports.saveNewDoctor = async (req, res) => {
 
   function insertIntoDoctorTable(response) {
     if (response.suc === false) {
-      return res.json(response.msg);
+      return res.status(statusCode.errorInData).json(response.msg);
     } else {
       db.run("INSERT into Doctor(userId,displayOrder)\n" +
         "VALUES ((SELECT seq from sqlite_sequence where name='User'),?)",

@@ -19,16 +19,6 @@ import {Patient} from '../../../models/Patient';
 import {QuickAddComponent} from '../quick-add/quick-add.component';
 import {AppointmentConverter} from '../../../models/Appointemts/AppointmentConverter';
 
-
-/** Error when invalid control is dirty, touched, or submitted. */
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
-  }
-}
-
-
 @Component({
   selector: 'app-dialog-overview-example-dialog',
   templateUrl: './addEditDialog.component.html',
@@ -46,9 +36,7 @@ export class AddEditDialogComponent implements OnInit, OnDestroy {
     ServedBy: [this.data.servedBy, Validators.required],
   });
 
-  public matcher = new MyErrorStateMatcher();
-
-  error;
+  error: string;
 
   public appointmentStatus: GeneralStatus[] = [];
   public appointmentType: GeneralType[] = [];
