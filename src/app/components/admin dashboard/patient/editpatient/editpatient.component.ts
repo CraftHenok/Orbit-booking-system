@@ -13,6 +13,7 @@ import {SnackBarManager} from '../../../../utility/snackBarManager';
 import {PatientsService} from '../../../../services/Patients/patients.service';
 import {PatientTitleService} from '../../../../services/Patients/PatientTitle/patient-title.service';
 import {EmergencyTitleService} from '../../../../services/Patients/EmergencyTitle/emergency-title.service';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-editpatient',
@@ -42,6 +43,7 @@ export class EditpatientComponent implements OnInit, OnDestroy {
               private activatedRoute: ActivatedRoute,
               private patientTitleService: PatientTitleService,
               private spinner: NgxSpinnerService,
+              private location: Location,
               private emergencyTitleService: EmergencyTitleService,
               private snackBar: MatSnackBar) {
     this.patientsFormManager = new PatientsFormManager(formBuilder);
@@ -105,6 +107,7 @@ export class EditpatientComponent implements OnInit, OnDestroy {
         if (result > 0) {
           this.snackBarMan.show('Patient updated successfully', 'Ok');
         }
+        this.location.back();
       },
       error => {
         console.error(error);

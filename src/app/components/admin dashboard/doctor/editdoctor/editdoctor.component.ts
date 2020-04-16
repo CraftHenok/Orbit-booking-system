@@ -4,12 +4,12 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {switchMap} from 'rxjs/operators';
 import {ActivatedRoute} from '@angular/router';
 import {Subscription} from 'rxjs';
-import {NgxSpinnerService} from 'ngx-spinner';
 import {Doctor} from '../../../../models/Doctor';
 import {SnackBarManager} from '../../../../utility/snackBarManager';
 import {Variables} from '../../../../utility/variables';
 import {DoctorsService} from '../../../../services/Doctors/doctors.service';
 import {DoctorsFormManager} from '../../../../utility/doctorsFormManager';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-editdoctor',
@@ -32,6 +32,7 @@ export class EditdoctorComponent implements OnInit, OnDestroy {
   constructor(private formBuilder: FormBuilder,
               private snackBar: MatSnackBar,
               private activatedRoute: ActivatedRoute,
+              private location: Location,
               private doctorService: DoctorsService) {
     this.doctorFormManager = new DoctorsFormManager(this.formBuilder);
     this.snackBarMan = new SnackBarManager(this.snackBar);
@@ -60,6 +61,7 @@ export class EditdoctorComponent implements OnInit, OnDestroy {
         if (result > 0) {
           this.snackBarMan.show('Doctor updated successfully', 'Ok');
         }
+        this.location.back();
       }, error => {
         this.error = error.error;
         console.error(error);

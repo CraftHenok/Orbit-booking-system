@@ -7,6 +7,7 @@ import {switchMap} from 'rxjs/operators';
 import {ReceptionFormManager} from '../../../../utility/receptionFormManager';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {SnackBarManager} from '../../../../utility/snackBarManager';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-edit-reception',
@@ -24,6 +25,7 @@ export class EditReceptionComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private accountService: AccountService,
               private snackBar: MatSnackBar,
+              private location: Location,
               private activatedRoute: ActivatedRoute) {
     this.receptionFormManager = new ReceptionFormManager(fb);
     this.snackBarMan = new SnackBarManager(this.snackBar);
@@ -49,10 +51,10 @@ export class EditReceptionComponent implements OnInit {
 
     this.accountService.updateAccountInfoById(accountToUpdate).subscribe(
       result => {
-        console.log(result);
         if (result > 0) {
           this.snackBarMan.show('Reception updated', 'ok');
         }
+        this.location.back();
       },
       error => {
         this.error = error.error;
