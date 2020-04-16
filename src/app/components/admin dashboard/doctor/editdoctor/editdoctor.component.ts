@@ -21,7 +21,7 @@ export class EditdoctorComponent implements OnInit, OnDestroy {
   hidePassword = true;
   doctor: Doctor;
 
-  doctorFormManager: DoctorsFormManager;
+  doctorsFormManager: DoctorsFormManager;
 
   private snackBarMan: SnackBarManager;
   private subscription: Subscription = new Subscription();
@@ -34,7 +34,7 @@ export class EditdoctorComponent implements OnInit, OnDestroy {
               private activatedRoute: ActivatedRoute,
               private location: Location,
               private doctorService: DoctorsService) {
-    this.doctorFormManager = new DoctorsFormManager(this.formBuilder);
+    this.doctorsFormManager = new DoctorsFormManager(this.formBuilder);
     this.snackBarMan = new SnackBarManager(this.snackBar);
   }
 
@@ -44,7 +44,7 @@ export class EditdoctorComponent implements OnInit, OnDestroy {
       switchMap(params => this.doctorService.getDoctorById(Number(params.get('doctorId'))))
     ).subscribe(result => {
       this.doctor = result;
-      this.doctorFormManager.updateForm(result);
+      this.doctorsFormManager.updateForm(result);
     }, error => {
       console.error(error);
     }));
@@ -53,7 +53,7 @@ export class EditdoctorComponent implements OnInit, OnDestroy {
 
   submit() {
 
-    const updatedDoctor = this.doctorFormManager.bindDataToNewDoctor(this.doctor.id);
+    const updatedDoctor = this.doctorsFormManager.bindDataToNewDoctor(this.doctor.id);
 
     this.subscription.add(this.doctorService.updateDoctor(updatedDoctor).subscribe(
       result => {

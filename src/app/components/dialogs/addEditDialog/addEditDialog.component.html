@@ -9,12 +9,9 @@
 <p class="errorMessage" *ngIf="error">{{ error | uppercase }}</p>
 
 <hr>
+<mat-dialog-content class="mat-typography">
 
-<form [formGroup]="addForm" (submit)="addForm.valid ? saveClicked() : ''">
-
-  <mat-dialog-content class="mat-typography">
-
-
+  <form [formGroup]="addForm">
     <mat-form-field appearance="outline">
       <mat-label>Patient Id</mat-label>
       <input matInput placeholder="Patient Id" id="PatientId" type="number" formControlName="PatientId" required>
@@ -76,26 +73,26 @@
     <div *ngIf="data.id">
       <mat-checkbox formControlName="IsServed">Is served</mat-checkbox>
     </div>
+  </form>
+</mat-dialog-content>
 
 
-  </mat-dialog-content>
+<div *ngIf="data.id else showSaveButton">
+  <mat-dialog-actions align="end">
+    <button mat-button color="warn" (click)="addForm.valid ? deleteClicked() : ''">
+      Delete
+    </button>
+    <button mat-flat-button color="primary" (click)="addForm.valid ? updateClicked() : ''">
+      Update
+    </button>
+  </mat-dialog-actions>
+</div>
+<ng-template #showSaveButton>
+  <mat-dialog-actions align="end">
+    <button mat-flat-button color="primary" type="submit" (submit)="addForm.valid ? saveClicked() : ''"
+            style="width: 100%">Save
+    </button>
+  </mat-dialog-actions>
+</ng-template>
 
 
-  <div *ngIf="data.id else showSaveButton">
-    <mat-dialog-actions align="end">
-      <button mat-button color="warn" (click)="addForm.valid ? deleteClicked() : ''">
-        Delete
-      </button>
-      <button mat-flat-button color="primary" type="submit" (click)="addForm.valid ? updateClicked() : ''">
-        Update
-      </button>
-    </mat-dialog-actions>
-  </div>
-  <ng-template #showSaveButton>
-    <mat-dialog-actions align="end">
-      <button mat-flat-button color="primary" type="submit" style="width: 100%">Save
-      </button>
-    </mat-dialog-actions>
-  </ng-template>
-
-</form>

@@ -6,7 +6,7 @@
   </div>
   <div class="bottom">
     <form [formGroup]="receptionFormManager.receptionForm"
-          (ngSubmit)="receptionFormManager.receptionForm.valid ? submit() : ''">
+          (submit)="receptionFormManager.receptionForm.valid ? submit() : ''">
       <div>
         <mat-form-field appearance="outline">
           <mat-label>Username</mat-label>
@@ -25,6 +25,10 @@
                   [attr.aria-pressed]="hidePassword">
             <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
           </button>
+
+          <mat-error *ngIf="receptionFormManager.receptionForm.get('password').hasError('minlength')">
+            password length must be at least 6 characters long
+          </mat-error>
         </mat-form-field>
       </div>
 

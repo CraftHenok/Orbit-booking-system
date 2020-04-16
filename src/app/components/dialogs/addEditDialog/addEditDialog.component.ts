@@ -32,7 +32,7 @@ export class AddEditDialogComponent implements OnInit, OnDestroy {
     AppointmentStatus: [this.data.appointmentStatusId, Validators.required],
     start: [this.data.start, Validators.required],
     duration: [DateManager.findDuration(this.data.start, this.data.end), Validators.required],
-    IsServed: [this.data.isServed ? this.data.isServed : false],
+    IsServed: [this.data.isServed || false],
     ServedBy: [this.data.servedBy, Validators.required],
   });
 

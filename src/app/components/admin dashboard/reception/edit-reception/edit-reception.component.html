@@ -25,6 +25,10 @@
                   [attr.aria-pressed]="hidePassword">
             <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
           </button>
+
+          <mat-error *ngIf="receptionFormManager.receptionForm.get('password').hasError('minlength')">
+            password length must be at least 6 characters long
+          </mat-error>
         </mat-form-field>
       </div>
 

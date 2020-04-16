@@ -46,7 +46,7 @@ export class DoctorsFormManager {
     return this.formBuilder.group({
       username: ['', Validators.required],
       email: ['', Validators.required, Validators.email],
-      password: ['', [Validators.required, Validators.min(Variables.minPasswordLength)]],
+      password: ['', [Validators.required, Validators.minLength(Variables.minPasswordLength)]],
       status: ['', Validators.required],
       displayOrder: ['', Validators.required],
     });

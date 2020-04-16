@@ -10,7 +10,7 @@ import {DoctorsService} from '../../../../services/Doctors/doctors.service';
 @Component({
   selector: 'app-adddoctor',
   templateUrl: './adddoctor.component.html',
-  styleUrls: ['../../reception/add-reception/add-reception.component.css'] // reuse
+  styleUrls: ['../../reception/add-reception/add-reception.component.css']
 })
 export class AdddoctorComponent implements OnInit, OnDestroy {
 
