@@ -9,19 +9,16 @@ const swaggerConfig = require('./backend/utitlity/swaggerConfiguration.js');
 const tokenVerifier = require('./backend/utitlity/verifyToken');
 const app = express();
 
-// route to access api documentation
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerConfig.swaggerSpec));
-
 
 app.use(compression());
 app.use(express.json());
 app.use(cors());
 
 // // ---------For angular only-------
-// app.use(express.static(__dirname + '/dist/bookingsystem'));
-// app.get('/*', function (req, res) {
-//   res.sendFile(path.join(__dirname + '/dist/bookingsystem'));
-// });
+app.use(express.static(__dirname + '/dist/bookingsystem'));
+app.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname + '/dist/bookingsystem'));
+});
 
 
 // check if the app's table schema is created
@@ -34,6 +31,7 @@ if (stateManager.createTables()) {
 }
 
 // api that doesn't need authentication
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerConfig.swaggerSpec));
 app.use('/account', require('./backend/route/loginAndRegistrationRoute'));
 
 // all apis below this => require user authentication
