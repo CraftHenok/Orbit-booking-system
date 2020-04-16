@@ -1,6 +1,7 @@
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('demo.db');
-const {registerToDB, updateUser} = require('./accountController');
+const {registerToDB} = require('./loginAndRegistrationController');
+const {updateUser} = require('./accountManagerController');
 const {getGrants} = require('../utitlity/roleManager');
 const {statusCode} = require('../utitlity/statusCodes');
 
@@ -24,8 +25,7 @@ exports.update = async (req, res) => {
 
   function updateDoctor(response) {
     if (response.suc === false) {
-      console.error(response.msg);
-      return res.json(response.msg).status(statusCode.notFound);
+      return res.status(statusCode.errorInData).json(response.msg);
     } else {
       db.run("update doctor set displayOrder=? where userId = ?",
         [doctorData.displayOrder, doctorData.id], function (err) {
@@ -49,6 +49,7 @@ exports.deleteDoctorById = async (req, res) => {
 
   await db.run("DELETE from Doctor WHERE userId = ?", req.params['id'], function (err) {
     if (err) {
+      console.error(err);
       res.json(err.message).status(statusCode.notFound);
     } else {
       res.status(statusCode.deleteOk).json(this.changes);
@@ -104,6 +105,7 @@ exports.getDoctorById = (req, res) => {
 
   db.get("SELECT User.*,displayOrder from User LEFT JOIN Doctor where user.id = ? and Doctor.userId = ?", [req.params['id'], req.params['id']], (err, row) => {
     if (err) {
+      console.error(err);
       res.json(err).status(statusCode.errorInData);
     } else {
       if (row === undefined) {

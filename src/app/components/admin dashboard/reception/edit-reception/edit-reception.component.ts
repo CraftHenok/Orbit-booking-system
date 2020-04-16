@@ -5,6 +5,8 @@ import {AccountService} from '../../../../services/Account/account.service';
 import {ActivatedRoute} from '@angular/router';
 import {switchMap} from 'rxjs/operators';
 import {ReceptionFormManager} from '../../../../utility/receptionFormManager';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {SnackBarManager} from '../../../../utility/snackBarManager';
 
 @Component({
   selector: 'app-edit-reception',
@@ -15,11 +17,16 @@ export class EditReceptionComponent implements OnInit {
 
   hidePassword = true;
   status = Variables.status;
-
+  private snackBarMan: SnackBarManager;
   receptionFormManager: ReceptionFormManager;
+  error: string;
 
-  constructor(private fb: FormBuilder, private accountService: AccountService, private activatedRoute: ActivatedRoute) {
+  constructor(private fb: FormBuilder,
+              private accountService: AccountService,
+              private snackBar: MatSnackBar,
+              private activatedRoute: ActivatedRoute) {
     this.receptionFormManager = new ReceptionFormManager(fb);
+    this.snackBarMan = new SnackBarManager(this.snackBar);
   }
 
   ngOnInit(): void {
@@ -42,10 +49,13 @@ export class EditReceptionComponent implements OnInit {
 
     this.accountService.updateAccountInfoById(accountToUpdate).subscribe(
       result => {
-        alert(result);
-        this.receptionFormManager.receptionForm.reset();
+        console.log(result);
+        if (result > 0) {
+          this.snackBarMan.show('Reception updated', 'ok');
+        }
       },
       error => {
+        this.error = error.error;
         console.error(error);
       });
 

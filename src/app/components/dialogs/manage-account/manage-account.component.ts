@@ -21,6 +21,7 @@ export class ManageAccountComponent implements OnInit {
     email: ['', Validators.required, Validators.email],
     password: ['', [Validators.required, Validators.min(6)]],
   });
+  error: string;
 
   constructor(private formBuilder: FormBuilder,
               private dialogRef: MatDialogRef<ManageAccountComponent>,
@@ -57,6 +58,7 @@ export class ManageAccountComponent implements OnInit {
       result => {
         this.dialogRef.close();
       }, error => {
+        this.error = error.error;
         console.error(error);
       }
     );

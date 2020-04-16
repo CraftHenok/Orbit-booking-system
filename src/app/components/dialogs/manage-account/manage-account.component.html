@@ -1,4 +1,7 @@
-<p mat-dialog-title style="color: #00695C;font-weight:normal;font-size: 1.6em" align="center">Manage account</p>
+<p mat-dialog-title style="color: #00695C;font-weight:normal;font-size: 1.6em" align="center">
+  Manage account
+</p>
+<p class="errorMessage" *ngIf="error">{{ error | uppercase }}</p>
 <hr>
 <div mat-dialog-content>
   <form [formGroup]="editAccountForm">

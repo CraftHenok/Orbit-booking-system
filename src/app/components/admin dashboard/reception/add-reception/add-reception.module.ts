@@ -9,7 +9,6 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
-import {NgxSpinnerModule} from 'ngx-spinner';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
@@ -26,7 +25,6 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     MatSelectModule,
     MatIconModule,
     MatButtonModule,
-    NgxSpinnerModule,
     MatSnackBarModule
   ]
 })

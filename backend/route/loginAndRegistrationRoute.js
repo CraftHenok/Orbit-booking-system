@@ -1,5 +1,5 @@
 const express = require("express");
-const accountController = require("../controller/accountController");
+const loginAndRegistrationController = require("../controller/loginAndRegistrationController");
 const router = express.Router();
 
 /**
@@ -26,7 +26,7 @@ const router = express.Router();
  *      200:
  *        description: the user with token added
  */
-router.post('/login', accountController.login);
+router.post('/login', loginAndRegistrationController.login);
 
 
 /**
@@ -57,6 +57,6 @@ router.post('/login', accountController.login);
  *      200:
  *        description: successful user registration
  */
-router.post('/register', accountController.register);
+router.post('/register', loginAndRegistrationController.register);
 
 module.exports = router;

@@ -17,10 +17,10 @@ export class AddReceptionComponent implements OnInit {
   status = Variables.status;
   private snackBarMan: SnackBarManager;
   receptionFormManager: ReceptionFormManager;
+  error: string;
 
   constructor(private fb: FormBuilder,
               private snackBar: MatSnackBar,
-              private spinner: NgxSpinnerService,
               private accountService: AccountService) {
     this.receptionFormManager = new ReceptionFormManager(fb);
   }
@@ -35,19 +35,14 @@ export class AddReceptionComponent implements OnInit {
 
   submit() {
 
-    this.spinner.show();
-
     this.accountService.registerAccount(this.getAccountFromForm()).subscribe(
       result => {
         this.snackBarMan.show('New Reception added', 'Ok');
         this.receptionFormManager.receptionForm.reset();
 
       }, error => {
-        this.spinner.hide();
+        this.error = error.error;
         console.error(error);
-      },
-      () => {
-        this.spinner.hide();
       }
     );
   }

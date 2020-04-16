@@ -2,6 +2,7 @@
   <div class="top">
     <p class="header">Update reception</p>
     <p class="subheader">Enter the required fill to Update reception</p>
+    <p class="errorMessage" *ngIf="error">{{ error | uppercase }}</p>
   </div>
   <div class="bottom">
     <form [formGroup]="receptionFormManager.receptionForm" (submit)="submit()">

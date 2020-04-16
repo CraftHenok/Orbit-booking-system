@@ -34,7 +34,7 @@ if (stateManager.createTables()) {
 }
 
 // api that doesn't need authentication
-app.use('/account', require('./backend/route/accountRoute'));
+app.use('/account', require('./backend/route/loginAndRegistrationRoute'));
 
 // all apis below this => require user authentication
 app.use(tokenVerifier);

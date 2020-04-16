@@ -11,7 +11,6 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-import {NgxSpinnerModule} from 'ngx-spinner';
 import {MatSelectModule} from '@angular/material/select';
 
 
@@ -30,7 +29,6 @@ import {MatSelectModule} from '@angular/material/select';
     MatIconModule,
     MatCheckboxModule,
     MatSnackBarModule,
-    NgxSpinnerModule,
     MatSelectModule
   ]
 })

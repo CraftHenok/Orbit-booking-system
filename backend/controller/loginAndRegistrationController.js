@@ -89,66 +89,6 @@ const localRegisterToDb = async function (userData, callBack) {
 
 };
 
-const checkEmailForUpdate = async (email, id, callBack) => {
-  await db.get("select username from user where email =? and id = ?", [email, id], (err, row) => {
-    if (err) {
-      console.error(err);
-      callBack({suc: false, msg: err});
-    } else {
-      if (row === undefined) {
-        callBack({suc: true});
-      } else {
-        callBack({suc: false, msg: "Email address already exist"});
-      }
-    }
-  });
-};
-
-const localUpdateUser = async function (userData, callBack) {
-
-  await checkEmailForUpdate(userData.email, userData.id, (response) => {
-    if (response.suc) {
-      // update();
-    } else {
-      callBack({suc: false, msg: response.msg});
-    }
-  });
-
-
-  function update() {
-    db.run("Update user set email=?,password=?,status=?,username=? where id=?",
-      [userData.email, userData.password, userData.status, userData.username, userData.id], function (err) {
-        if (err) {
-          callBack({suc: false, msg: err});
-        } else {
-          callBack({suc: true, msg: this.changes})
-        }
-      });
-  }
-
-};
-
-const localDeleteUser = async function (userId, callBack) {
-  db.run("delete from user where id = ?",
-    [userId], function (err) {
-      if (err) {
-        callBack({suc: false, msg: err});
-      } else {
-        callBack({suc: true, msg: this.changes})
-      }
-    });
-};
-
-exports.deleteUser = (function () {
-  return localDeleteUser;
-})();
-
-
-exports.updateUser = (function () {
-  return localUpdateUser;
-})();
-
-
 exports.registerToDB = (function () {
   return localRegisterToDb;
 })();

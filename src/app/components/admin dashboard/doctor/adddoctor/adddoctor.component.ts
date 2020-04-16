@@ -2,7 +2,6 @@ import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core
 import {FormBuilder} from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {Subscription} from 'rxjs';
-import {NgxSpinnerService} from 'ngx-spinner';
 import {DoctorsFormManager} from '../../../../utility/doctorsFormManager';
 import {SnackBarManager} from '../../../../utility/snackBarManager';
 import {Variables} from '../../../../utility/variables';
@@ -29,7 +28,6 @@ export class AdddoctorComponent implements OnInit, OnDestroy {
 
   constructor(private formBuilder: FormBuilder,
               private snackBar: MatSnackBar,
-              private spinner: NgxSpinnerService,
               private doctorService: DoctorsService) {
   }
 
@@ -39,8 +37,6 @@ export class AdddoctorComponent implements OnInit, OnDestroy {
   }
 
   submit() {
-    this.spinner.show();
-
     const newDoctor = this.doctorsFormManager.bindDataToNewDoctor();
 
     this.subscription.add(this.doctorService.saveDoctor(newDoctor).subscribe(
@@ -49,12 +45,8 @@ export class AdddoctorComponent implements OnInit, OnDestroy {
         this.doctorsFormManager.doctorForm.reset();
       },
       error => {
-        this.spinner.hide();
         this.error = error.error;
         console.error(error);
-      },
-      () => {
-        this.spinner.hide();
       }
     ));
 

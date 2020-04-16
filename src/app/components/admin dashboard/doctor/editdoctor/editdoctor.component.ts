@@ -27,11 +27,11 @@ export class EditdoctorComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
 
   status = Variables.status;
+  error: string;
 
   constructor(private formBuilder: FormBuilder,
               private snackBar: MatSnackBar,
               private activatedRoute: ActivatedRoute,
-              private spinner: NgxSpinnerService,
               private doctorService: DoctorsService) {
     this.doctorFormManager = new DoctorsFormManager(this.formBuilder);
     this.snackBarMan = new SnackBarManager(this.snackBar);
@@ -51,7 +51,6 @@ export class EditdoctorComponent implements OnInit, OnDestroy {
 
 
   submit() {
-    this.spinner.show();
 
     const updatedDoctor = this.doctorFormManager.bindDataToNewDoctor(this.doctor.id);
 
@@ -62,10 +61,8 @@ export class EditdoctorComponent implements OnInit, OnDestroy {
           this.snackBarMan.show('Doctor updated successfully', 'Ok');
         }
       }, error => {
+        this.error = error.error;
         console.error(error);
-      },
-      () => {
-        this.spinner.hide();
       }
     ));
   }

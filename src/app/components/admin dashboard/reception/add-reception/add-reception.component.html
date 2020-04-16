@@ -1,14 +1,12 @@
-<ngx-spinner>
-  <p style="color: white">Adding new doctor...</p>
-</ngx-spinner>
-
 <div class="container mat-elevation-z8">
   <div class="top">
     <p class="header">Add new reception</p>
     <p class="subheader">Enter the required fill to add new reception</p>
+    <p *ngIf="error" class="errorMessage">{{ error | uppercase }}</p>
   </div>
   <div class="bottom">
-    <form [formGroup]="receptionFormManager.receptionForm" (ngSubmit)="submit()">
+    <form [formGroup]="receptionFormManager.receptionForm"
+          (ngSubmit)="receptionFormManager.receptionForm.valid ? submit() : ''">
       <div>
         <mat-form-field appearance="outline">
           <mat-label>Username</mat-label>

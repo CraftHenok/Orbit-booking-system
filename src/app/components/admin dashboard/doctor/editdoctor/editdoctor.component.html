@@ -1,11 +1,8 @@
-<ngx-spinner>
-  <p style="color: white">Updating update...</p>
-</ngx-spinner>
-
 <div class="container mat-elevation-z6">
   <div class="top">
     <p class="header">Update Doctor</p>
     <p class="subheader">Enter the required fill to update doctor</p>
+    <p class="errorMessage" *ngIf="error">{{ error | uppercase }}</p>
   </div>
   <div class="bottom">
     <form [formGroup]="doctorFormManager.doctorForm" (submit)="submit()">
