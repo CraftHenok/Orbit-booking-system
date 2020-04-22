@@ -36,7 +36,7 @@
   </mat-dialog-content>
 
   <mat-dialog-actions align="end">
-    <div *ngIf="data.id==0 else updateAndDelete">
+    <div *ngIf="data.id==0 else updateAndDelete" style="position: relative;width: 100%">
       <button mat-flat-button color="primary" type="submit" (click)="scheduleBlockingForm.valid ? submit() : ''"
               style="width: 100%">Save
       </button>
