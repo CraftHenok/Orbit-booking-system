@@ -5,10 +5,10 @@ import {AppointmentsServices} from '../../../services/Appointments/appointments-
 import {AppointmentConverter} from '../../../models/Appointemts/AppointmentConverter';
 import {MatDialog} from '@angular/material/dialog';
 import {Variables} from '../../../utility/variables';
-import {ScheduleblockingComponent} from '../scheduleblocking/scheduleblocking.component';
 import {ScheduleBlockingService} from '../../../services/ScheduleBlocking/schedule-blocking.service';
 import {ScheduleBlockingConverter} from '../../../models/ScheduleBlocking/ScheduleBlockingConverter';
 import {LocalScheduleBlocking} from '../../../models/ScheduleBlocking/LocalScheduleBlocking';
+import {ScheduleblockingComponent} from '../../dialogs/scheduleblocking/scheduleblocking.component';
 
 @Component({
   selector: 'app-doctorsappointment',

@@ -3,7 +3,6 @@ import {CommonModule} from '@angular/common';
 import {AddEditDialogComponent} from './addEditDialog/addEditDialog.component';
 import {ForgetIdComponent} from './forget-id/forget-id.component';
 import {QuickAddComponent} from './quick-add/quick-add.component';
-import {ScheduleblockingComponent} from '../doctor dashboard/scheduleblocking/scheduleblocking.component';
 import {ManageAccountComponent} from './manage-account/manage-account.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import {ReactiveFormsModule} from '@angular/forms';
@@ -17,6 +16,9 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatListModule} from '@angular/material/list';
 import {MatIconModule} from '@angular/material/icon';
 import {NgxSpinnerModule} from 'ngx-spinner';
+import {ScheduleblockingComponent} from './scheduleblocking/scheduleblocking.component';
+import {ConfirmActionDialogComponent} from './confirm-action-dialog/confirm-action-dialog.component';
+import {PatientsdetaildialogComponent} from './patientsdetaildialog/patientsdetaildialog.component';
 
 
 @NgModule({
@@ -26,6 +28,8 @@ import {NgxSpinnerModule} from 'ngx-spinner';
     QuickAddComponent,
     ScheduleblockingComponent,
     ManageAccountComponent,
+    ConfirmActionDialogComponent,
+    PatientsdetaildialogComponent
   ],
   imports: [
     CommonModule,
@@ -47,7 +51,9 @@ import {NgxSpinnerModule} from 'ngx-spinner';
     ForgetIdComponent,
     QuickAddComponent,
     ScheduleblockingComponent,
-    ManageAccountComponent
+    ManageAccountComponent,
+    ConfirmActionDialogComponent,
+    PatientsdetaildialogComponent
   ],
 })
 export class DialogFeatureModuleModule {

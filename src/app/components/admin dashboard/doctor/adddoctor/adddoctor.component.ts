@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder} from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {Subscription} from 'rxjs';
@@ -15,7 +15,6 @@ import {DoctorsService} from '../../../../services/Doctors/doctors.service';
 export class AdddoctorComponent implements OnInit, OnDestroy {
 
   hidePassword = true;
-  @ViewChild('stepper') stepper: ElementRef;
 
   doctorsFormManager: DoctorsFormManager;
 
@@ -37,6 +36,9 @@ export class AdddoctorComponent implements OnInit, OnDestroy {
   }
 
   submit() {
+    alert('here');
+    return;
+
     const newDoctor = this.doctorsFormManager.bindDataToNewDoctor();
 
     this.subscription.add(this.doctorService.saveDoctor(newDoctor).subscribe(

@@ -1,43 +1,40 @@
 <div [ngSwitch]="data.code">
   <div *ngSwitchCase="'A'">
     <h1 mat-dialog-title>Patient address</h1>
-    <hr>
     <mat-dialog-content class="mat-typography">
       <p>Line 1</p>
-      <h2>{{ address.line1 ? address.line1 : '*Not provided'  }}</h2>
+      <h2>{{ address.line1 || '*Not provided'  }}</h2>
       <p>Line 2</p>
-      <h2>{{ address.line2 ? address.line2 : '*Not provided' }}</h2>
+      <h2>{{ address.line2 || '*Not provided' }}</h2>
       <p>City</p>
-      <h2>{{ address.city ? address.city : '*Not provided' | titlecase }}</h2>
+      <h2>{{ address.city || '*Not provided' | titlecase }}</h2>
       <p>Country</p>
-      <h2>{{ address.country ? address.country : '*Not provided' | uppercase }}</h2>
+      <h2>{{ address.country || '*Not provided' | uppercase }}</h2>
     </mat-dialog-content>
   </div>
   <div *ngSwitchCase="'C'">
     <h1 mat-dialog-title>Patient contact info</h1>
-    <hr>
     <mat-dialog-content class="mat-typography">
       <p>Email</p>
-      <h2>{{ contactInfo.email ? contactInfo.email : '*Not provided' }}</h2>
+      <h2>{{ contactInfo.email || '*Not provided' }}</h2>
       <p>Phone number</p>
-      <h2>{{ contactInfo.phoneNumber ? contactInfo.phoneNumber : '*Not provided' }}</h2>
+      <h2>{{ contactInfo.phoneNumber || '*Not provided' }}</h2>
       <p>Alternate phone number</p>
-      <h2>{{ contactInfo.alternatePhoneNumber ? contactInfo.alternatePhoneNumber : '*Not provided' }}</h2>
+      <h2>{{ contactInfo.alternatePhoneNumber || '*Not provided' }}</h2>
     </mat-dialog-content>
   </div>
 
   <div *ngSwitchCase="'E'">
     <h1 mat-dialog-title>Patients emergency info</h1>
-    <hr>
     <mat-dialog-content class="mat-typography">
       <p>Title id</p>
-      <h2>{{ emergencyInfo.emergencyTitleId ? emergencyInfo.emergencyTitleId : '*Not provided' }}</h2>
+      <h2>{{ emergencyInfo.emergencyTitleId || '*Not provided' }}</h2>
       <p>Name</p>
-      <h2>{{ emergencyInfo.name ? emergencyInfo.name : '*Not provided' | titlecase }}</h2>
+      <h2>{{ (emergencyInfo.name || '*Not provided') | titlecase }}</h2>
       <p>Phone number</p>
-      <h2>{{ emergencyInfo.phoneNumber ? emergencyInfo.phoneNumber : '*Not provided' }}</h2>
+      <h2>{{ emergencyInfo.phoneNumber || '*Not provided' }}</h2>
       <p>Alternate phone number</p>
-      <h2>{{ emergencyInfo.alternatePhoneNumber ? emergencyInfo.alternatePhoneNumber : '*Not provided' }}</h2>
+      <h2>{{ emergencyInfo.alternatePhoneNumber || '*Not provided' }}</h2>
     </mat-dialog-content>
   </div>
 </div>

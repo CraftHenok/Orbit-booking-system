@@ -13,16 +13,12 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
-import {PatientsdetaildialogComponent} from '../../../dialogs/patientsdetaildialog/patientsdetaildialog.component';
-import {ConfirmActionDialogComponent} from '../../../dialogs/confirm-action-dialog/confirm-action-dialog.component';
 import {NumberToBooleanModule} from '../../../../customPipes/numberToBoolean/number-to-boolean.module';
 
 
 @NgModule({
   declarations: [
     PatientsComponent,
-    PatientsdetaildialogComponent,
-    ConfirmActionDialogComponent
   ],
   imports: [
     CommonModule,
@@ -38,10 +34,6 @@ import {NumberToBooleanModule} from '../../../../customPipes/numberToBoolean/num
     MatMenuModule,
     MatIconModule,
     MatTooltipModule
-  ],
-  entryComponents: [
-    PatientsdetaildialogComponent,
-    ConfirmActionDialogComponent
   ]
 })
 export class PatientsModule {

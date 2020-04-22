@@ -1,14 +1,13 @@
-<h1 *ngIf="data.id else newAppointment" mat-dialog-title align="center" style="color:#00695C">
+<h1 *ngIf="data.id else newAppointment" mat-dialog-title>
   Manage Appointment
 </h1>
 
 <ng-template #newAppointment>
-  <h1 mat-dialog-title align="center" style="color:#00695C">New Appointment</h1>
+  <h1 mat-dialog-title>New Appointment</h1>
 </ng-template>
 
 <p class="errorMessage" *ngIf="error">{{ error | uppercase }}</p>
 
-<hr>
 <mat-dialog-content class="mat-typography">
 
   <form [formGroup]="addForm">
