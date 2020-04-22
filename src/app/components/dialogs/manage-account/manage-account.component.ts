@@ -18,7 +18,7 @@ export class ManageAccountComponent implements OnInit {
 
   editAccountForm = this.formBuilder.group({
     username: ['', Validators.required],
-    email: ['', Validators.required, Validators.email],
+    email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(Variables.minPasswordLength)]],
   });
   error: string;

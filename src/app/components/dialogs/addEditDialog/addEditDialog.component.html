@@ -88,7 +88,7 @@
 </div>
 <ng-template #showSaveButton>
   <mat-dialog-actions align="end">
-    <button mat-flat-button color="primary" type="submit" (submit)="addForm.valid ? saveClicked() : ''"
+    <button mat-flat-button color="primary" type="submit" (click)="addForm.valid ? saveClicked() : ''"
             style="width: 100%">Save
     </button>
   </mat-dialog-actions>

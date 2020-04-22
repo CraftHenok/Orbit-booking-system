@@ -33,7 +33,6 @@ export class DoctorsFormManager {
     const result = new Doctor(
       this.DoctorForm.get('email').value,
       this.DoctorForm.get('password').value,
-      Variables.doctorRoleName,
       this.DoctorForm.get('username').value,
       this.DoctorForm.get('status').value,
       this.DoctorForm.get('displayOrder').value);
@@ -45,7 +44,7 @@ export class DoctorsFormManager {
   private getFormBuilders() {
     return this.formBuilder.group({
       username: ['', Validators.required],
-      email: ['', Validators.required, Validators.email],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(Variables.minPasswordLength)]],
       status: ['', Validators.required],
       displayOrder: ['', Validators.required],

@@ -52,7 +52,6 @@ export class EditdoctorComponent implements OnInit, OnDestroy {
 
 
   submit() {
-
     const updatedDoctor = this.doctorsFormManager.bindDataToNewDoctor(this.doctor.id);
 
     this.subscription.add(this.doctorService.updateDoctor(updatedDoctor).subscribe(

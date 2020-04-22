@@ -1,4 +1,5 @@
 import {Account} from './Account';
+import {Variables} from '../utility/variables';
 
 /**
  * Doctor
@@ -13,9 +14,9 @@ export class Doctor extends Account {
    */
   displayOrder: number;
 
-  constructor(email: string, password: string, role: string, username: string,
+  constructor(email: string, password: string, username: string,
               status: string, displayOrder: number) {
-    super(email, password, role, username, status);
+    super(email, password, Variables.doctorRoleName, username, status);
     this.displayOrder = displayOrder;
   }
 }

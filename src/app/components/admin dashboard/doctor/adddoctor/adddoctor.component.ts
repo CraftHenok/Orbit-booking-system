@@ -36,9 +36,6 @@ export class AdddoctorComponent implements OnInit, OnDestroy {
   }
 
   submit() {
-    alert('here');
-    return;
-
     const newDoctor = this.doctorsFormManager.bindDataToNewDoctor();
 
     this.subscription.add(this.doctorService.saveDoctor(newDoctor).subscribe(
