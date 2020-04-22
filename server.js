@@ -14,11 +14,20 @@ app.use(compression());
 app.use(express.json());
 app.use(cors());
 
-// // ---------For angular only-------
-// app.use(express.static(__dirname + '/dist/bookingsystem'));
-// app.get('/*', function (req, res) {
-//   res.sendFile(path.join(__dirname + '/dist/bookingsystem'));
-// });
+
+const args = process.argv;
+if (args.indexOf('apionly') === -1) {
+  /**
+   * This serves the pwa
+   * when in development only the api is served
+   * user (npm run be dev) or (npm run devbe dev)
+   */
+  console.log("-------------The front-end is served...-----------------");
+  app.use(express.static(__dirname + '/dist/bookingsystem'));
+  app.get('/*', function (req, res) {
+    res.sendFile(path.join(__dirname + '/dist/bookingsystem'));
+  });
+}
 
 
 // check if the app's table schema is created
