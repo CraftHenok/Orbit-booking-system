@@ -90,7 +90,7 @@ router.get('/byId/:id', doctorsController.getDoctorById);
  *    produces:
  *      -application/json
  *    responses:
- *      200:
+ *      201:
  *        description: doctor is saved
  */
 router.post('/', doctorsController.saveNewDoctor);
@@ -138,7 +138,7 @@ router.put('/:id', doctorsController.update);
  *    produces:
  *      -application/json
  *    responses:
- *      200:
+ *      204:
  *        description: the number of rows affected
  *      404:
  *        description: the doctor doesn't exist

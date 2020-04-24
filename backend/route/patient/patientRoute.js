@@ -233,7 +233,7 @@ router.get('/forgetId/:firstName/:pn', patientsController.getPatientByNameAndPn)
  *          schema:
  *            $ref: '#/definitions/Patient'
  *    responses:
- *      200:
+ *      201:
  *        description: patient is saved
  */
 router.post('/', patientsController.saveNewPatient);
@@ -277,7 +277,7 @@ router.post('/', patientsController.saveNewPatient);
  *            type: integer
  *            minimum: 1
  *    responses:
- *      200:
+ *      204:
  *        description: patient is deleted
  *      404:
  *         description: patient doesn't exist

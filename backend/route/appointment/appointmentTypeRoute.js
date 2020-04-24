@@ -37,7 +37,7 @@ router.get("/", appointmentTypeController.getAllAppointmentTypes);
  *    produces:
  *      -application/json
  *    responses:
- *      200:
+ *      201:
  *        description: new appointment type is saved
  */
 router.post("/", appointmentTypeController.saveAppointmentType);
@@ -59,7 +59,7 @@ router.post("/", appointmentTypeController.saveAppointmentType);
  *    produces:
  *      -application/json
  *    responses:
- *      200:
+ *      204:
  *        description: number of rows affected in appointment types
  */
 router.delete("/:id", appointmentTypeController.deleteAppointmentType);

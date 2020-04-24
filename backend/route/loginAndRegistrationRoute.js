@@ -23,7 +23,7 @@ const router = express.Router();
  *    produces:
  *      -application/json
  *    responses:
- *      200:
+ *      201:
  *        description: the user with token added
  */
 router.post('/login', loginAndRegistrationController.login);
@@ -60,7 +60,7 @@ router.post('/login', loginAndRegistrationController.login);
  *    produces:
  *      -application/json
  *    responses:
- *      200:
+ *      201:
  *        description: successful user registration
  */
 router.post('/register', loginAndRegistrationController.register);

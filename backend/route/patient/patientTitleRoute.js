@@ -36,7 +36,7 @@ router.get("/", patientTitleController.getAllPatientTitle);
  *    produces:
  *      -application/json
  *    responses:
- *      200:
+ *      201:
  *        description: patient title is saved
  */
 router.post("/", patientTitleController.savePatientTitle);
@@ -57,8 +57,8 @@ router.post("/", patientTitleController.savePatientTitle);
  *    produces:
  *      -application/json
  *    responses:
- *      200:
- *        description: number of rows affected in showpatients title
+ *      204:
+ *        description: number of rows affected in patients title
  */
 router.delete("/:id", patientTitleController.deletePatientTitle);
 

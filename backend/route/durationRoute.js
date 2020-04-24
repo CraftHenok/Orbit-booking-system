@@ -36,7 +36,7 @@ router.get("/", durationController.getAllDuration);
  *    produces:
  *      -application/json
  *    responses:
- *      200:
+ *      201:
  *        description: duration is saved
  */
 router.post("/", durationController.saveDuration);
@@ -58,7 +58,7 @@ router.post("/", durationController.saveDuration);
  *    produces:
  *      -application/json
  *    responses:
- *      200:
+ *      204:
  *        description: number of rows affected in duration
  */
 router.delete("/:id", durationController.deleteDuration);

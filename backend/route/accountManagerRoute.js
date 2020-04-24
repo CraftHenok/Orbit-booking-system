@@ -126,7 +126,7 @@ router.put('/:id', accountManagerController.updateAccountInfoById);
  *    produces:
  *      -application/json
  *    responses:
- *      200:
+ *      204:
  *        description: number of rows affected in user table
  */
 router.delete('/:id', accountManagerController.deleteAccount);

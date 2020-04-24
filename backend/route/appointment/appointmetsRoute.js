@@ -116,7 +116,7 @@ router.get('/doctors/:doctorId', appointmentController.getDoctorAppointmentByIts
  *          schema:
  *            $ref: '#/definitions/NewAppointment'
  *    responses:
- *      200:
+ *      201:
  *        description: list of appointment status
  */
 router.post('/', appointmentController.saveNewAppointment);
@@ -139,7 +139,7 @@ router.post('/', appointmentController.saveNewAppointment);
  *            type: integer
  *            minimum: 1
  *    responses:
- *      200:
+ *      204:
  *        description: appointment is deleted
  *      404:
  *         description: the appointment trying to delete doesn't exist

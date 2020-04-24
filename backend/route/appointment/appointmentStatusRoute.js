@@ -37,7 +37,7 @@ router.get("/", appointmentStatusController.getAllAppointmentStatus);
  *    produces:
  *      -application/json
  *    responses:
- *      200:
+ *      201:
  *        description: appointment status is saved
  */
 router.post("/", appointmentStatusController.saveAppointmentStatus);
@@ -57,7 +57,7 @@ router.post("/", appointmentStatusController.saveAppointmentStatus);
  *    produces:
  *      -application/json
  *    responses:
- *      200:
+ *      204:
  *        description: number of rows affected in appointment status
  */
 router.delete("/:id", appointmentStatusController.deleteAppointmentStatus);

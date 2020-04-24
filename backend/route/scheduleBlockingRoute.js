@@ -70,7 +70,7 @@ router.get("/:id", scheduleBlockingController.getDoctorsScheduleBlockingById);
  *    produces:
  *      -application/json
  *    responses:
- *      200:
+ *      201:
  *        description: the schedule blocking is saved
  */
 router.post("/", scheduleBlockingController.saveNewScheduleBlocking);
@@ -92,7 +92,7 @@ router.post("/", scheduleBlockingController.saveNewScheduleBlocking);
  *    produces:
  *      -application/json
  *    responses:
- *      200:
+ *      204:
  *        description: number of rows affected in schedule Blocking
  */
 router.delete("/:id", scheduleBlockingController.deleteScheduleBlocking);

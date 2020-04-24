@@ -36,7 +36,7 @@ router.get("/", emergencyTitleController.getAllEmergencyTitle);
  *    produces:
  *      -application/json
  *    responses:
- *      200:
+ *      201:
  *        description: emergency title is saved
  */
 router.post("/", emergencyTitleController.saveEmergencyTitle);
@@ -58,7 +58,7 @@ router.post("/", emergencyTitleController.saveEmergencyTitle);
  *    produces:
  *      -application/json
  *    responses:
- *      200:
+ *      204:
  *        description: number of rows affected in emergency title
  */
 router.delete("/:id", emergencyTitleController.deleteEmergencyTitle);
