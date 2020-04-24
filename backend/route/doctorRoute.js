@@ -10,35 +10,28 @@ const router = express.Router();
  *   Doctor:
  *     type: object
  *     required:
- *       - name
  *       - username
+ *       - email
  *       - password
+ *       - status
  *       - displayOrder
- *       - manageBlocks
- *       - manageBooking
- *       - isDoctor
  *     properties:
- *       name:
- *         type: string
- *         description: the name of the doctor
  *       username:
  *         type: string
- *         description: unique user name of the doctor
+ *         description: the name of the doctor
  *       password:
  *          type: string
- *          description: password
+ *          description: password (password length must be at least 6 characters long)
  *       displayOrder:
  *          type: integer
  *          description: the position of the doctor in the doctor's queue
- *       manageBooking:
- *          type: boolean
- *          description: weather the doctor manage it's booking
- *       manageBlocks:
- *          type: boolean
- *          description: manageBlocks?
- *       isDoctor:
- *          type: boolean
- *          description: doctor or not
+ *          minimum: 1
+ *       status:
+ *          type: string
+ *          description: the status of the doctor (can be approved,suspended,)
+ *       email:
+ *          type: string
+ *          description: doctor's email address
  */
 
 
@@ -46,14 +39,14 @@ const router = express.Router();
  * @swagger
  * /doctor:
  *  get:
- *    description: get all showdoctors
+ *    description: get all doctors
  *    tags:
  *      - doctor
  *    produces:
  *      -application/json
  *    responses:
  *      200:
- *        description: all or empty list of showdoctors
+ *        description: list of all doctors
  */
 router.get('/', doctorsController.getAllDoctors);
 
@@ -64,11 +57,19 @@ router.get('/', doctorsController.getAllDoctors);
  *    description: get doctor's profile by id
  *    tags:
  *      - doctor
+ *    parameters:
+ *       - name: id
+ *         description: the id of the doctor.
+ *         required: true
+ *         in: path
+ *         schema:
+ *            type: integer
+ *            minimum: 1
  *    produces:
  *      -application/json
  *    responses:
  *      200:
- *        description: return doctor profile
+ *        description: doctor profile is returned
  */
 router.get('/byId/:id', doctorsController.getDoctorById);
 
@@ -125,7 +126,7 @@ router.put('/:id', doctorsController.update);
  * @swagger
  * /doctor/{id}:
  *  delete:
- *    description: get showdoctors by name
+ *    description: delete doctors by id
  *    tags:
  *      - doctor
  *    parameters:
@@ -138,9 +139,9 @@ router.put('/:id', doctorsController.update);
  *      -application/json
  *    responses:
  *      200:
- *        description: doctor deleted successfully
+ *        description: the number of rows affected
  *      404:
- *        description: the doctor trying to delete doesn't exist
+ *        description: the doctor doesn't exist
  */
 router.delete('/:id', doctorsController.deleteDoctorById);
 

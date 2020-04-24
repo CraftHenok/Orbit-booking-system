@@ -37,7 +37,7 @@ router.get("/", durationController.getAllDuration);
  *      -application/json
  *    responses:
  *      200:
- *        description: new duration in database
+ *        description: duration is saved
  */
 router.post("/", durationController.saveDuration);
 
@@ -46,7 +46,7 @@ router.post("/", durationController.saveDuration);
  * @swagger
  * /duration/{durationId}:
  *  delete:
- *    description: delete specific duration
+ *    description: delete duration by id
  *    tags:
  *      - duration
  *    parameters:
@@ -91,7 +91,7 @@ router.delete("/:id", durationController.deleteDuration);
  *      -application/json
  *    responses:
  *      200:
- *        description: number of rows affected in durationId
+ *        description: number of rows affected in duration table
  */
 router.put("/:id", durationController.editDuration);
 

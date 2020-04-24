@@ -64,12 +64,8 @@ exports.saveNewDoctor = async (req, res) => {
     password: req.body.password,
     username: req.body.username,
     role: "D",
-    status: req.body.status || "Pending"
-  };
-
-  const doctorData = {
-    ...newUser,
     displayOrder: req.body.displayOrder,
+    status: req.body.status || "Pending"
   };
 
   // first save to the general user table
@@ -81,12 +77,12 @@ exports.saveNewDoctor = async (req, res) => {
     } else {
       db.run("INSERT into Doctor(userId,displayOrder)\n" +
         "VALUES ((SELECT seq from sqlite_sequence where name='User'),?)",
-        [doctorData.displayOrder], function (err) {
+        [newUser.displayOrder], function (err) {
           if (err) {
             console.error(err);
             res.status(statusCode.errorInData).send(err);
           } else {
-            res.status(statusCode.saveOk).json(doctorData);
+            res.status(statusCode.saveOk).json(newUser);
           }
         });
     }

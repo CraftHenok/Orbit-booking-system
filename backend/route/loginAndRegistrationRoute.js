@@ -6,9 +6,9 @@ const router = express.Router();
  * @swagger
  * /account/login:
  *  post:
- *    description: used to login a user
+ *    description: login a user and return a token
  *    tags:
- *      - account
+ *      - loginAndRegistration
  *    requestBody:
  *      required: true
  *      content:
@@ -35,7 +35,7 @@ router.post('/login', loginAndRegistrationController.login);
  *  post:
  *    description: register a new user
  *    tags:
- *      - account
+ *      - loginAndRegistration
  *    requestBody:
  *      required: true
  *      content:
@@ -43,13 +43,19 @@ router.post('/login', loginAndRegistrationController.login);
  *          schema:
  *            type: object
  *            properties:
+ *              username:
+ *                type: string
  *              email:
  *                type: string
+ *                description: unique email
  *              password:
- *                type: password
+ *                type: string
+ *              status:
+ *                type: string
+ *                description: A(for approved), S(for suspended), P(for pending)
  *              role:
  *                type: string
- *                description: the role of the user it can be D(for doctor) or R(for reception)
+ *                description: the role of the user it can be D(for doctor) or R(for reception),A(for admin)
  *                minimum: 1
  *    produces:
  *      -application/json

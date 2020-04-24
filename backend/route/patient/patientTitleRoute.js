@@ -6,14 +6,14 @@ const router = express.Router();
  * @swagger
  * /patientTitle:
  *  get:
- *    description: get available patient titles
+ *    description: get all patient's titles
  *    tags:
  *      - patient Title
  *    produces:
  *      -application/json
  *    responses:
  *      200:
- *        description: available list of showpatients title
+ *        description: available list of patients title
  */
 router.get("/", patientTitleController.getAllPatientTitle);
 
@@ -89,7 +89,7 @@ router.delete("/:id", patientTitleController.deletePatientTitle);
  *      -application/json
  *    responses:
  *      200:
- *        description: number of rows affected in showpatients title
+ *        description: number of rows affected in patient's title
  */
 router.put("/:id", patientTitleController.updatePatientTitle);
 

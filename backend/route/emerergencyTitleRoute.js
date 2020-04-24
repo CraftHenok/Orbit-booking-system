@@ -13,7 +13,7 @@ const router = express.Router();
  *      -application/json
  *    responses:
  *      200:
- *        description: available list of showpatients emergency Title
+ *        description: available list of patients emergency Title
  */
 router.get("/", emergencyTitleController.getAllEmergencyTitle);
 
@@ -50,7 +50,7 @@ router.post("/", emergencyTitleController.saveEmergencyTitle);
  *    tags:
  *      - emergency title
  *    parameters:
- *      - name: appointmentTypeId
+ *      - name: emergencyTitleId
  *        description: the emergency title's id to delete
  *        required: true
  *        type: integer
@@ -72,7 +72,7 @@ router.delete("/:id", emergencyTitleController.deleteEmergencyTitle);
  *      - emergency title
  *    parameters:
  *      - name: emergencyTitleId
- *        description: the emergency title's id to delete
+ *        description: the emergency title id to delete
  *        required: true
  *        type: integer
  *        in: path

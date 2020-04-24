@@ -2,7 +2,7 @@ const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('demo.db');
 const {statusCode} = require('../utitlity/statusCodes');
 
-exports.getDoctorsScheduleBlocking = async (req, res) => {
+exports.getDoctorsScheduleBlockingByToken = async (req, res) => {
   await db.all("Select * from ScheduleBlocking where userId = ?",
     [req.user.userId], function (err, row) {
       res.status(statusCode.getOk).json(row);

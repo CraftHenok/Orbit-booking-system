@@ -6,7 +6,7 @@ const router = express.Router();
  * @swagger
  * /appointmentStatus:
  *  get:
- *    description: get appointment status
+ *    description: get all appointment status
  *    tags:
  *      - appointment status
  *    produces:
@@ -46,7 +46,7 @@ router.post("/", appointmentStatusController.saveAppointmentStatus);
  * @swagger
  * /appointmentStatus/{appointmentStatusId}:
  *  delete:
- *    description: delete appointment status
+ *    description: delete appointment status by id
  *    tags:
  *      - appointment status
  *    parameters:
@@ -66,7 +66,7 @@ router.delete("/:id", appointmentStatusController.deleteAppointmentStatus);
  * @swagger
  * /appointmentStatus/{appointmentStatusId}:
  *  put:
- *    description: update appointment status
+ *    description: update appointment status by id
  *    tags:
  *      - appointment status
  *    parameters:

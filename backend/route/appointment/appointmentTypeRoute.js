@@ -6,7 +6,7 @@ const router = express.Router();
  * @swagger
  * /appointmentType:
  *  get:
- *    description: get appointment types
+ *    description: get all appointment types
  *    tags:
  *      - appointment types
  *    produces:

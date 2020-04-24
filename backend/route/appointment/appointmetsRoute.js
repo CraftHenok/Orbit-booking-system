@@ -57,7 +57,7 @@ const router = express.Router();
  *      -application/json
  *    responses:
  *      200:
- *        description: all or empty appointments
+ *        description: get all list of appointments
  */
 router.get('/', appointmentController.getAllAppointments);
 
@@ -65,21 +65,21 @@ router.get('/', appointmentController.getAllAppointments);
  * @swagger
  * /appointment/doctors:
  *  get:
- *    description: get loged in doctor's appointment
+ *    description: get doctor's appointment using token
  *    produces:
  *      -application/json
  *    tags:
  *      - appointment
  *    responses:
  *      200:
- *        description: list of the loged in doctor's appointment
+ *        description: list of doctor's appointments
  */
 router.get('/doctors', appointmentController.getLogedInDoctorAppointment);
 
 
 /**
  * @swagger
- * /appointment/doctors:
+ * /appointment/doctors/{doctors}:
  *  get:
  *    description: get all doctor's appointment by doctor id
  *    produces:
@@ -150,7 +150,7 @@ router.delete('/:appointmentId', appointmentController.deleteAppointmentById);
  * @swagger
  * /appointment/{appointmentId}:
  *  put:
- *    description: update appointment
+ *    description: update appointment by id
  *    tags:
  *      - appointment
  *    produces:
@@ -171,7 +171,7 @@ router.delete('/:appointmentId', appointmentController.deleteAppointmentById);
  *            $ref: '#/definitions/NewAppointment'
  *    responses:
  *      200:
- *        description: appointment updated
+ *        description: the number of rows affected
  */
 router.put('/:appointmentId', appointmentController.updateAppointment);
 

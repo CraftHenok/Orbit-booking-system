@@ -33,6 +33,7 @@ const router = express.Router();
  *       emergencyTitleId:
  *         type: string
  *         description: patient's emergency title info id
+ *         minimum: 1
  *       name:
  *         type: string
  *         description: patient's emergency contact info name
@@ -132,14 +133,14 @@ const router = express.Router();
  * @swagger
  * /patient:
  *  get:
- *    description: get all showpatients
+ *    description: get all patients
  *    tags:
  *      - patient
  *    produces:
  *      -application/json
  *    responses:
  *      200:
- *        description: all or empty list of showpatients
+ *        description: all or empty list of patients
  */
 router.get('/', patientsController.getAllPatients);
 
@@ -194,7 +195,7 @@ router.get('/byIdFull/:patientId', patientsController.getPatientByIdFull);
  * @swagger
  * /patient/byName/{firstName}/{phoneNumber}:
  *  get:
- *    description: get showpatients by first or phone number
+ *    description: get patients by first name or phone number
  *    tags:
  *      - patient
  *    parameters:
@@ -203,8 +204,8 @@ router.get('/byIdFull/:patientId', patientsController.getPatientByIdFull);
  *        required: true
  *        type: string
  *        in: path
- *      - name: pn
- *        description: patient phone number
+ *      - name: phoneNumber
+ *        description: patient's phone number
  *        required: true
  *        type: string
  *        in: path
@@ -212,7 +213,7 @@ router.get('/byIdFull/:patientId', patientsController.getPatientByIdFull);
  *      -application/json
  *    responses:
  *      200:
- *        description: list showpatients matching first name and phone number
+ *        description: list of patients matching first name and phone number
  */
 router.get('/forgetId/:firstName/:pn', patientsController.getPatientByNameAndPn);
 
@@ -220,7 +221,7 @@ router.get('/forgetId/:firstName/:pn', patientsController.getPatientByNameAndPn)
  * @swagger
  * /patient:
  *  post:
- *    description: save new appointment
+ *    description: save new patient
  *    tags:
  *      - patient
  *    produces:
@@ -233,7 +234,7 @@ router.get('/forgetId/:firstName/:pn', patientsController.getPatientByNameAndPn)
  *            $ref: '#/definitions/Patient'
  *    responses:
  *      200:
- *        description: list of appointment status
+ *        description: patient is saved
  */
 router.post('/', patientsController.saveNewPatient);
 
@@ -311,12 +312,12 @@ router.delete('/:patientId/:addressId/:contactId/:emergencyInfoId', patientsCont
  */
 router.put('/:patientId', patientsController.updatePatientById);
 
-//patient detail queries
+
 /**
  * @swagger
  * /patient/contactInfo/{contactId}:
  *  get:
- *    description: get full contact info with contact id
+ *    description: get patient's contact info with contact id
  *    tags:
  *      - patient
  *    parameters:
@@ -329,7 +330,7 @@ router.put('/:patientId', patientsController.updatePatientById);
  *      -application/json
  *    responses:
  *      200:
- *        description: full contact info
+ *        description: patient's contact info
  */
 router.get('/contactInfo/:contactId', patientsController.getContactById);
 
@@ -337,7 +338,7 @@ router.get('/contactInfo/:contactId', patientsController.getContactById);
  * @swagger
  * /patient/address/{addressId}:
  *  get:
- *    description: get full address info with address id
+ *    description: get patient's address info with address id
  *    tags:
  *      - patient
  *    parameters:
@@ -350,7 +351,7 @@ router.get('/contactInfo/:contactId', patientsController.getContactById);
  *      -application/json
  *    responses:
  *      200:
- *        description: full address info
+ *        description: patient's address info
  */
 router.get('/address/:addressId', patientsController.getAddressById);
 
@@ -371,7 +372,7 @@ router.get('/address/:addressId', patientsController.getAddressById);
  *      -application/json
  *    responses:
  *      200:
- *        description: full emergency info
+ *        description: patient's emergency info
  */
 router.get('/emergencyInfo/:emergencyInfoId', patientsController.getEmergencyInfoById);
 
