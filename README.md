@@ -4,12 +4,16 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## To run application for production mode
 <code>npm install</code>
-<br><code>npm run be</code>
-<br>Then consult the console to see which port the app is using then navigate to localhost:{port}
+<br>
+<code>npm build --prod</code>
+<br>
+<code>npm run be</code>
+<br>
+Then consult the console to see which port the app is using then navigate to localhost:{port}
 
 ## To run application in development mode
-<code>npm run devbe</code>
-<br>This run the backend express
+<code>npm run devbe apionly</code>
+<br>This run the backend express(only the required api) with nodemon
 
 <code>ng serve</code>
 <br>This run the angular code
