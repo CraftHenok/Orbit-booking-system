@@ -115,7 +115,7 @@ export class DoctorsappointmentComponent implements OnInit {
   }
 
   handleEvent(event) {
-    if (event.patientId) {
+    if (event.patientId || event.id === undefined) {
       return;
     }
     this.openDialogWith(event);

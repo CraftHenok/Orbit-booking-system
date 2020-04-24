@@ -89,7 +89,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
 
   // called when items are clicked
   handleEvent(action: string, event): void {
-    if (!event.patientId) {
+    if (!event.patientId || event.id === undefined) {
       return;
     }
     const dialogRef = this.openDialogWith(event);
