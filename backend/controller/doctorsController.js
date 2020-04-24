@@ -1,7 +1,7 @@
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('demo.db');
 const {registerToDB} = require('./loginAndRegistrationController');
-const {updateUser} = require('./accountManagerController');
+const {updateUser, deleteUser} = require('./accountManagerController');
 const {getGrants} = require('../utitlity/roleManager');
 const {statusCode} = require('../utitlity/statusCodes');
 
@@ -47,6 +47,10 @@ exports.deleteDoctorById = async (req, res) => {
     return res.status(statusCode.forbidden).json("Access forbidden " + req.user.role);
   }
 
+  await deleteUser(req.params['id'], (response) => {
+    console.log(response);
+  });
+
   await db.run("DELETE from Doctor WHERE userId = ?", req.params['id'], function (err) {
     if (err) {
       console.error(err);
@@ -55,6 +59,8 @@ exports.deleteDoctorById = async (req, res) => {
       res.status(statusCode.deleteOk).json(this.changes);
     }
   });
+
+
 };
 
 exports.saveNewDoctor = async (req, res) => {
